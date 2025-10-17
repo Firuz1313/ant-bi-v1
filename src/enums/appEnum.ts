@@ -29,8 +29,9 @@ export enum MenuWidth {
 
 // Language
 export enum LanguageEnum {
-  ZH = 'zh',
-  EN = 'en'
+  RU = 'ru',
+  EN = 'en',
+  TG = 'tg'
 }
 
 // Icon type

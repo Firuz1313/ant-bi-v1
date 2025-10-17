@@ -5,9 +5,9 @@
     <div v-if="showDevToolsWarning" class="dev-tools-warning">
       <div class="warning-content">
         <div class="warning-icon">🔒</div>
-        <h1 class="warning-title">系统已锁定</h1>
+        <h1 class="warning-title">Система заблокирована</h1>
         <p class="warning-text">
-          检测到开发者工具已打开<br />
+          Обнаружены открытые инструменты разработчика<br />
           为了系统安全，请关闭开发者工具后继续使用
         </p>
         <div class="warning-subtitle">Security Lock Activated</div>

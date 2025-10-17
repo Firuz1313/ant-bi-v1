@@ -1,106 +1,243 @@
-<img  src="https://www.qiniu.lingchen.kim/github-cover-light6.webp" />
+# Ант Аналитика
 
-<br />
-<h1 align="center">Art Design Pro</h1>
-<p align="center">A backend system template that combines design aesthetics with efficient development, helping you quickly build professional-grade applications</p>
-<div align="center">English | <a href="./README.zh-CN.md">简体中文</a></div>
-
-<br />
 <div align="center">
-
-[![license](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE) [![github stars](https://img.shields.io/github/stars/Daymychen/art-design-pro)](https://github.com/Daymychen/art-design-pro/stargazers) [![github forks](https://img.shields.io/github/forks/Daymychen/art-design-pro)](https://github.com/Daymychen/art-design-pro/network/members)
-
+  <h2>Новая эра корпоративной аналитики</h2>
+  <p>Современные технологии, визуальные отчёты и автоматизация — всё, чтобы ваши данные работали на результат.</p>
 </div>
-<br />
 
-## What makes this project special?
+## 📋 О проекте
 
-**Interface Design**: Modern UI design with smooth interactions, focusing on user experience and visual design
+Ант Аналитика - это современная система управления и аналитики, построенная на базе Vue 3, TypeScript и Element Plus. Проект полностью очищен от демо-контента и готов для разработки вашего решения.
 
-**Quick Start**: Clean architecture + comprehensive documentation, easy for backend developers to use
+## ✨ Основные возможности
 
-**Rich Components**: Built-in high-quality components for data display, forms, and more to meet different business scenarios
+- 🎨 **Современный UI/UX** - Красивый и интуитивный интерфейс
+- 🌍 **Мультиязычность** - Поддержка русского и таджикского языков
+- 🔐 **Система авторизации** - Полноценная аутентификация и управление правами
+- 👥 **Управление пользователями** - CRUD операции с пользователями и ролями
+- 🎯 **Гибкая настройка** - Настройка тем, меню и интерфейса
+- 📱 **Адаптивный дизайн** - Работает на всех устройствах
+- 🚀 **Высокая производительность** - Оптимизация и быстрая загрузка
 
-**Smooth Interactions**: Button clicks, theme switching, page transitions, chart animations - experience comparable to commercial products
+## 🛠 Технологический стек
 
-**Efficient Development**: Built-in practical APIs like useTable and ArtForm to significantly improve development efficiency
+- **Фреймворк:** Vue 3 (Composition API)
+- **Язык:** TypeScript
+- **UI библиотека:** Element Plus
+- **Роутинг:** Vue Router 4
+- **Управление состоянием:** Pinia
+- **Сборщик:** Vite
+- **Иконки:** Собственная иконочная система
+- **Стили:** SCSS
 
-**Clean Scripts**: Built-in one-click cleanup script to quickly remove demo data and get a ready-to-develop base project
+## 📦 Установка
 
-## Tech Stack
+### Требования
 
-Development Framework: Vue3, TypeScript, Vite, Element-Plus
+- Node.js >= 20.19.0
+- pnpm >= 8.8.0 (рекомендуется) или npm >= 10.0.0
 
-Code Standards: Eslint, Prettier, Stylelint, Husky, Lint-staged, cz-git
-
-## Preview
-
-<kbd><img src="https://www.qiniu.lingchen.kim/github-c1.webp" alt="Light Theme"/></kbd>
-
-<kbd><img src="https://www.qiniu.lingchen.kim/github-c2.webp" alt="Light Theme"/></kbd>
-
-<kbd><img src="https://www.qiniu.lingchen.kim/github-c4.webp" alt="Dark Theme"/></kbd>
-
-<kbd><img src="https://www.qiniu.lingchen.kim/github-c5.webp" alt="Dark Theme"/></kbd>
-
-## Quick Access
-
-[Live Demo](https://www.artd.pro)
-
-[Official Documentation](https://www.artd.pro/docs)
-
-## Installation & Setup
+### Установка зависимостей
 
 ```bash
-# Install dependencies
+# С помощью pnpm (рекомендуется)
 pnpm install
 
-# If pnpm install fails, try using the command below
-pnpm install --ignore-scripts
-
-# Start local development environment
-pnpm dev
-
-# Build for production
-pnpm build
+# Или с помощью npm
+npm install
 ```
 
-## Clean Version
+## 🚀 Запуск
 
-The project includes a cleanup script to quickly remove demo data and provide developers with a ready-to-develop base project
+### Режим разработки
 
 ```bash
-pnpm clean:dev
+# С помощью pnpm
+pnpm dev
+
+# Или с помощью npm
+npm run dev
 ```
 
-## Technical Support
+Проект запустится на `http://localhost:5173`
 
-QQ Group: <a href="https://qm.qq.com/cgi-bin/qm/qr?k=Gg6yzZLFaNgmRhK0T5Qcjf7-XcAFWWXm&jump_from=webapi&authKey=YpRKVJQyFKYbGTiKw0GJ/YQXnNF+GdXNZC5beQQqnGZTvuLlXoMO7nw5fNXvmVhA">821834289</a> (Click the link to join the group chat)
+### Сборка для продакшена
 
-## Browser Compatibility
+```bash
+# С помощью pnpm
+pnpm build
 
-Supports modern mainstream browsers including Chrome, Safari, Firefox, and more.
+# Или с помощью npm
+npm run build
+```
 
-## Contributing
+### Предварительный просмотр сборки
 
-We sincerely welcome and appreciate the support of every contributor! Whether you have new ideas, feature suggestions, or code optimizations, you can participate in the following ways:
+```bash
+# С помощью pnpm
+pnpm serve
 
-Submit Pull Requests: Share your code and help the project grow.
+# Или с помощью npm
+npm run serve
+```
 
-Create GitHub Issues: Provide bug feedback or new feature suggestions to help us improve together.
+## 📁 Структура проекта
 
-Every contribution you make takes this project one step further! Come join our open source community!
+```
+Ант Аналитика/
+├── public/                 # Статические файлы
+├── src/
+│   ├── api/               # API запросы и сервисы
+│   ├── assets/            # Ресурсы (изображения, стили, иконки)
+│   ├── components/        # Переиспользуемые компоненты
+│   ├── composables/       # Композиционные функции Vue
+│   ├── config/            # Конфигурация приложения
+│   ├── directives/        # Пользовательские директивы
+│   ├── enums/             # TypeScript перечисления
+│   ├── locales/           # Файлы локализации
+│   │   └── langs/         # Языковые файлы (ru, tg, en)
+│   ├── mock/              # Mock данные для разработки
+│   ├── router/            # Конфигурация маршрутизации
+│   ├── store/             # Pinia хранилища
+│   ├── types/             # TypeScript типы
+│   ├── utils/             # Утилиты и хелперы
+│   ├── views/             # Страницы приложения
+│   │   ├── auth/          # Страницы аутентификации
+│   │   ├── dashboard/     # Главная панель
+│   │   ├── exception/     # Страницы ошибок (403, 404, 500)
+│   │   ├── index/         # Основной макет
+│   │   └── system/        # Системные страницы
+│   ├── App.vue            # Корневой компонент
+│   └── main.ts            # Точка входа
+├── .gitignore
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
 
-## Continuous Optimization & Extension
+## 🎯 Основные модули
 
-The project maintains active updates, supports the latest frontend tech stack, is compatible with mainstream frameworks, and ensures long-term stability and extensibility. Community-driven feedback mechanisms allow your needs to be quickly integrated into project iterations.
+### Аутентификация
+- Вход в систему
+- Регистрация
+- Восстановление пароля
+- Блокировка экрана
 
-## Donation
+### Управление системой
+- **Пользователи** - Управление пользователями системы
+- **Роли** - Настройка ролей и прав доступа
+- **Меню** - Конфигурация навигационного меню
+- **Личный кабинет** - Профиль и настройки пользователя
 
-If you feel this project has reduced your development costs and solved problems in your work/life, you can support us through the following ways:
+### Панель управления
+- Главная страница с краткой информацией
+- Готова для добавления виджетов и статистики
 
-<img src="https://www.qiniu.lingchen.kim/%E7%BB%84%202%402x%202.png" alt="Donation QR Code"/>
+## 🌐 Языки
 
-## Star History
+Проект поддерживает следующие языки:
+- 🇷🇺 **Русский** (по умолчанию)
+- 🇹🇯 **Тоҷикӣ** (Таджикский)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=Daymychen/art-design-pro&type=Date)](https://www.star-history.com/#Daymychen/art-design-pro&Date)
+Переключение языка доступно в интерфейсе приложения.
+
+## 🎨 Темы
+
+- Светлая тема
+- Темная тема
+- Автоматическое переключение (системная тема)
+
+## 📝 Разработка
+
+### Добавление новой страницы
+
+1. Создайте компонент в `src/views/`
+2. Добавьте маршрут в `src/router/routes/asyncRoutes.ts`
+3. Добавьте переводы в `src/locales/langs/`
+4. Обновите типы если необходимо
+
+### Добавление нового пункта меню
+
+```typescript
+// src/router/routes/asyncRoutes.ts
+{
+  name: 'YourModule',
+  path: '/your-module',
+  component: RoutesAlias.Layout,
+  meta: {
+    title: 'menus.yourModule.title',
+    icon: '&#xe721;',
+    roles: ['R_SUPER', 'R_ADMIN']
+  },
+  children: [
+    {
+      path: 'page',
+      name: 'YourPage',
+      component: '/views/your-module/page',
+      meta: {
+        title: 'menus.yourModule.page',
+        keepAlive: false
+      }
+    }
+  ]
+}
+```
+
+### Добавление переводов
+
+```json
+// src/locales/langs/ru.json
+{
+  "menus": {
+    "yourModule": {
+      "title": "Ваш модуль",
+      "page": "Страница"
+    }
+  }
+}
+```
+
+## 🔧 Конфигурация
+
+Основные настройки находятся в `src/config/index.ts`:
+- Название системы
+- Тема по умолчанию
+- Цветовая схема
+- Настройки меню
+- И другие параметры
+
+## 📚 Доступные скрипты
+
+```bash
+pnpm dev          # Запуск в режиме разработки
+pnpm build        # Сборка для продакшена
+pnpm serve        # Предварительный просмотр сборки
+pnpm lint         # Проверка кода
+pnpm fix          # Исправление ошибок кода
+```
+
+## 🚨 Состояние проекта
+
+✅ **Проект полностью очищен от демо-контента**
+
+- Удалены все демо-страницы и компоненты
+- Очищены конфигурационные файлы
+- Минимизированы языковые файлы
+- Оставлена только базовая функциональность
+- Готов для разработки новых функций
+
+Подробная информация об очистке доступна в файле `CLEANUP_INFO.md`
+
+## 📄 Лицензия
+
+MIT License
+
+## 🤝 Поддержка
+
+Если у вас возникли вопросы или проблемы, пожалуйста, создайте issue в репозитории.
+
+---
+
+**Разработано с ❤️ для Ант Аналитика**

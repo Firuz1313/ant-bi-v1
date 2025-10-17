@@ -1,40 +1,13 @@
 <template>
   <div class="console">
-    <CardList></CardList>
-
-    <el-row :gutter="20">
-      <el-col :sm="24" :md="12" :lg="10">
-        <ActiveUser />
-      </el-col>
-      <el-col :sm="24" :md="12" :lg="14">
-        <SalesOverview />
-      </el-col>
-    </el-row>
-
-    <el-row :gutter="20">
-      <el-col :sm="24" :md="24" :lg="12">
-        <NewUser />
-      </el-col>
-      <el-col :sm="24" :md="12" :lg="6">
-        <Dynamic />
-      </el-col>
-      <el-col :sm="24" :md="12" :lg="6">
-        <TodoList />
-      </el-col>
-    </el-row>
-
-    <AboutProject />
+    <div class="empty-state">
+      <h2>Добро пожаловать в Ант Аналитика</h2>
+      <p>Панель управления готова к настройке</p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import CardList from './widget/CardList.vue'
-  import ActiveUser from './widget/ActiveUser.vue'
-  import SalesOverview from './widget/SalesOverview.vue'
-  import NewUser from './widget/NewUser.vue'
-  import Dynamic from './widget/Dynamic.vue'
-  import TodoList from './widget/TodoList.vue'
-  import AboutProject from './widget/AboutProject.vue'
   import { useCommon } from '@/composables/useCommon'
 
   defineOptions({ name: 'Console' })
@@ -43,5 +16,27 @@
 </script>
 
 <style lang="scss" scoped>
-  @use './style';
+  .console {
+    padding: 20px;
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      text-align: center;
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: var(--art-text-gray-800);
+      }
+
+      p {
+        font-size: 16px;
+        color: var(--art-text-gray-600);
+      }
+    }
+  }
 </style>

@@ -14,10 +14,10 @@
         class="img-cutter"
       >
         <template #choose>
-          <el-button type="primary" plain v-ripple>选择图片</el-button>
+          <el-button type="primary" plain v-ripple>Выбрать изображение</el-button>
         </template>
         <template #cancel>
-          <el-button type="danger" plain v-ripple>清除</el-button>
+          <el-button type="danger" plain v-ripple>Очистить</el-button>
         </template>
         <template #confirm>
           <!-- <el-button type="primary" style="margin-left: 10px">确定</el-button> -->

@@ -44,8 +44,8 @@
 
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="visible = false">取 消</el-button>
-          <el-button type="primary" @click="visible = false">确 定</el-button>
+          <el-button @click="visible = false">Отмена</el-button>
+          <el-button type="primary" @click="visible = false">Выбрать</el-button>
         </span>
       </template>
     </el-dialog>

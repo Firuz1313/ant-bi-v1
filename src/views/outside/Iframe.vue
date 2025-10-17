@@ -1,47 +1,78 @@
 <template>
-  <div class="iframe-container" v-loading="isLoading">
+  <div class="iframe-container">
+    <div v-if="loading" class="iframe-loading">
+      <el-icon class="is-loading">
+        <Loading />
+      </el-icon>
+      <span>Загрузка...</span>
+    </div>
     <iframe
+      v-show="!loading"
       ref="iframeRef"
-      :src="iframeUrl"
-      frameborder="0"
+      :src="iframeSrc"
       class="iframe-content"
-      @load="handleIframeLoad"
-    ></iframe>
+      frameborder="0"
+      @load="handleLoad"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { getIframeRoutes } from '@/router/utils/menuToRouter'
+  import { ref, computed, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
+  import { Loading } from '@element-plus/icons-vue'
+
+  defineOptions({ name: 'Iframe' })
 
   const route = useRoute()
-  const isLoading = ref(true)
-  const iframeUrl = ref('')
-  const iframeRef = ref<HTMLIFrameElement | null>(null)
+  const iframeRef = ref<HTMLIFrameElement>()
+  const loading = ref(true)
 
-  onMounted(() => {
-    const iframeRoute = getIframeRoutes().find((item: any) => item.path === route.path)
-
-    if (iframeRoute?.meta) {
-      iframeUrl.value = iframeRoute.meta.link || ''
-    }
+  const iframeSrc = computed(() => {
+    return (route.meta?.link as string) || ''
   })
 
-  const handleIframeLoad = () => {
-    isLoading.value = false
+  const handleLoad = () => {
+    loading.value = false
   }
+
+  onMounted(() => {
+    if (!iframeSrc.value) {
+      loading.value = false
+    }
+  })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .iframe-container {
-    box-sizing: border-box;
+    position: relative;
     width: 100%;
-    height: 100%;
-  }
+    height: calc(100vh - 120px);
+    background-color: var(--art-bg-color);
 
-  .iframe-content {
-    width: 100%;
-    height: 100%;
-    min-height: calc(100vh - 120px);
-    border: none;
+    .iframe-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--art-text-gray-600);
+
+      .el-icon {
+        font-size: 32px;
+        margin-bottom: 10px;
+      }
+
+      span {
+        font-size: 14px;
+      }
+    }
+
+    .iframe-content {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #fff;
+    }
   }
 </style>

@@ -25,6 +25,7 @@ export default ({ mode }: { mode: string }) => {
     base: VITE_BASE_URL,
     server: {
       port: Number(VITE_PORT),
+      open: '/#/auth/login', // Автоматически открывать страницу входа
       proxy: {
         '/api': {
           target: VITE_API_PROXY_URL,
@@ -114,8 +115,8 @@ export default ({ mode }: { mode: string }) => {
         // sass variable and mixin
         scss: {
           additionalData: `
-            @use "@styles/el-light.scss" as *; 
-            @use "@styles/variables.scss" as *; 
+            @use "@styles/el-light.scss" as *;
+            @use "@styles/variables.scss" as *;
             @use "@styles/mixin.scss" as *;
           `
         }

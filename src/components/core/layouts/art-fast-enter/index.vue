@@ -47,7 +47,7 @@
       </div>
 
       <div class="quick-links">
-        <h3>快速链接</h3>
+        <h3>Быстрые ссылки</h3>
         <ul>
           <li
             v-for="quickLink in enabledQuickLinks"

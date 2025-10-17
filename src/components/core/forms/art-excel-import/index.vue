@@ -8,7 +8,7 @@
       @change="handleFileChange"
     >
       <ElButton type="primary" v-ripple>
-        <slot>导入 Excel</slot>
+        <slot>Импорт Excel</slot>
       </ElButton>
     </ElUpload>
   </div>

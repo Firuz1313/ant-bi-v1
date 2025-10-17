@@ -46,7 +46,7 @@
               <div class="input-actions">
                 <ElButton :icon="Paperclip" circle plain />
                 <ElButton :icon="Picture" circle plain />
-                <ElButton type="primary" @click="sendMessage" v-ripple>发送</ElButton>
+                <ElButton type="primary" @click="sendMessage" v-ripple>Отправить</ElButton>
               </div>
             </template>
           </ElInput>
@@ -55,7 +55,7 @@
               <i class="iconfont-sys">&#xe634;</i>
               <i class="iconfont-sys">&#xe809;</i>
             </div>
-            <ElButton type="primary" @click="sendMessage" v-ripple>发送</ElButton>
+            <ElButton type="primary" @click="sendMessage" v-ripple>Отправить</ElButton>
           </div>
         </div>
       </div>

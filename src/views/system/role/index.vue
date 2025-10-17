@@ -1,247 +1,68 @@
 <template>
-  <div class="role-page art-full-height">
-    <RoleSearch
-      v-show="showSearchBar"
-      v-model="searchForm"
-      @search="handleSearch"
-      @reset="resetSearchParams"
-    ></RoleSearch>
-
-    <ElCard
-      class="art-table-card"
-      shadow="never"
-      :style="{ 'margin-top': showSearchBar ? '12px' : '0' }"
-    >
-      <ArtTableHeader
-        v-model:columns="columnChecks"
-        v-model:showSearchBar="showSearchBar"
-        :loading="loading"
-        @refresh="refreshData"
-      >
-        <template #left>
-          <ElSpace wrap>
-            <ElButton @click="showDialog('add')" v-ripple>新增角色</ElButton>
-          </ElSpace>
+  <div class="system-page">
+    <div class="empty-placeholder">
+      <el-empty description="Страница в разработке">
+        <template #image>
+          <svg class="empty-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+              fill="currentColor"
+            />
+            <path
+              d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372zm184.4 277.7l-244 199c-4.4 3.6-10.8 0.4-10.8-5.4V412.7c0-5.8 6.5-9 10.8-5.4l244 199c3.9 3.2 3.9 9.4 0 12.8z"
+              fill="currentColor"
+              opacity="0.3"
+            />
+          </svg>
         </template>
-      </ArtTableHeader>
-
-      <!-- 表格 -->
-      <ArtTable
-        :loading="loading"
-        :data="data"
-        :columns="columns"
-        :pagination="pagination"
-        @pagination:size-change="handleSizeChange"
-        @pagination:current-change="handleCurrentChange"
-      >
-      </ArtTable>
-    </ElCard>
-
-    <!-- 角色编辑弹窗 -->
-    <RoleEditDialog
-      v-model="dialogVisible"
-      :dialog-type="dialogType"
-      :role-data="currentRoleData"
-      @success="refreshData"
-    />
-
-    <!-- 菜单权限弹窗 -->
-    <RolePermissionDialog
-      v-model="permissionDialog"
-      :role-data="currentRoleData"
-      @success="refreshData"
-    />
+        <template #description>
+          <div class="description-content">
+            <h3>Управление ролями</h3>
+            <p>Эта страница готова для добавления функционала</p>
+          </div>
+        </template>
+        <el-button type="primary">Начать разработку</el-button>
+      </el-empty>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ButtonMoreItem } from '@/components/core/forms/art-button-more/index.vue'
-  import { Setting, Edit, Delete } from '@element-plus/icons-vue'
-  import { useTable } from '@/composables/useTable'
-  import { fetchGetRoleList } from '@/api/system-manage'
-  import ArtButtonMore from '@/components/core/forms/art-button-more/index.vue'
-  import RoleSearch from './modules/role-search.vue'
-  import RoleEditDialog from './modules/role-edit-dialog.vue'
-  import RolePermissionDialog from './modules/role-permission-dialog.vue'
-
-  defineOptions({ name: 'Role' })
-
-  type RoleListItem = Api.SystemManage.RoleListItem
-
-  // 搜索表单
-  const searchForm = ref({
-    roleName: undefined,
-    roleCode: undefined,
-    description: undefined,
-    enabled: undefined,
-    daterange: undefined
-  })
-
-  const showSearchBar = ref(false)
-
-  const dialogVisible = ref(false)
-  const permissionDialog = ref(false)
-  const currentRoleData = ref<RoleListItem | undefined>(undefined)
-
-  const {
-    columns,
-    columnChecks,
-    data,
-    loading,
-    pagination,
-    getData,
-    searchParams,
-    resetSearchParams,
-    handleSizeChange,
-    handleCurrentChange,
-    refreshData
-  } = useTable({
-    // 核心配置
-    core: {
-      apiFn: fetchGetRoleList,
-      apiParams: {
-        current: 1,
-        size: 20
-      },
-      // 排除 apiParams 中的属性
-      excludeParams: ['daterange'],
-      columnsFactory: () => [
-        {
-          prop: 'roleId',
-          label: '角色ID',
-          width: 100
-        },
-        {
-          prop: 'roleName',
-          label: '角色名称',
-          minWidth: 120
-        },
-        {
-          prop: 'roleCode',
-          label: '角色编码',
-          minWidth: 120
-        },
-        {
-          prop: 'description',
-          label: '角色描述',
-          minWidth: 150,
-          showOverflowTooltip: true
-        },
-        {
-          prop: 'enabled',
-          label: '角色状态',
-          width: 100,
-          formatter: (row) => {
-            const statusConfig = row.enabled
-              ? { type: 'success', text: '启用' }
-              : { type: 'warning', text: '禁用' }
-            return h(
-              ElTag,
-              { type: statusConfig.type as 'success' | 'warning' },
-              () => statusConfig.text
-            )
-          }
-        },
-        {
-          prop: 'createTime',
-          label: '创建日期',
-          width: 180,
-          sortable: true
-        },
-        {
-          prop: 'operation',
-          label: '操作',
-          width: 80,
-          fixed: 'right',
-          formatter: (row) =>
-            h('div', [
-              h(ArtButtonMore, {
-                list: [
-                  {
-                    key: 'permission',
-                    label: '菜单权限',
-                    icon: Setting
-                  },
-                  {
-                    key: 'edit',
-                    label: '编辑角色',
-                    icon: Edit
-                  },
-                  {
-                    key: 'delete',
-                    label: '删除角色',
-                    icon: Delete,
-                    color: '#f56c6c'
-                  }
-                ],
-                onClick: (item: ButtonMoreItem) => buttonMoreClick(item, row)
-              })
-            ])
-        }
-      ]
-    }
-  })
-
-  const dialogType = ref<'add' | 'edit'>('add')
-
-  const showDialog = (type: 'add' | 'edit', row?: RoleListItem) => {
-    dialogVisible.value = true
-    dialogType.value = type
-    currentRoleData.value = row
-  }
-
-  /**
-   * 搜索处理
-   * @param params 搜索参数
-   */
-  const handleSearch = (params: Record<string, any>) => {
-    // 处理日期区间参数，把 daterange 转换为 startTime 和 endTime
-    const { daterange, ...filtersParams } = params
-    const [startTime, endTime] = Array.isArray(daterange) ? daterange : [null, null]
-
-    // 搜索参数赋值
-    Object.assign(searchParams, { ...filtersParams, startTime, endTime })
-    getData()
-  }
-
-  const buttonMoreClick = (item: ButtonMoreItem, row: RoleListItem) => {
-    switch (item.key) {
-      case 'permission':
-        showPermissionDialog(row)
-        break
-      case 'edit':
-        showDialog('edit', row)
-        break
-      case 'delete':
-        deleteRole(row)
-        break
-    }
-  }
-
-  const showPermissionDialog = (row?: RoleListItem) => {
-    permissionDialog.value = true
-    currentRoleData.value = row
-  }
-
-  const deleteRole = (row: RoleListItem) => {
-    ElMessageBox.confirm(`确定删除角色"${row.roleName}"吗？此操作不可恢复！`, '删除确认', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    })
-      .then(() => {
-        // TODO: 调用删除接口
-        ElMessage.success('删除成功')
-        refreshData()
-      })
-      .catch(() => {
-        ElMessage.info('已取消删除')
-      })
-  }
+  defineOptions({ name: 'SystemRole' })
 </script>
 
 <style lang="scss" scoped>
-  .role-page {
-    padding-bottom: 15px;
+  .system-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 200px);
+    padding: 40px 20px;
+
+    .empty-placeholder {
+      width: 100%;
+      max-width: 600px;
+
+      .empty-icon {
+        width: 120px;
+        height: 120px;
+        color: var(--el-color-primary);
+        opacity: 0.6;
+      }
+
+      .description-content {
+        h3 {
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--art-text-gray-800);
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 14px;
+          color: var(--art-text-gray-600);
+        }
+      }
+    }
   }
 </style>

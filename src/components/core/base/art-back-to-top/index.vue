@@ -4,7 +4,7 @@
     <div class="back-to-top" v-show="showButton" @click="scrollToTop">
       <div class="back-to-top-btn">
         <i class="iconfont-sys">&#xe864;</i>
-        <p>顶部</p>
+        <p>Вверх</p>
       </div>
     </div>
   </div>

@@ -215,25 +215,25 @@ function handleIframeRoute(
   iframeRoutes: AppRouteRecord[],
   depth: number
 ): void {
-  const LAYOUT_VIEW = () => import('@/views/index/index.vue')
-  const IFRAME_VIEW = () => import('@/views/outside/Iframe.vue')
+  // // const LAYOUT_VIEW = () => import('@/views/index/index.vue')
+  // // const IFRAME_VIEW = () => import('@/views/outside/Iframe.vue')
 
-  if (depth === 0) {
-    // 顶级 iframe：用 Layout 包裹
-    targetRoute.component = LAYOUT_VIEW
-    targetRoute.path = `/${(sourceRoute.path?.split('/')[1] || '').trim()}`
-    targetRoute.name = ''
+  // if (depth === 0) {
+  //   // 顶级 iframe：用 Layout 包裹
+  //   targetRoute.component = LAYOUT_VIEW
+  //   targetRoute.path = `/${(sourceRoute.path?.split('/')[1] || '').trim()}`
+  //   targetRoute.name = ''
 
-    targetRoute.children = [
-      {
-        ...sourceRoute,
-        component: IFRAME_VIEW
-      } as ConvertedRoute
-    ]
-  } else {
-    // 非顶级（嵌套）iframe：直接使用 Iframe.vue
-    targetRoute.component = IFRAME_VIEW
-  }
+  //   targetRoute.children = [
+  //     {
+  //       ...sourceRoute,
+  //       component: IFRAME_VIEW
+  //     } as ConvertedRoute
+  //   ]
+  // } else {
+  //   // 非顶级（嵌套）iframe：直接使用 Iframe.vue
+  //   targetRoute.component = IFRAME_VIEW
+  // }
 
   // 记录 iframe 路由，供 Iframe.vue 查找对应的外链
   iframeRoutes.push(sourceRoute)
@@ -247,7 +247,7 @@ function handleLayoutRoute(
   route: AppRouteRecord,
   component: string | undefined
 ): void {
-  converted.component = () => import('@/views/index/index.vue')
+  // converted.component = () => import('@/views/index/index.vue')
   converted.path = `/${(route.path?.split('/')[1] || '').trim()}`
   converted.name = ''
   route.meta.isFirstLevel = true
