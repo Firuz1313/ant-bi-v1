@@ -17,25 +17,25 @@ function safeToString(input: unknown): string {
     }
 
     const maybeComp = input as any
-    if (maybeComp && (maybeComp.$?.type?.name || maybeComp.type?.name || maybeComp.$options?.name)) {
+    if (
+      maybeComp &&
+      (maybeComp.$?.type?.name || maybeComp.type?.name || maybeComp.$options?.name)
+    ) {
       const name = maybeComp.$?.type?.name || maybeComp.type?.name || maybeComp.$options?.name
       return `[Component ${String(name)}]`
     }
 
     const seen = new WeakSet<object>()
-    const json = JSON.stringify(
-      input as any,
-      (key, value) => {
-        if (typeof value === 'bigint') return value.toString()
-        if (typeof value === 'symbol') return value.toString()
-        if (typeof value === 'function') return `[Function ${value.name || 'anonymous'}]`
-        if (typeof value === 'object' && value !== null) {
-          if (seen.has(value)) return '[Circular]'
-          seen.add(value)
-        }
-        return value
+    const json = JSON.stringify(input as any, (key, value) => {
+      if (typeof value === 'bigint') return value.toString()
+      if (typeof value === 'symbol') return value.toString()
+      if (typeof value === 'function') return `[Function ${value.name || 'anonymous'}]`
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) return '[Circular]'
+        seen.add(value)
       }
-    )
+      return value
+    })
     if (json !== undefined) return json
 
     return Object.prototype.toString.call(input)
