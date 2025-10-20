@@ -1,4 +1,3 @@
-import { RoutesAlias } from '../routesAlias'
 import { AppRouteRecord } from '@/types/router'
 
 /**
@@ -37,7 +36,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.analytics.title',
-      icon: '&#xe73a;', // иконка аналитики
+      icon: '&#xe73a;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
     children: [
@@ -85,7 +84,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.reports.title',
-      icon: '&#xe75f;', // иконка отчётов
+      icon: '&#xe75f;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
     children: [
@@ -133,7 +132,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.data.title',
-      icon: '&#xe734;', // иконка данных
+      icon: '&#xe734;',
       roles: ['R_SUPER', 'R_ADMIN']
     },
     children: [
@@ -181,7 +180,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     component: RoutesAlias.Layout,
     meta: {
       title: 'menus.visualization.title',
-      icon: '&#xe722;', // иконка визуализации
+      icon: '&#xe722;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
     children: [
@@ -273,6 +272,111 @@ export const asyncRoutes: AppRouteRecord[] = [
           keepAlive: false
         }
       }
+    ]
+  },
+  {
+    name: 'ApplicationsAnalytics',
+    path: '/applications-analytics',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Аналитика по заявкам на подключение план/факт',
+      icon: '&#xe6af;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'ApplicationsAnalyticsIndex',
+        component: '/business/applications-analytics/index',
+        meta: { title: 'Общая сводка', keepAlive: true }
+      },
+      { path: 'service-center', name: 'ApplicationsAnalyticsServiceCenter', component: '/business/applications-analytics/service-center/index', meta: { title: 'Центр обслуживания', keepAlive: true } },
+      { path: 'stp', name: 'ApplicationsAnalyticsSTP', component: '/business/applications-analytics/stp/index', meta: { title: 'СТП', keepAlive: true } },
+      { path: 'contact-center', name: 'ApplicationsAnalyticsContactCenter', component: '/business/applications-analytics/contact-center/index', meta: { title: 'Контакт центр', keepAlive: true } },
+      { path: 'f2f', name: 'ApplicationsAnalyticsF2F', component: '/business/applications-analytics/f2f/index', meta: { title: 'F2F', keepAlive: true } }
+    ]
+  },
+  {
+    name: 'MastersDept',
+    path: '/masters-dept',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Отдел-мастеров: план/факт выполнения заявок',
+      icon: '&#xe73a;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      { path: 'index', name: 'MastersDeptIndex', component: '/business/masters-dept/index', meta: { title: 'Общая сводка', keepAlive: true } },
+      { path: 'cancelled', name: 'MastersDeptCancelled', component: '/business/masters-dept/cancelled/index', meta: { title: 'Отмененные заявки', keepAlive: true } },
+      { path: 'repair-days', name: 'MastersDeptRepairDays', component: '/business/masters-dept/repair-days/index', meta: { title: 'Дни обработки на ремонт', keepAlive: true } },
+      { path: 'connection-days', name: 'MastersDeptConnectionDays', component: '/business/masters-dept/connection-days/index', meta: { title: 'Дни обработки подключений', keepAlive: true } },
+      { path: 'percent-completed', name: 'MastersDeptPercentCompleted', component: '/business/masters-dept/percent-completed/index', meta: { title: '% Выполнено', keepAlive: true } },
+      { path: 'avg-days', name: 'MastersDeptAvgDays', component: '/business/masters-dept/avg-days/index', meta: { title: 'Среднее количество дней', keepAlive: true } },
+      { path: 'forecasts', name: 'MastersDeptForecasts', component: '/business/masters-dept/forecasts/index', meta: { title: 'Прогнозы', keepAlive: true } },
+      { path: 'source', name: 'MastersDeptSource', component: '/business/masters-dept/source/index', meta: { title: 'Источник заявок', keepAlive: true } }
+    ]
+  },
+  {
+    name: 'CallCenterStats',
+    path: '/call-center',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Контакт-центр: статистика звонков',
+      icon: '&#xe6af;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      { path: 'index', name: 'CallCenterIndex', component: '/business/call-center/index', meta: { title: 'Общая сводка', keepAlive: true } },
+      { path: 'call-purpose-repeat', name: 'CallCenterPurposeRepeat', component: '/business/call-center/call-purpose-repeat/index', meta: { title: 'Цель звонка и повторные', keepAlive: true } },
+      { path: 'by-periods', name: 'CallCenterByPeriods', component: '/business/call-center/by-periods/index', meta: { title: 'По дням, месяцам, годам', keepAlive: true } },
+      { path: 'by-daytime', name: 'CallCenterByDaytime', component: '/business/call-center/by-daytime/index', meta: { title: 'По времени суток', keepAlive: true } },
+      { path: 'resolved-remotely', name: 'CallCenterResolvedRemotely', component: '/business/call-center/resolved-remotely/index', meta: { title: 'Решенные удаленно', keepAlive: true } }
+    ]
+  },
+  {
+    name: 'DiscountProgram',
+    path: '/discount-program',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Участники дисконтной программы',
+      icon: '&#xe6af;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      { path: 'index', name: 'DiscountProgramIndex', component: '/business/discount-program/index', meta: { title: 'Общая сводка', keepAlive: true } },
+      { path: 'by-connection', name: 'DiscountProgramByConnection', component: '/business/discount-program/by-connection/index', meta: { title: 'По подключению', keepAlive: true } },
+      { path: 'by-years', name: 'DiscountProgramByYears', component: '/business/discount-program/by-years/index', meta: { title: 'По годам', keepAlive: true } },
+      { path: 'package-share', name: 'DiscountProgramPackageShare', component: '/business/discount-program/package-share/index', meta: { title: 'Удельный вес по пакетам', keepAlive: true } }
+    ]
+  },
+  {
+    name: 'BackofficeDelay',
+    path: '/backoffice-delay',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Опоздание Backoffice',
+      icon: '&#xe6af;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      { path: 'index', name: 'BackofficeDelayIndex', component: '/business/backoffice-delay/index', meta: { title: 'Общая сводка', keepAlive: true } },
+      { path: 'salary-penalty', name: 'BackofficeSalaryPenalty', component: '/business/backoffice-delay/salary-penalty/index', meta: { title: 'Штраф от ЗП', keepAlive: true } }
+    ]
+  },
+  {
+    name: 'Clients',
+    path: '/clients',
+    component: RoutesAlias.Layout,
+    meta: {
+      title: 'Клиенты',
+      icon: '&#xe6af;',
+      roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
+    },
+    children: [
+      { path: 'index', name: 'ClientsIndex', component: '/business/clients/index', meta: { title: 'Общая сводка', keepAlive: true } },
+      { path: 'inactive', name: 'ClientsInactive', component: '/business/clients/inactive/index', meta: { title: 'Неактивные', keepAlive: true } },
+      { path: 'by-region', name: 'ClientsByRegion', component: '/business/clients/by-region/index', meta: { title: 'По регионам', keepAlive: true } },
+      { path: 'empty-names', name: 'ClientsEmptyNames', component: '/business/clients/empty-names/index', meta: { title: 'С пустыми ФИО', keepAlive: true } }
     ]
   }
 ]
