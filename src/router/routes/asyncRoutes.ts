@@ -1,4 +1,5 @@
 import { AppRouteRecord } from '@/types/router'
+import { RoutesAlias } from '../routesAlias'
 
 /**
  * Меню и асинхронные роуты
