@@ -8,6 +8,7 @@
   import { useUserStore } from './store/modules/user'
   import zh from 'element-plus/es/locale/lang/zh-cn'
   import en from 'element-plus/es/locale/lang/en'
+  import ru from 'element-plus/es/locale/lang/ru'
   import { systemUpgrade } from './utils/sys'
 
   import { setThemeTransitionClass } from './utils/theme/animation'
@@ -18,7 +19,9 @@
 
   const locales = {
     zh: zh,
-    en: en
+    en: en,
+    ru: ru,
+    tg: en
   }
 
   onBeforeMount(() => {
