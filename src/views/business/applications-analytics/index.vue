@@ -404,19 +404,20 @@ function deltaClass(plan: number, done: number) {
 }
 
 function arrowIcon(plan: number, done: number) {
+  // Arrow based on percent thresholds: <50 down, 50-79 right, >=80 up
+  const p = percent(plan, done)
   if (!plan) return 'right'
-  const diff = done - plan
-  if (diff > 0) return 'up'
-  if (diff < 0) return 'down'
-  return 'right'
+  if (p >= 80) return 'up'
+  if (p >= 50) return 'right'
+  return 'down'
 }
 
 function arrowTitle(plan: number, done: number) {
   if (!plan) return 'План отсутствует'
-  const diff = done - plan
-  if (diff > 0) return `Превышение на ${diff}`
-  if (diff < 0) return `Недобор на ${Math.abs(diff)}`
-  return 'В соответствии с планом'
+  const p = percent(plan, done)
+  if (p >= 80) return `Показатель отличный (${p}%)`
+  if (p >= 50) return `Показатель в норме (${p}%)`
+  return `Низкий показатель (${p}%)`
 }
 
 function getSummary(columns: any[]) {
