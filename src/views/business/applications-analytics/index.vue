@@ -7,11 +7,6 @@
         </div>
       </div>
       <div class="controls-right">
-        <el-button type="primary" @click="showFilter = !showFilter" size="small" class="filter-toggle">
-          <i class="el-icon-setting"></i>
-          Фильтр
-        </el-button>
-
         <div class="top-summary">
           <div class="summary-item">
             <div class="summary-label">Всего заявок</div>
@@ -414,7 +409,7 @@ function arrowTitle(plan: number, done: number) {
   if (!plan) return 'План отсутствует'
   const diff = done - plan
   if (diff > 0) return `Превышение на ${diff}`
-  if (diff < 0) return `Недобор на ${Math.abs(diff)}`
+  if (diff < 0) return `Н��добор на ${Math.abs(diff)}`
   return 'В соответствии с планом'
 }
 
