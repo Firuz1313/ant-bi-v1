@@ -216,7 +216,7 @@ const yearOptions = Array.from({ length: 5 }).map((_, i) => currentYear - i) // 
 const selectedYear = ref<number | null>(currentYear)
 const monthOptions = [
   { value: 1, label: 'Январь' },
-  { value: 2, label: 'Фе��раль' },
+  { value: 2, label: 'Февраль' },
   { value: 3, label: 'Март' },
   { value: 4, label: 'Апрель' },
   { value: 5, label: 'Май' },
@@ -529,4 +529,69 @@ watch(dateRange, (rng) => {
 
 .fade-enter-active, .fade-leave-active { transition: all 0.25s ease }
 .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-6px) }
+
+/* Theme variables - light by default, dark overrides below */
+:root {
+  --table-bg: #ffffff;
+  --text-color: #0f172a;
+  --muted: #64748b;
+  --summary-bg: #fbfdff;
+  --summary-quiet: #eaf4ff;
+  --border-weak: rgba(0,0,0,0.06);
+}
+
+/* Dark theme overrides: supports body.dark, .theme-dark, and [data-theme="dark"] */
+body.dark, .theme-dark, [data-theme="dark"] {
+  --table-bg: #071022;
+  --text-color: #e6eef8;
+  --muted: #9aa8c2;
+  --summary-bg: #061225;
+  --summary-quiet: #052033;
+  --border-weak: rgba(255,255,255,0.06);
+}
+
+.analytics-summary-page { color: var(--text-color); }
+
+/* Apply theme-aware backgrounds */
+.analytics-summary-page .top-filter { background: var(--summary-bg); }
+.analytics-summary-page .top-summary .summary-item { background: linear-gradient(180deg, var(--table-bg), var(--summary-bg)); border-color: var(--border-weak); }
+
+/* Summary footer (Итого) background uses quiet color */
+:deep(.el-table__footer-wrapper .el-table__row) { background: var(--summary-quiet); }
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .analytics-summary-page .top-controls { flex-direction: column; align-items: stretch; gap: 8px; }
+  .analytics-summary-page .top-summary { flex-direction: row; gap: 8px; overflow-x: auto; padding: 6px 0; }
+  .analytics-summary-page .top-summary .summary-item { min-width: 120px; }
+  .analytics-summary-page .top-filter .filter-row { flex-direction: column; align-items: stretch; }
+  .analytics-summary-page .card-actions { position:relative; top:auto; right:auto; margin:8px 0 0 0 }
+
+  /* Reduce font sizes on small screens */
+  .el-table th { font-size:14px }
+  .el-table td { font-size:12px }
+
+  /* Hide less important columns on mobile to keep layout clean.
+     This hides columns starting from the 8th column (adjust if you want more/less). */
+  :deep(.el-table__header-wrapper th:nth-child(n+8)),
+  :deep(.el-table__body-wrapper td:nth-child(n+8)) {
+    display: none;
+  }
+
+  /* Ensure table stays usable horizontally when needed */
+  .el-table { width: 100%; overflow-x: auto; }
+}
+
+/* Desktop tweaks: stronger column separators */
+@media (min-width: 769px) {
+  :deep(.el-table__header-wrapper th), :deep(.el-table__body-wrapper td) { border-right: 1px solid var(--border-weak); }
+  :deep(.el-table__header-wrapper th:last-child), :deep(.el-table__body-wrapper td:last-child) { border-right: none; }
+}
+
+/* Improve summary numbers visibility */
+.analytics-summary-page .top-summary .summary-item .summary-value { font-size: 20px; font-weight: 800 }
+
+/* Allow table rows to wrap content gracefully */
+.el-table .cell { display: flex; align-items: center; justify-content: center; }
+
 </style>
