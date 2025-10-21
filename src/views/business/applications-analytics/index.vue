@@ -1,54 +1,70 @@
 <template>
   <div class="analytics-summary-page">
-    <div class="top-filter">
-      <div class="filter-row">
-        <el-date-picker
-          v-model="dateRange"
-          type="daterange"
-          range-separator="—"
-          start-placeholder="Дата от"
-          end-placeholder="Дата до"
-          value-format="yyyy-MM-dd"
-          class="filter-item"
-        />
-        <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
-          <el-option label="Все" value="all" />
-          <el-option label="Выполнено" value="done" />
-          <el-option label="В работе" value="in_progress" />
-          <el-option label="Просрочено" value="overdue" />
-        </el-select>
-        <el-input
-          v-model="search"
-          placeholder="Поиск по заявке / клиенту"
-          clearable
-          class="filter-item filter-search"
-        >
-          <template #prefix>
-            <i class="el-icon-search"></i>
-          </template>
-        </el-input>
-        <el-button type="primary" @click="resetFilters" class="filter-item">Сброс</el-button>
+    <div class="top-controls">
+      <div class="controls-left">
+        <el-button type="primary" @click="showFilter = !showFilter" size="small" class="filter-toggle">
+          <i class="el-icon-setting"></i>
+          Фильтр
+        </el-button>
       </div>
-
-      <div class="top-summary">
-        <div class="summary-item">
-          <div class="summary-label">Всего заявок</div>
-          <div class="summary-value">{{ totalCount }}</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-label">Выполнено</div>
-          <div class="summary-value color-success">{{ doneCount }}</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-label">В работе</div>
-          <div class="summary-value color-warning">{{ inProgressCount }}</div>
-        </div>
-        <div class="summary-item">
-          <div class="summary-label">Просрочено</div>
-          <div class="summary-value color-danger">{{ overdueCount }}</div>
+      <div class="controls-right">
+        <div class="top-summary">
+          <div class="summary-item">
+            <div class="summary-label">Всего заявок</div>
+            <div class="summary-value">{{ totalCount }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Выполнено</div>
+            <div class="summary-value color-success">{{ doneCount }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">В работе</div>
+            <div class="summary-value color-warning">{{ inProgressCount }}</div>
+          </div>
+          <div class="summary-item">
+            <div class="summary-label">Просрочено</div>
+            <div class="summary-value color-danger">{{ overdueCount }}</div>
+          </div>
         </div>
       </div>
     </div>
+
+    <transition name="fade">
+      <div v-show="showFilter" class="top-filter">
+        <div class="filter-row">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            range-separator="—"
+            start-placeholder="Дата от"
+            end-placeholder="Дата до"
+            value-format="yyyy-MM-dd"
+            class="filter-item"
+          />
+          <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
+            <el-option label="Все" value="all" />
+            <el-option label="Выполнено" value="done" />
+            <el-option label="В работе" value="in_progress" />
+            <el-option label="Просрочено" value="overdue" />
+          </el-select>
+          <el-input
+            v-model="search"
+            placeholder="Поиск по заявке / клиенту"
+            clearable
+            class="filter-item filter-search"
+          >
+            <template #prefix>
+              <i class="el-icon-search"></i>
+            </template>
+          </el-input>
+
+          <div class="filter-actions">
+            <el-button type="primary" @click="applyFilters">Применить</el-button>
+            <el-button @click="resetFilters">Сброс</el-button>
+          </div>
+        </div>
+      </div>
+    </transition>
 
     <el-card class="table-card">
       <el-table
@@ -57,50 +73,63 @@
         size="small"
         class="analytics-table"
         :default-sort="{ prop: sortBy, order: sortOrder }"
+        :show-summary="true"
+        :summary-method="getSummary"
       >
-        <!-- Required columns as provided -->
         <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
-        <el-table-column prop="days_nd" label="Дни нд" width="100" :sortable="true" @header-click="handleSort('days_nd')" />
+        <el-table-column prop="days_nd" label="Дни нд" width="90" :sortable="true" @header-click="handleSort('days_nd')" />
 
-        <el-table-column prop="kc_plan" label="Кц План" width="100" :sortable="true" @header-click="handleSort('kc_plan')" />
+        <el-table-column prop="kc_plan" label="Кц План" width="90" :sortable="true" @header-click="handleSort('kc_plan')" />
         <el-table-column prop="kc_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('kc_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(percent(row.kc_plan, row.kc_done))]">
-              <span class="execution-value">{{ row.kc_done }}</span>
-              <span class="execution-delta">{{ percent(row.kc_plan, row.kc_done) }}%</span>
+            <div class="cell-combo">
+              <div class="value">{{ row.kc_done }}</div>
+              <div :class="['delta', deltaClass(row.kc_plan, row.kc_done)]">
+                <i :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]"></i>
+                <span class="pct">{{ percent(row.kc_plan, row.kc_done) }}%</span>
+              </div>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="co_plan" label="ЦО План" width="100" :sortable="true" @header-click="handleSort('co_plan')" />
-        <el-table-column prop="co_fact" label="ЦО Факт" width="100" :sortable="true" @header-click="handleSort('co_fact')" />
+        <el-table-column prop="co_plan" label="ЦО План" width="90" :sortable="true" @header-click="handleSort('co_plan')" />
+        <el-table-column prop="co_fact" label="ЦО Факт" width="90" :sortable="true" @header-click="handleSort('co_fact')" />
         <el-table-column prop="co_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('co_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(percent(row.co_plan, row.co_done))]">
-              <span class="execution-value">{{ row.co_done }}</span>
-              <span class="execution-delta">{{ percent(row.co_plan, row.co_done) }}%</span>
+            <div class="cell-combo">
+              <div class="value">{{ row.co_done }}</div>
+              <div :class="['delta', deltaClass(row.co_plan, row.co_done)]">
+                <i :class="['arrow', arrowIcon(row.co_plan, row.co_done)]"></i>
+                <span class="pct">{{ percent(row.co_plan, row.co_done) }}%</span>
+              </div>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="stp_plan" label="СТП План" width="100" :sortable="true" @header-click="handleSort('stp_plan')" />
-        <el-table-column prop="stp_fact" label="СТП Факт" width="100" :sortable="true" @header-click="handleSort('stp_fact')" />
+        <el-table-column prop="stp_plan" label="СТП План" width="90" :sortable="true" @header-click="handleSort('stp_plan')" />
+        <el-table-column prop="stp_fact" label="СТП Факт" width="90" :sortable="true" @header-click="handleSort('stp_fact')" />
         <el-table-column prop="stp_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('stp_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(percent(row.stp_plan, row.stp_done))]">
-              <span class="execution-value">{{ row.stp_done }}</span>
-              <span class="execution-delta">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+            <div class="cell-combo">
+              <div class="value">{{ row.stp_done }}</div>
+              <div :class="['delta', deltaClass(row.stp_plan, row.stp_done)]">
+                <i :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]"></i>
+                <span class="pct">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+              </div>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="f2f_plan" label="F2F План" width="100" :sortable="true" @header-click="handleSort('f2f_plan')" />
-        <el-table-column prop="f2f_fact" label="F2F Факт" width="100" :sortable="true" @header-click="handleSort('f2f_fact')" />
+        <el-table-column prop="f2f_plan" label="F2F План" width="90" :sortable="true" @header-click="handleSort('f2f_plan')" />
+        <el-table-column prop="f2f_fact" label="F2F Факт" width="90" :sortable="true" @header-click="handleSort('f2f_fact')" />
         <el-table-column prop="f2f_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('f2f_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(percent(row.f2f_plan, row.f2f_done))]">
-              <span class="execution-value">{{ row.f2f_done }}</span>
-              <span class="execution-delta">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+            <div class="cell-combo">
+              <div class="value">{{ row.f2f_done }}</div>
+              <div :class="['delta', deltaClass(row.f2f_plan, row.f2f_done)]">
+                <i :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]"></i>
+                <span class="pct">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -109,9 +138,12 @@
         <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
         <el-table-column prop="total_done" label="Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(percent(row.total_plan, row.total_done))]">
-              <span class="execution-value">{{ row.total_done }}</span>
-              <span class="execution-delta">{{ percent(row.total_plan, row.total_done) }}%</span>
+            <div class="cell-combo">
+              <div class="value">{{ row.total_done }}</div>
+              <div :class="['delta', deltaClass(row.total_plan, row.total_done)]">
+                <i :class="['arrow', arrowIcon(row.total_plan, row.total_done)]"></i>
+                <span class="pct">{{ percent(row.total_plan, row.total_done) }}%</span>
+              </div>
             </div>
           </template>
         </el-table-column>
@@ -155,6 +187,7 @@ interface Row {
   status: 'done' | 'in_progress' | 'overdue' | 'other'
 }
 
+const showFilter = ref(false)
 const dateRange = ref<[string, string] | null>(null)
 const status = ref<string>('all')
 const search = ref<string>('')
@@ -277,6 +310,11 @@ function handleSort(prop: string) {
   }
 }
 
+function applyFilters() {
+  // currently filtering reactive variables are enough; this function kept for expansion
+  page.value = 1
+}
+
 function resetFilters() {
   dateRange.value = null
   status.value = 'all'
@@ -288,11 +326,70 @@ function percent(plan: number, done: number) {
   return Math.round((done / plan) * 100)
 }
 
-function executionClass(value: number) {
-  if (value >= 100) return 'excellent'
-  if (value >= 80) return 'good'
-  if (value >= 60) return 'warning'
+function deltaClass(plan: number, done: number) {
+  const p = percent(plan, done)
+  if (p >= 100) return 'excellent'
+  if (p >= 80) return 'good'
+  if (p >= 60) return 'warning'
   return 'poor'
+}
+
+function arrowIcon(plan: number, done: number) {
+  // returns classes: 'up','down','right'
+  if (!plan) return 'right'
+  const diff = done - plan
+  if (diff > 0) return 'up'
+  if (diff < 0) return 'down'
+  return 'right'
+}
+
+function getSummary(columns: any[]) {
+  // columns are provided in order; build totals corresponding to visible columns
+  const totals: any[] = []
+  // We'll map by order of table columns in template
+  const data = filteredData.value
+  const sum = (key: string) => data.reduce((acc, cur) => acc + (Number((cur as any)[key]) || 0), 0)
+
+  // Date column -> label
+  totals.push('Всего')
+  // days_nd
+  totals.push(sum('days_nd'))
+  // kc_plan
+  totals.push(sum('kc_plan'))
+  // kc_done
+  totals.push(sum('kc_done'))
+  // co_plan
+  totals.push(sum('co_plan'))
+  // co_fact
+  totals.push(sum('co_fact'))
+  // co_done
+  totals.push(sum('co_done'))
+  // stp_plan
+  totals.push(sum('stp_plan'))
+  // stp_fact
+  totals.push(sum('stp_fact'))
+  // stp_done
+  totals.push(sum('stp_done'))
+  // f2f_plan
+  totals.push(sum('f2f_plan'))
+  // f2f_fact
+  totals.push(sum('f2f_fact'))
+  // f2f_done
+  totals.push(sum('f2f_done'))
+  // total_plan
+  totals.push(sum('total_plan'))
+  // total_fact
+  totals.push(sum('total_fact'))
+  // total_done
+  totals.push(sum('total_done'))
+
+  return totals
+}
+
+function arrowCharacter(type: string) {
+  if (type === 'up') return '▲'
+  if (type === 'down') return '▼'
+  return '▶'
 }
 
 const totalCount = computed(() => rows.value.length)
@@ -308,89 +405,88 @@ watch([filteredData, sortBy, sortOrder], () => {
 
 <style scoped lang="scss">
 .analytics-summary-page {
+  .top-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    .controls-left { display: flex; gap: 8px; }
+    .controls-right { display: flex; align-items: center; }
+  }
+
+  .filter-toggle { display: inline-flex; align-items: center; gap: 6px; }
+
   .top-filter {
     margin-bottom: 16px;
+    background: #fbfdff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(10,23,50,0.04);
     .filter-row {
       display: flex;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
-      margin-bottom: 14px;
-      .filter-item {
-        min-width: 160px;
-      }
-      .filter-search {
-        min-width: 300px;
-      }
-    }
-
-    .top-summary {
-      display: flex;
-      gap: 18px;
-      margin-top: 6px;
-      .summary-item {
-        padding: 10px 16px;
-        background: var(--el-card-bg-color, #fff);
-        border-radius: 8px;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-        .summary-label {
-          font-size: 12px;
-          color: #6b6f76;
-        }
-        .summary-value {
-          font-size: 20px;
-          font-weight: 600;
-          margin-top: 4px;
-        }
-      }
-      .color-success { color: #16a34a; }
-      .color-warning { color: #d97706; }
-      .color-danger { color: #dc2626; }
+      .filter-item { min-width: 160px; }
+      .filter-search { min-width: 300px; }
+      .filter-actions { display: flex; gap: 8px; align-items: center; }
     }
   }
 
-  .table-card {
-    padding: 12px;
+  .top-summary {
+    display: flex;
+    gap: 12px;
+    .summary-item {
+      padding: 8px 14px;
+      background: linear-gradient(180deg, #ffffff, #fbfbff);
+      border-radius: 8px;
+      border: 1px solid rgba(15,23,42,0.04);
+      .summary-label { font-size: 12px; color: #556; }
+      .summary-value { font-size: 18px; font-weight: 700; }
+    }
+    .color-success { color: #059669; }
+    .color-warning { color: #d97706; }
+    .color-danger { color: #dc2626; }
   }
+
+  .table-card { padding: 8px; }
 
   .analytics-table {
     width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
 
-    .cell-execution {
+    .cell-combo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      .execution-value {
-        font-weight: 600;
-      }
-      .execution-delta {
+      justify-content: space-between;
+      .value { font-weight: 700; }
+      .delta {
         display: inline-flex;
         align-items: center;
         gap: 6px;
+        padding: 4px 8px;
+        border-radius: 6px;
         font-size: 12px;
-        color: #374151;
       }
-
-      &.excellent { background: rgba(16,185,129,0.06); color: #065f46; padding: 6px 8px; border-radius: 6px; }
-      &.good { background: rgba(34,197,94,0.04); color: #166534; padding: 6px 8px; border-radius: 6px; }
-      &.warning { background: rgba(245,158,11,0.06); color: #92400e; padding: 6px 8px; border-radius: 6px; }
-      &.poor { background: rgba(239,68,68,0.06); color: #7f1d1d; padding: 6px 8px; border-radius: 6px; }
+      .arrow { width: 0; height: 0; }
+      .arrow.up::after { content: '▲'; color: #059669; }
+      .arrow.down::after { content: '▼'; color: #dc2626; }
+      .arrow.right::after { content: '▶'; color: #64748b; }
+      .delta.excellent { background: rgba(16,185,129,0.06); color: #065f46; }
+      .delta.good { background: rgba(34,197,94,0.04); color: #166534; }
+      .delta.warning { background: rgba(245,158,11,0.06); color: #92400e; }
+      .delta.poor { background: rgba(239,68,68,0.06); color: #7f1d1d; }
     }
+
+    /* summary row styles */
+    .el-table__footer-wrapper { background: linear-gradient(180deg,#f7fafc,#fff); }
+    .el-table__summary { font-weight: 700; }
   }
 
-  .table-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 12px;
-  }
+  .table-footer { display: flex; justify-content: flex-end; margin-top: 12px; }
 }
 
-@media (max-width: 900px) {
-  .analytics-summary-page {
-    .top-filter {
-      .top-summary { flex-direction: column; gap: 8px; }
-      .filter-row { .filter-item { min-width: 48%; } }
-    }
-  }
-}
+.fade-enter-active, .fade-leave-active { transition: all 0.25s ease; }
+.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-6px); }
 </style>
