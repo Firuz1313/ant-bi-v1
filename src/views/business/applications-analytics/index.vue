@@ -416,7 +416,7 @@ function arrowTitle(plan: number, done: number) {
   if (!plan) return 'План отсутствует'
   const p = percent(plan, done)
   if (p >= 80) return `Показатель отличный (${p}%)`
-  if (p >= 50) return `Показатель в норме (${p}%)`
+  if (p >= 50) return `Показа��ель в норме (${p}%)`
   return `Низкий показатель (${p}%)`
 }
 
@@ -525,8 +525,10 @@ watch(dateRange, (rng) => {
   .table-footer{ display:flex; justify-content:flex-end; margin-top:12px }
 
   /* Center align all table content and set project font */
-  .el-table th, .el-table td { text-align:center; font-family:'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px }
-  .el-table th { font-size:14px; font-weight:700 }
+  .el-table th, .el-table td { text-align:center; font-family:'Segoe UI', Tahoma, Arial, sans-serif; }
+  /* Headers ~12pt -> 16px, data ~11pt -> 14px */
+  .el-table th { font-size:16px; font-weight:700 }
+  .el-table td { font-size:14px }
 
   /* Bottom tabs */
   .bottom-tabs { margin-top:12px; display:flex; justify-content:center; gap:8px }
