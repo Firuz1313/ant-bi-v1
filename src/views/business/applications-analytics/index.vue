@@ -92,7 +92,7 @@
           Фильтр
         </el-button>
       </div>
-      <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader :show-summary="true" :summary-method="getSummary">
+      <ArtTable :data="sortedData" showTableHeader :show-summary="true" :summary-method="getSummary">
         <template #default>
           <el-table-column prop="date" label="Дата" width="120" align="center" :sortable="true" @header-click="handleSort('date')" />
           <el-table-column prop="days_nd" label="Дни нд" width="90" align="center" :sortable="true" @header-click="handleSort('days_nd')" />
@@ -416,7 +416,7 @@ function arrowTitle(plan: number, done: number) {
   if (!plan) return 'План отсутствует'
   const p = percent(plan, done)
   if (p >= 80) return `Показатель отличный (${p}%)`
-  if (p >= 50) return `Показа��ель в норме (${p}%)`
+  if (p >= 50) return `Показатель в норме (${p}%)`
   return `Низкий показатель (${p}%)`
 }
 
