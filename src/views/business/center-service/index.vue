@@ -538,11 +538,11 @@
 
     @media (max-width: 1400px) {
       .table-container {
-        height: 500px;
+        height: 480px;
       }
 
       .chart-container {
-        height: 500px;
+        height: 480px;
       }
 
       .pie-chart {
