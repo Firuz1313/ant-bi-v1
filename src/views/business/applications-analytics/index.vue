@@ -67,7 +67,7 @@
     </transition>
 
     <el-card class="table-card art-table-card">
-      <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader>
+      <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader :show-summary="true" :summary-method="getSummary">
         <template #default>
           <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
           <el-table-column prop="days_nd" label="Дни нд" width="90" :sortable="true" @header-click="handleSort('days_nd')" />
@@ -127,7 +127,7 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="total_plan" label="ИТОГ ��лан" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
+          <el-table-column prop="total_plan" label="ИТОГ План" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
           <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
           <el-table-column prop="total_done" label="ИТОГ Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
             <template #default="{ row }">
