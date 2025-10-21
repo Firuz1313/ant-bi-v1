@@ -51,10 +51,10 @@
             <el-button type="primary" size="small" @click="toggleFilter">Фильтр</el-button>
           </div>
           <el-table :data="filteredRows" stripe border class="center-table" style="width: 100%">
-            <el-table-column prop="fio" label="ФИО" width="220" align="center" />
-            <el-table-column prop="dept" label="Подразделение" width="180" align="center" />
-            <el-table-column prop="total" label="Заявки" width="90" align="center" />
-            <el-table-column prop="cancelled" label="Отменено" width="90" align="center">
+            <el-table-column prop="fio" label="ФИО" width="160" align="center" />
+            <el-table-column prop="dept" label="Подразделение" width="130" align="center" />
+            <el-table-column prop="total" label="Заявки" width="75" align="center" />
+            <el-table-column prop="cancelled" label="Отменено" width="75" align="center">
               <template #default="{ row }">
                 <div class="cell-combo">
                   <div class="value">{{ row.cancelled }}</div>
@@ -64,12 +64,12 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="in_progress" label="В процессе" width="100" align="center">
+            <el-table-column prop="in_progress" label="В процессе" width="85" align="center">
               <template #default="{ row }">
                 <div class="value">{{ row.in_progress }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="done" label="Выполнено" width="100" align="center">
+            <el-table-column prop="done" label="Выполнено" width="85" align="center">
               <template #default="{ row }">
                 <div class="cell-combo">
                   <div class="value">{{ row.done }}</div>
@@ -364,19 +364,19 @@
 
     .table-container {
       display: flex;
-      height: 600px;
+      height: 550px;
       overflow: hidden;
     }
 
     .chart-container {
       display: flex;
-      height: 600px;
+      height: 550px;
       overflow: hidden;
     }
 
     .table-card,
     .chart-card {
-      padding: 16px;
+      padding: 12px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -405,13 +405,13 @@
       color: #fff;
       font-weight: 700;
       text-align: center;
-      font-size: 13px;
+      font-size: 11px;
     }
 
     .center-table .el-table td {
       text-align: center;
       font-weight: 600;
-      font-size: 13px;
+      font-size: 11px;
     }
 
     .cell-combo {
@@ -465,15 +465,16 @@
     }
 
     .summary-footer {
-      margin-top: 12px;
+      margin-top: 8px;
       background: #dbeafe;
-      padding: 12px 16px;
+      padding: 8px 12px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 700;
       color: #1e40af;
+      font-size: 11px;
     }
 
     .summary-label {
@@ -537,11 +538,11 @@
 
     @media (max-width: 1400px) {
       .table-container {
-        height: 500px;
+        height: 480px;
       }
 
       .chart-container {
-        height: 500px;
+        height: 480px;
       }
 
       .pie-chart {
@@ -556,11 +557,11 @@
       }
 
       .table-container {
-        height: 450px;
+        height: 420px;
       }
 
       .chart-container {
-        height: 450px;
+        height: 420px;
       }
 
       .pie-chart {
@@ -627,16 +628,16 @@
       }
 
       .table-container {
-        height: 400px;
+        height: 380px;
       }
 
       .chart-container {
-        height: 400px;
+        height: 380px;
       }
 
       .table-card,
       .chart-card {
-        padding: 12px;
+        padding: 10px;
       }
 
       .pie-chart {
