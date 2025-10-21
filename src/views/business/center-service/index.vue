@@ -403,6 +403,8 @@
     .center-table {
       flex: 1;
       overflow-y: auto;
+      overflow-x: hidden;
+      width: 100%;
     }
 
     .center-table .el-table th {
