@@ -3,7 +3,7 @@
     <div class="top-controls">
       <div class="controls-left">
         <div class="page-title">
-          <h2>П��АН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
+          <h2>ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
         </div>
       </div>
       <div class="controls-right">
@@ -519,6 +519,18 @@ watch(dateRange, (rng) => {
   /* Headers ~12pt -> 16px, data ~11pt -> 14px */
   .el-table th { font-size:16px; font-weight:700 }
   .el-table td { font-size:14px }
+
+  /* Column separators */
+  :deep(.el-table__header-wrapper th), :deep(.el-table__body-wrapper td) {
+    border-right: 1px solid rgba(0,0,0,0.06);
+  }
+  /* Remove right border on last column */
+  :deep(.el-table__header-wrapper th:last-child), :deep(.el-table__body-wrapper td:last-child) {
+    border-right: none;
+  }
+  /* Make table full width and compact */
+  .el-table { width: 100%; table-layout: fixed }
+  .el-table th .cell, .el-table td .cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 
   /* Bottom tabs */
   .bottom-tabs { margin-top:12px; display:flex; justify-content:center; gap:8px }
