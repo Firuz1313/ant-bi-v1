@@ -447,10 +447,32 @@ watch(selectedMonths, (v) => { onMonthsChange(v) })
 .analytics-summary-page {
   .top-controls { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
   .filter-toggle { display:inline-flex; align-items:center; gap:6px }
-  .top-filter { margin-bottom:16px; background:#fbfdff; padding:12px; border-radius:8px; box-shadow:0 6px 18px rgba(10,23,50,0.04); }
+
+  .top-filter {
+    margin-bottom:16px;
+    background:#fbfdff;
+    padding:14px;
+    border-radius:8px;
+    box-shadow:0 8px 24px rgba(10,23,50,0.06);
+    .filter-row {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      .filter-item { min-width:140px; }
+      .months-select { min-width:220px; }
+      .compact-date { min-width:220px; }
+      .filter-search { min-width:280px; }
+      .filter-actions { display:flex; gap:8px; align-items:center; }
+    }
+  }
+
   .top-summary { display:flex; gap:12px; .summary-item{ padding:8px 14px; background:linear-gradient(180deg,#ffffff,#fbfbff); border-radius:8px; border:1px solid rgba(15,23,42,0.04); .summary-label{font-size:12px;color:#556} .summary-value{font-size:18px;font-weight:700}} .color-success{color:#059669} .color-warning{color:#d97706} .color-danger{color:#dc2626} }
+
   .table-card.art-table-card{ padding:8px }
-  .cell-combo{ display:flex; align-items:center; justify-content:space-between; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:6px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669} .arrow.down::after{content:'▼'; color:#dc2626} .arrow.right::after{content:'▶'; color:#64748b} .delta.excellent{ background:rgba(16,185,129,0.06); color:#065f46 } .delta.good{ background:rgba(34,197,94,0.04); color:#166534 } .delta.warning{ background:rgba(245,158,11,0.06); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.06); color:#7f1d1d } }
+
+  .cell-combo{ display:flex; align-items:center; justify-content:space-between; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669; font-weight:700} .arrow.down::after{content:'▼'; color:#dc2626; font-weight:700} .arrow.right::after{content:'▶'; color:#64748b; font-weight:700} .delta.excellent{ background:rgba(16,185,129,0.08); color:#065f46 } .delta.good{ background:rgba(34,197,94,0.06); color:#166534 } .delta.warning{ background:rgba(245,158,11,0.07); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.07); color:#7f1d1d } }
+
   .el-table__footer-wrapper{ background:linear-gradient(180deg,#f7fafc,#fff) }
   .table-footer{ display:flex; justify-content:flex-end; margin-top:12px }
 }
