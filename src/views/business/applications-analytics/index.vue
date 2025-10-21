@@ -58,52 +58,63 @@
         class="analytics-table"
         :default-sort="{ prop: sortBy, order: sortOrder }"
       >
-        <el-table-column
-          prop="date"
-          label="Дата"
-          width="120"
-          :sortable="true"
-          @header-click="handleSort('date')"
-        >
-        </el-table-column>
+        <!-- Required columns as provided -->
+        <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
+        <el-table-column prop="days_nd" label="Дни нд" width="100" :sortable="true" @header-click="handleSort('days_nd')" />
 
-        <el-table-column
-          prop="plan"
-          label="План"
-          width="90"
-          :sortable="true"
-          @header-click="handleSort('plan')"
-        />
-
-        <el-table-column
-          prop="fact"
-          label="Факт"
-          width="90"
-          :sortable="true"
-          @header-click="handleSort('fact')"
-        />
-
-        <el-table-column
-          prop="execution"
-          label="Выполнение %"
-          width="140"
-          :sortable="true"
-          @header-click="handleSort('execution')"
-        >
+        <el-table-column prop="kc_plan" label="Кц План" width="100" :sortable="true" @header-click="handleSort('kc_plan')" />
+        <el-table-column prop="kc_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('kc_done')">
           <template #default="{ row }">
-            <div :class="['cell-execution', executionClass(row.execution)]">
-              <span class="execution-value">{{ row.execution }}%</span>
-              <span class="execution-delta" v-if="row.delta !== 0">
-                <i :class="['delta-arrow', row.delta > 0 ? 'up' : 'down']"></i>
-                {{ Math.abs(row.delta) }}%
-              </span>
+            <div :class="['cell-execution', executionClass(percent(row.kc_plan, row.kc_done))]">
+              <span class="execution-value">{{ row.kc_done }}</span>
+              <span class="execution-delta">{{ percent(row.kc_plan, row.kc_done) }}%</span>
             </div>
           </template>
         </el-table-column>
 
-        <el-table-column prop="channel" label="Канал" width="140" />
-        <el-table-column prop="manager" label="Менеджер" width="160" />
-        <el-table-column prop="notes" label="Примечание" />
+        <el-table-column prop="co_plan" label="ЦО План" width="100" :sortable="true" @header-click="handleSort('co_plan')" />
+        <el-table-column prop="co_fact" label="ЦО Факт" width="100" :sortable="true" @header-click="handleSort('co_fact')" />
+        <el-table-column prop="co_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('co_done')">
+          <template #default="{ row }">
+            <div :class="['cell-execution', executionClass(percent(row.co_plan, row.co_done))]">
+              <span class="execution-value">{{ row.co_done }}</span>
+              <span class="execution-delta">{{ percent(row.co_plan, row.co_done) }}%</span>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="stp_plan" label="СТП План" width="100" :sortable="true" @header-click="handleSort('stp_plan')" />
+        <el-table-column prop="stp_fact" label="СТП Факт" width="100" :sortable="true" @header-click="handleSort('stp_fact')" />
+        <el-table-column prop="stp_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('stp_done')">
+          <template #default="{ row }">
+            <div :class="['cell-execution', executionClass(percent(row.stp_plan, row.stp_done))]">
+              <span class="execution-value">{{ row.stp_done }}</span>
+              <span class="execution-delta">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="f2f_plan" label="F2F План" width="100" :sortable="true" @header-click="handleSort('f2f_plan')" />
+        <el-table-column prop="f2f_fact" label="F2F Факт" width="100" :sortable="true" @header-click="handleSort('f2f_fact')" />
+        <el-table-column prop="f2f_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('f2f_done')">
+          <template #default="{ row }">
+            <div :class="['cell-execution', executionClass(percent(row.f2f_plan, row.f2f_done))]">
+              <span class="execution-value">{{ row.f2f_done }}</span>
+              <span class="execution-delta">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column prop="total_plan" label="ИТОГ План" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
+        <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
+        <el-table-column prop="total_done" label="Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
+          <template #default="{ row }">
+            <div :class="['cell-execution', executionClass(percent(row.total_plan, row.total_done))]">
+              <span class="execution-value">{{ row.total_done }}</span>
+              <span class="execution-delta">{{ percent(row.total_plan, row.total_done) }}%</span>
+            </div>
+          </template>
+        </el-table-column>
 
       </el-table>
 
@@ -122,18 +133,25 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import type { Ref } from 'vue'
 
 interface Row {
   id: number
   date: string
-  plan: number
-  fact: number
-  execution: number
-  delta: number
-  channel: string
-  manager: string
-  notes?: string
+  days_nd: number
+  kc_plan: number
+  kc_done: number
+  co_plan: number
+  co_fact: number
+  co_done: number
+  stp_plan: number
+  stp_fact: number
+  stp_done: number
+  f2f_plan: number
+  f2f_fact: number
+  f2f_done: number
+  total_plan: number
+  total_fact: number
+  total_done: number
   status: 'done' | 'in_progress' | 'overdue' | 'other'
 }
 
@@ -147,31 +165,57 @@ const sortOrder = ref<'ascending' | 'descending'>('descending')
 const page = ref(1)
 const pageSize = ref(10)
 
-// Mock data set — realistic example rows
+// Mock data set
 const rows = ref<Row[]>(generateMockRows())
+
+function randInt(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 function generateMockRows(): Row[] {
   const base: Row[] = []
-  const channels = ['Онлайн', 'Call-центр', 'F2F', 'СТП']
-  const managers = ['Иванов', 'Петров', 'Сидоров', 'Кузнецов']
   for (let i = 1; i <= 28; i++) {
-    const plan = Math.floor(Math.random() * 60) + 20
-    const fact = Math.max(0, plan + Math.floor((Math.random() - 0.4) * 30))
-    const exec = Math.round((fact / plan) * 100)
-    const delta = Math.round((Math.random() - 0.5) * 40)
+    const kc_plan = randInt(10, 60)
+    const kc_done = Math.max(0, kc_plan + randInt(-10, 20))
+    const co_plan = randInt(5, 40)
+    const co_fact = Math.max(0, co_plan + randInt(-8, 18))
+    const co_done = Math.max(0, Math.round((co_fact + randInt(-3, 5))))
+    const stp_plan = randInt(3, 30)
+    const stp_fact = Math.max(0, stp_plan + randInt(-6, 12))
+    const stp_done = Math.max(0, stp_fact + randInt(-2, 4))
+    const f2f_plan = randInt(0, 10)
+    const f2f_fact = Math.max(0, f2f_plan + randInt(-3, 6))
+    const f2f_done = Math.max(0, f2f_fact + randInt(-1, 3))
+
+    const total_plan = kc_plan + co_plan + stp_plan + f2f_plan
+    const total_fact = Math.max(0, kc_done + co_fact + stp_fact + f2f_fact)
+    const total_done = Math.max(0, kc_done + co_done + stp_done + f2f_done)
+
     const date = new Date()
     date.setDate(date.getDate() - (28 - i))
+
+    const execution = Math.round((total_done / Math.max(1, total_plan)) * 100)
+    const status: Row['status'] = execution >= 100 ? 'done' : execution >= 60 ? 'in_progress' : 'overdue'
+
     base.push({
       id: i,
       date: date.toISOString().slice(0, 10),
-      plan,
-      fact,
-      execution: exec,
-      delta,
-      channel: channels[i % channels.length],
-      manager: managers[i % managers.length],
-      notes: i % 5 === 0 ? 'Пик нагрузки' : '',
-      status: exec >= 100 ? 'done' : exec >= 60 ? 'in_progress' : 'overdue'
+      days_nd: randInt(0, 3),
+      kc_plan,
+      kc_done,
+      co_plan,
+      co_fact,
+      co_done,
+      stp_plan,
+      stp_fact,
+      stp_done,
+      f2f_plan,
+      f2f_fact,
+      f2f_done,
+      total_plan,
+      total_fact,
+      total_done,
+      status
     })
   }
   return base
@@ -192,9 +236,13 @@ const filteredData = computed(() => {
     data = data.filter(
       (r) =>
         String(r.id).includes(q) ||
-        r.channel.toLowerCase().includes(q) ||
-        r.manager.toLowerCase().includes(q) ||
-        (r.notes || '').toLowerCase().includes(q)
+        String(r.days_nd).includes(q) ||
+        String(r.kc_plan).includes(q) ||
+        String(r.kc_done).includes(q) ||
+        String(r.co_plan).includes(q) ||
+        String(r.co_fact).includes(q) ||
+        String(r.co_done).includes(q) ||
+        String(r.total_done).includes(q)
     )
   }
   return data
@@ -233,6 +281,11 @@ function resetFilters() {
   dateRange.value = null
   status.value = 'all'
   search.value = ''
+}
+
+function percent(plan: number, done: number) {
+  if (!plan || plan === 0) return 0
+  return Math.round((done / plan) * 100)
 }
 
 function executionClass(value: number) {
@@ -316,18 +369,6 @@ watch([filteredData, sortBy, sortOrder], () => {
         gap: 6px;
         font-size: 12px;
         color: #374151;
-        .delta-arrow {
-          width: 0;
-          height: 0;
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
-          &.up {
-            border-bottom: 10px solid #10b981;
-          }
-          &.down {
-            border-top: 10px solid #ef4444;
-          }
-        }
       }
 
       &.excellent { background: rgba(16,185,129,0.06); color: #065f46; padding: 6px 8px; border-radius: 6px; }
