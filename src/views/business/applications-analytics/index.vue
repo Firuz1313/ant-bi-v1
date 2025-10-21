@@ -98,7 +98,7 @@
               <div class="cell-combo">
                 <div class="value">{{ row.kc_done }}</div>
                 <div :class="['delta', deltaClass(row.kc_plan, row.kc_done)]">
-                  <i :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]"></i>
+                  <i :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]" :title="arrowTitle(row.kc_plan, row.kc_done)"></i>
                   <span class="pct">{{ percent(row.kc_plan, row.kc_done) }}%</span>
                 </div>
               </div>
@@ -112,7 +112,7 @@
               <div class="cell-combo">
                 <div class="value">{{ row.co_done }}</div>
                 <div :class="['delta', deltaClass(row.co_plan, row.co_done)]">
-                  <i :class="['arrow', arrowIcon(row.co_plan, row.co_done)]"></i>
+                  <i :class="['arrow', arrowIcon(row.co_plan, row.co_done)]" :title="arrowTitle(row.co_plan, row.co_done)"></i>
                   <span class="pct">{{ percent(row.co_plan, row.co_done) }}%</span>
                 </div>
               </div>
@@ -126,7 +126,7 @@
               <div class="cell-combo">
                 <div class="value">{{ row.stp_done }}</div>
                 <div :class="['delta', deltaClass(row.stp_plan, row.stp_done)]">
-                  <i :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]"></i>
+                  <i :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]" :title="arrowTitle(row.stp_plan, row.stp_done)"></i>
                   <span class="pct">{{ percent(row.stp_plan, row.stp_done) }}%</span>
                 </div>
               </div>
@@ -140,7 +140,7 @@
               <div class="cell-combo">
                 <div class="value">{{ row.f2f_done }}</div>
                 <div :class="['delta', deltaClass(row.f2f_plan, row.f2f_done)]">
-                  <i :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]"></i>
+                  <i :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]" :title="arrowTitle(row.f2f_plan, row.f2f_done)"></i>
                   <span class="pct">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
                 </div>
               </div>
@@ -154,7 +154,7 @@
               <div class="cell-combo">
                 <div class="value">{{ row.total_done }}</div>
                 <div :class="['delta', deltaClass(row.total_plan, row.total_done)]">
-                  <i :class="['arrow', arrowIcon(row.total_plan, row.total_done)]"></i>
+                  <i :class="['arrow', arrowIcon(row.total_plan, row.total_done)]" :title="arrowTitle(row.total_plan, row.total_done)"></i>
                   <span class="pct">{{ percent(row.total_plan, row.total_done) }}%</span>
                 </div>
               </div>
