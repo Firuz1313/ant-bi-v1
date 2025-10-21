@@ -436,6 +436,9 @@ const filteredInProgressCount = computed(() => filteredData.value.filter((r) => 
 const filteredOverdueCount = computed(() => filteredData.value.filter((r) => r.status === 'overdue').length)
 
 watch([filteredData, sortBy, sortOrder], () => { page.value = 1 })
+
+// Keep selectedYear/months in sync: when selectedMonths changed programmatically, update range
+watch(selectedMonths, (v) => { onMonthsChange(v) })
 </script>
 
 <style scoped lang="scss">
