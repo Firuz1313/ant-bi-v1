@@ -1,66 +1,65 @@
 <template>
   <div class="center-analytics-page">
-    <div class="page-header">
-      <div class="title-block">
-        <h2>ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК — ЦЕНТР ОБСЛУЖИВАНИЕ</h2>
-        <div class="kpis">
-          <div class="kpi kpi-blue">
-            <div class="kpi-value">{{ totals.total }}</div>
-            <div class="kpi-label">Заявки</div>
-          </div>
-          <div class="kpi kpi-red">
-            <div class="kpi-value">{{ totals.cancelled }}</div>
-            <div class="kpi-label">Отменено</div>
-          </div>
-          <div class="kpi kpi-green">
-            <div class="kpi-value">{{ totals.done }}</div>
-            <div class="kpi-label">Выполнено</div>
-          </div>
-          <div class="kpi kpi-orange">
-            <div class="kpi-value">{{ totals.in_progress }}</div>
-            <div class="kpi-label">В процессе</div>
-          </div>
-        </div>
+    <div class="page-title-section">
+      <h1 class="page-title">ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК — ЦЕНТР ОБСЛУЖИВАНИЕ</h1>
+    </div>
+
+    <div class="kpi-section">
+      <div class="kpi-block kpi-blue">
+        <div class="kpi-value">{{ totals.total }}</div>
+        <div class="kpi-label">Заявки</div>
       </div>
-
-      <div class="controls">
-        <div class="period-inline">
-          <div class="period-label">Период:</div>
-          <div class="period-dates">{{ periodStart }} — {{ periodEnd }}</div>
-        </div>
-
-        <div class="period-slider">
-          <el-select
-            v-model="selectedMonth"
-            placeholder="Август 2025"
-            class="month-select"
-            size="small"
-          >
-            <el-option :label="'Август 2025'" :value="8" />
-          </el-select>
-
-          <el-slider
-            v-model="daysRange"
-            range
-            :min="1"
-            :max="31"
-            show-tooltip
-            class="days-slider"
-          />
-          <div class="slider-labels">{{ sliderLabel }}</div>
-        </div>
+      <div class="kpi-block kpi-red">
+        <div class="kpi-value">{{ totals.cancelled }}</div>
+        <div class="kpi-label">Отменено</div>
+      </div>
+      <div class="kpi-block kpi-green">
+        <div class="kpi-value">{{ totals.done }}</div>
+        <div class="kpi-label">Выполнено</div>
+      </div>
+      <div class="kpi-block kpi-orange">
+        <div class="kpi-value">{{ totals.in_progress }}</div>
+        <div class="kpi-label">В процессе</div>
       </div>
     </div>
 
-    <div class="content">
-      <div class="left">
+    <div class="period-section">
+      <div class="period-inline">
+        <div class="period-label">Период:</div>
+        <div class="period-dates">{{ periodStart }} — {{ periodEnd }}</div>
+      </div>
+
+      <div class="period-slider">
+        <el-select
+          v-model="selectedMonth"
+          placeholder="Август 2025"
+          class="month-select"
+          size="small"
+        >
+          <el-option :label="'Август 2025'" :value="8" />
+        </el-select>
+
+        <el-slider
+          v-model="daysRange"
+          range
+          :min="1"
+          :max="31"
+          show-tooltip
+          class="days-slider"
+        />
+        <div class="slider-labels">{{ sliderLabel }}</div>
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="table-container">
         <el-card class="table-card art-table-card">
           <div class="card-actions">
             <el-button type="primary" size="small" @click="toggleFilter">Фильтр</el-button>
           </div>
           <el-table :data="filteredRows" stripe border class="center-table" style="width: 100%">
             <el-table-column prop="fio" label="ФИО" width="220" align="center" />
-            <el-table-column prop="dept" label="Под��азделение" width="180" align="center" />
+            <el-table-column prop="dept" label="Подразделение" width="180" align="center" />
             <el-table-column prop="total" label="Заявки" width="90" align="center" />
             <el-table-column prop="cancelled" label="Отменено" width="90" align="center">
               <template #default="{ row }">
@@ -90,7 +89,6 @@
             </el-table-column>
           </el-table>
 
-          <!-- Итого row is handled by a footer area for style continuity -->
           <div class="summary-footer">
             <div class="summary-label">Итого</div>
             <div class="summary-values">
@@ -103,7 +101,7 @@
         </el-card>
       </div>
 
-      <div class="right">
+      <div class="chart-container">
         <el-card class="chart-card">
           <div class="chart-legend">
             <div class="legend-item"
