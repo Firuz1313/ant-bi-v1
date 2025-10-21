@@ -115,7 +115,7 @@
               }}%)</div
             >
             <div class="legend-item"
-              ><span class="dot inprog"></span> В п��оцессе {{ totals.in_progress }} ({{
+              ><span class="dot inprog"></span> В процессе {{ totals.in_progress }} ({{
                 percentTotalInProgress
               }}%)</div
             >
@@ -287,7 +287,7 @@
       text-align: center;
       min-width: 140px;
       flex: 1;
-      max-width: 200px;
+      max-width: 280px;
     }
 
     .kpi-value {
