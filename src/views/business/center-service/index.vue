@@ -628,16 +628,16 @@
       }
 
       .table-container {
-        height: 400px;
+        height: 380px;
       }
 
       .chart-container {
-        height: 400px;
+        height: 380px;
       }
 
       .table-card,
       .chart-card {
-        padding: 12px;
+        padding: 10px;
       }
 
       .pie-chart {
