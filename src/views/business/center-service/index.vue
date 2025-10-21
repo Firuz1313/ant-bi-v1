@@ -197,7 +197,7 @@
             },
             {
               value: totals.value.cancelled,
-              name: `Отменено ${totals.value.cancelled}`,
+              name: `Отмен��но ${totals.value.cancelled}`,
               itemStyle: { color: '#dc2626' }
             },
             {
@@ -363,14 +363,17 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
+      grid-auto-rows: 1fr;
     }
 
     .table-container {
       display: flex;
+      min-height: 600px;
     }
 
     .chart-container {
       display: flex;
+      min-height: 600px;
     }
 
     .table-card,
@@ -379,7 +382,8 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      height: 100%;
+      flex: 1;
+      width: 100%;
     }
 
     .card-actions {
