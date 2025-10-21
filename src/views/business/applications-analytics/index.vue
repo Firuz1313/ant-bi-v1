@@ -94,11 +94,11 @@
       </div>
       <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader :show-summary="true" :summary-method="getSummary">
         <template #default>
-          <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
-          <el-table-column prop="days_nd" label="Дни нд" width="90" :sortable="true" @header-click="handleSort('days_nd')" />
+          <el-table-column prop="date" label="Дата" width="120" align="center" :sortable="true" @header-click="handleSort('date')" />
+          <el-table-column prop="days_nd" label="Дни нд" width="90" align="center" :sortable="true" @header-click="handleSort('days_nd')" />
 
-          <el-table-column prop="kc_plan" label="Кц План" width="90" :sortable="true" @header-click="handleSort('kc_plan')" />
-          <el-table-column prop="kc_done" label="Кц Выполнено" width="120" :sortable="true" @header-click="handleSort('kc_done')">
+          <el-table-column prop="kc_plan" label="Кц План" width="90" align="center" :sortable="true" @header-click="handleSort('kc_plan')" />
+          <el-table-column prop="kc_done" label="Кц Выполнено" width="120" align="center" :sortable="true" @header-click="handleSort('kc_done')">
             <template #default="{ row }">
               <div class="cell-combo">
                 <div class="value">{{ row.kc_done }}</div>
@@ -110,9 +110,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="co_plan" label="ЦО План" width="90" :sortable="true" @header-click="handleSort('co_plan')" />
-          <el-table-column prop="co_fact" label="ЦО Факт" width="90" :sortable="true" @header-click="handleSort('co_fact')" />
-          <el-table-column prop="co_done" label="ЦО Выполнено" width="120" :sortable="true" @header-click="handleSort('co_done')">
+          <el-table-column prop="co_plan" label="ЦО План" width="90" align="center" :sortable="true" @header-click="handleSort('co_plan')" />
+          <el-table-column prop="co_fact" label="ЦО Факт" width="90" align="center" :sortable="true" @header-click="handleSort('co_fact')" />
+          <el-table-column prop="co_done" label="ЦО Выполнено" width="120" align="center" :sortable="true" @header-click="handleSort('co_done')">
             <template #default="{ row }">
               <div class="cell-combo">
                 <div class="value">{{ row.co_done }}</div>
@@ -124,9 +124,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="stp_plan" label="СТП План" width="90" :sortable="true" @header-click="handleSort('stp_plan')" />
-          <el-table-column prop="stp_fact" label="СТП Факт" width="90" :sortable="true" @header-click="handleSort('stp_fact')" />
-          <el-table-column prop="stp_done" label="СТП Выполнено" width="120" :sortable="true" @header-click="handleSort('stp_done')">
+          <el-table-column prop="stp_plan" label="СТП План" width="90" align="center" :sortable="true" @header-click="handleSort('stp_plan')" />
+          <el-table-column prop="stp_fact" label="СТП Факт" width="90" align="center" :sortable="true" @header-click="handleSort('stp_fact')" />
+          <el-table-column prop="stp_done" label="СТП Выполнено" width="120" align="center" :sortable="true" @header-click="handleSort('stp_done')">
             <template #default="{ row }">
               <div class="cell-combo">
                 <div class="value">{{ row.stp_done }}</div>
@@ -138,9 +138,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="f2f_plan" label="F2F План" width="90" :sortable="true" @header-click="handleSort('f2f_plan')" />
-          <el-table-column prop="f2f_fact" label="F2F Факт" width="90" :sortable="true" @header-click="handleSort('f2f_fact')" />
-          <el-table-column prop="f2f_done" label="F2F Выполнено" width="120" :sortable="true" @header-click="handleSort('f2f_done')">
+          <el-table-column prop="f2f_plan" label="F2F План" width="90" align="center" :sortable="true" @header-click="handleSort('f2f_plan')" />
+          <el-table-column prop="f2f_fact" label="F2F Факт" width="90" align="center" :sortable="true" @header-click="handleSort('f2f_fact')" />
+          <el-table-column prop="f2f_done" label="F2F Выполнено" width="120" align="center" :sortable="true" @header-click="handleSort('f2f_done')">
             <template #default="{ row }">
               <div class="cell-combo">
                 <div class="value">{{ row.f2f_done }}</div>
@@ -152,9 +152,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="total_plan" label="ИТОГ План" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
-          <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
-          <el-table-column prop="total_done" label="ИТОГ Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
+          <el-table-column prop="total_plan" label="ИТОГ План" width="110" align="center" :sortable="true" @header-click="handleSort('total_plan')" />
+          <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" align="center" :sortable="true" @header-click="handleSort('total_fact')" />
+          <el-table-column prop="total_done" label="ИТОГ Выполнено" width="130" align="center" :sortable="true" @header-click="handleSort('total_done')">
             <template #default="{ row }">
               <div class="cell-combo">
                 <div class="value">{{ row.total_done }}</div>
