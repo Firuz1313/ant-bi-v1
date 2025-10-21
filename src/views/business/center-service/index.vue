@@ -39,14 +39,7 @@
           <el-option :label="'Август 2025'" :value="8" />
         </el-select>
 
-        <el-slider
-          v-model="daysRange"
-          range
-          :min="1"
-          :max="31"
-          show-tooltip
-          class="days-slider"
-        />
+        <el-slider v-model="daysRange" range :min="1" :max="31" show-tooltip class="days-slider" />
         <div class="slider-labels">{{ sliderLabel }}</div>
       </div>
     </div>
