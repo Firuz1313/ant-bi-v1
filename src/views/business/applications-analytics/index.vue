@@ -624,12 +624,70 @@
   @import '@/components/core/tables/art-table/style.scss';
 
   .analytics-summary-page {
-    .top-controls {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: var(--text-color, #0f172a);
+
+    .page-title-section {
+      margin-bottom: 24px;
     }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1e40af;
+      margin: 0;
+      padding: 0;
+    }
+
+    .kpi-section {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .kpi-block {
+      padding: 16px 20px;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 140px;
+      flex: 1;
+      max-width: 200px;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .kpi-blue {
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+      color: #1e40af;
+    }
+
+    .kpi-red {
+      background: linear-gradient(135deg, #fee2e2, #fef2f2);
+      color: #991b1b;
+    }
+
+    .kpi-green {
+      background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+      color: #15803d;
+    }
+
+    .kpi-orange {
+      background: linear-gradient(135deg, #fed7aa, #fffbeb);
+      color: #b45309;
+    }
+
     .filter-toggle {
       display: inline-flex;
       align-items: center;
@@ -638,27 +696,33 @@
 
     .top-filter {
       margin-bottom: 16px;
-      background: #fbfdff;
+      background: #f9fafb;
       padding: 14px;
       border-radius: 8px;
-      box-shadow: 0 8px 24px rgba(10, 23, 50, 0.06);
+      border: 1px solid #e5e7eb;
+
       .filter-row {
         display: flex;
         gap: 12px;
         align-items: center;
         flex-wrap: wrap;
+
         .filter-item {
           min-width: 140px;
         }
+
         .months-select {
           min-width: 220px;
         }
+
         .compact-date {
           min-width: 220px;
         }
+
         .filter-search {
           min-width: 280px;
         }
+
         .filter-actions {
           display: flex;
           gap: 8px;
@@ -667,38 +731,8 @@
       }
     }
 
-    .top-summary {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      .summary-item {
-        padding: 8px 14px;
-        background: linear-gradient(180deg, #ffffff, #fbfbff);
-        border-radius: 8px;
-        border: 1px solid rgba(15, 23, 42, 0.04);
-        text-align: center;
-        .summary-label {
-          font-size: 12px;
-          color: #556;
-        }
-        .summary-value {
-          font-size: 18px;
-          font-weight: 700;
-        }
-      }
-      .color-success {
-        color: #059669;
-      }
-      .color-warning {
-        color: #d97706;
-      }
-      .color-danger {
-        color: #dc2626;
-      }
-    }
-
     .table-card.art-table-card {
-      padding: 8px;
+      padding: 16px;
       position: relative;
     }
 
@@ -706,68 +740,77 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      z-index: 5;
+      z-index: 10;
     }
 
     .cell-combo {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
+
       .value {
         font-weight: 700;
       }
+
       .delta {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-size: 12px;
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
       }
+
       .arrow.up::after {
         content: '▲';
-        color: #059669;
+        color: #16a34a;
         font-weight: 700;
-        margin-right: 4px;
+        margin-right: 2px;
       }
+
       .arrow.down::after {
         content: '▼';
         color: #dc2626;
         font-weight: 700;
-        margin-right: 4px;
+        margin-right: 2px;
       }
+
       .arrow.right::after {
         content: '▶';
-        color: #64748b;
+        color: #f59e0b;
         font-weight: 700;
-        margin-right: 4px;
+        margin-right: 2px;
       }
+
       .delta.good {
-        background: rgba(16, 185, 129, 0.12);
-        color: #065f46;
+        background: rgba(22, 163, 74, 0.12);
+        color: #15803d;
       }
+
       .delta.warning {
-        background: rgba(250, 204, 21, 0.12);
-        color: #7c5d00;
+        background: rgba(249, 115, 22, 0.12);
+        color: #92400e;
       }
+
       .delta.poor {
-        background: rgba(239, 68, 68, 0.12);
-        color: #7f1d1d;
+        background: rgba(220, 38, 38, 0.12);
+        color: #991b1b;
       }
     }
 
     .el-table__footer-wrapper {
-      background: linear-gradient(180deg, #f7fafc, #fff);
+      background: #dbeafe;
     }
 
-    /* Summary row (Итого) styling */
     :deep(.el-table__footer-wrapper .el-table__row) {
-      background: #eaf4ff;
+      background: #dbeafe;
     }
+
     :deep(.el-table__footer-wrapper td) {
       text-align: center;
       font-weight: 700;
+      color: #1e40af;
     }
 
     .table-footer {
@@ -776,75 +819,74 @@
       margin-top: 12px;
     }
 
-    /* Center align all table content and set project font */
     .el-table th,
     .el-table td {
       text-align: center;
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
     }
-    /* Headers ~12pt -> 16px, data ~11pt -> 14px */
+
     .el-table th {
-      font-size: 16px;
+      background: #1e40af;
+      color: #fff;
+      font-size: 13px;
       font-weight: 700;
     }
+
     .el-table td {
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    /* Column separators */
     :deep(.el-table__header-wrapper th),
     :deep(.el-table__body-wrapper td) {
       border-right: 1px solid rgba(0, 0, 0, 0.06);
     }
-    /* Remove right border on last column */
+
     :deep(.el-table__header-wrapper th:last-child),
     :deep(.el-table__body-wrapper td:last-child) {
       border-right: none;
     }
-    /* Make table full width and compact */
+
     .el-table {
       width: 100%;
       table-layout: fixed;
     }
+
     .el-table th .cell,
     .el-table td .cell {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
-    /* Bottom tabs */
   }
 
   .fade-enter-active,
   .fade-leave-active {
     transition: all 0.25s ease;
   }
+
   .fade-enter-from,
   .fade-leave-to {
     opacity: 0;
     transform: translateY(-6px);
   }
 
-  /* Theme variables - light by default, dark overrides below */
   :root {
     --table-bg: #ffffff;
     --text-color: #0f172a;
     --muted: #64748b;
-    --summary-bg: #fbfdff;
-    --summary-quiet: #eaf4ff;
+    --summary-bg: #f9fafb;
+    --summary-quiet: #dbeafe;
     --border-weak: rgba(0, 0, 0, 0.06);
   }
 
-  /* Dark theme overrides: supports body.dark, .theme-dark, and [data-theme="dark"] */
   body.dark,
   .theme-dark,
   [data-theme='dark'] {
     --table-bg: #071022;
     --text-color: #e6eef8;
     --muted: #9aa8c2;
-    --summary-bg: #061225;
-    --summary-quiet: #052033;
+    --summary-bg: #1a202c;
+    --summary-quiet: #1e3a5f;
     --border-weak: rgba(255, 255, 255, 0.06);
   }
 
@@ -852,88 +894,85 @@
     color: var(--text-color);
   }
 
-  /* Apply theme-aware backgrounds */
   .analytics-summary-page .top-filter {
     background: var(--summary-bg);
-  }
-  .analytics-summary-page .top-summary .summary-item {
-    background: linear-gradient(180deg, var(--table-bg), var(--summary-bg));
     border-color: var(--border-weak);
   }
 
-  /* Summary footer (Итого) background uses quiet color */
   :deep(.el-table__footer-wrapper .el-table__row) {
     background: var(--summary-quiet);
   }
 
-  /* Mobile responsiveness */
   @media (max-width: 768px) {
-    .analytics-summary-page .top-controls {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 8px;
-    }
-    .analytics-summary-page .top-summary {
-      flex-direction: row;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 6px 0;
-    }
-    .analytics-summary-page .top-summary .summary-item {
-      min-width: 120px;
-    }
-    .analytics-summary-page .top-filter .filter-row {
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .analytics-summary-page .card-actions {
-      position: relative;
-      top: auto;
-      right: auto;
-      margin: 8px 0 0 0;
-    }
+    .analytics-summary-page {
+      .page-title {
+        font-size: 22px;
+      }
 
-    /* Reduce font sizes on small screens */
-    .el-table th {
-      font-size: 14px;
-    }
-    .el-table td {
-      font-size: 12px;
-    }
+      .kpi-section {
+        flex-direction: row;
+        gap: 12px;
+      }
 
-    /* Hide less important columns on mobile to keep layout clean.
-     This hides columns starting from the 8th column (adjust if you want more/less). */
-    :deep(.el-table__header-wrapper th:nth-child(n + 8)),
-    :deep(.el-table__body-wrapper td:nth-child(n + 8)) {
-      display: none;
-    }
+      .kpi-block {
+        padding: 12px 16px;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
+      }
 
-    /* Ensure table stays usable horizontally when needed */
-    .el-table {
-      width: 100%;
-      overflow-x: auto;
+      .kpi-value {
+        font-size: 24px;
+      }
+
+      .kpi-label {
+        font-size: 12px;
+      }
+
+      .top-filter .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .card-actions {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 8px 0 0 0;
+      }
+
+      .el-table th {
+        font-size: 12px;
+      }
+
+      .el-table td {
+        font-size: 11px;
+      }
+
+      :deep(.el-table__header-wrapper th:nth-child(n + 8)),
+      :deep(.el-table__body-wrapper td:nth-child(n + 8)) {
+        display: none;
+      }
+
+      .el-table {
+        width: 100%;
+        overflow-x: auto;
+      }
     }
   }
 
-  /* Desktop tweaks: stronger column separators */
   @media (min-width: 769px) {
     :deep(.el-table__header-wrapper th),
     :deep(.el-table__body-wrapper td) {
       border-right: 1px solid var(--border-weak);
     }
+
     :deep(.el-table__header-wrapper th:last-child),
     :deep(.el-table__body-wrapper td:last-child) {
       border-right: none;
     }
   }
 
-  /* Improve summary numbers visibility */
-  .analytics-summary-page .top-summary .summary-item .summary-value {
-    font-size: 20px;
-    font-weight: 800;
-  }
-
-  /* Allow table rows to wrap content gracefully */
   .el-table .cell {
     display: flex;
     align-items: center;
