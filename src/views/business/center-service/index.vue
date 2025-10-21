@@ -19,7 +19,7 @@
       </div>
       <div class="kpi-block kpi-orange">
         <div class="kpi-value">{{ totals.in_progress }}</div>
-        <div class="kpi-label">В процессе</div>
+        <div class="kpi-label">В проц��ссе</div>
       </div>
     </div>
 
@@ -544,15 +544,15 @@
 
     @media (max-width: 1400px) {
       .table-container {
-        min-height: 500px;
+        height: 500px;
       }
 
       .chart-container {
-        min-height: 500px;
+        height: 500px;
       }
 
       .pie-chart {
-        height: 420px;
+        height: 100%;
       }
     }
 
@@ -563,15 +563,15 @@
       }
 
       .table-container {
-        min-height: 450px;
+        height: 450px;
       }
 
       .chart-container {
-        min-height: 450px;
+        height: 450px;
       }
 
       .pie-chart {
-        height: 380px;
+        height: 100%;
       }
     }
 
@@ -634,11 +634,11 @@
       }
 
       .table-container {
-        min-height: 350px;
+        height: 400px;
       }
 
       .chart-container {
-        min-height: 350px;
+        height: 400px;
       }
 
       .table-card,
@@ -647,7 +647,7 @@
       }
 
       .pie-chart {
-        height: 280px;
+        height: 100%;
       }
 
       .summary-values {
@@ -709,11 +709,11 @@
 
       .table-container,
       .chart-container {
-        min-height: 280px;
+        height: 300px;
       }
 
       .pie-chart {
-        height: 220px;
+        height: 100%;
       }
 
       .summary-values {
