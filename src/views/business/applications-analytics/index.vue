@@ -353,7 +353,7 @@
   const selectedYear = ref<number | null>(currentYear)
   const monthOptions = [
     { value: 1, label: 'Январь' },
-    { value: 2, label: 'Февраль' },
+    { value: 2, label: 'Фев��аль' },
     { value: 3, label: 'Март' },
     { value: 4, label: 'Апрель' },
     { value: 5, label: 'Май' },
@@ -637,6 +637,7 @@
       color: #1e40af;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
 
     .kpi-section {
