@@ -86,6 +86,12 @@
     </transition>
 
     <el-card class="table-card art-table-card">
+      <div class="card-actions">
+        <el-button type="primary" @click="showFilter = !showFilter" size="small" class="filter-toggle">
+          <i class="el-icon-setting"></i>
+          Фильтр
+        </el-button>
+      </div>
       <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader :show-summary="true" :summary-method="getSummary">
         <template #default>
           <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
@@ -409,7 +415,7 @@ function arrowTitle(plan: number, done: number) {
   if (!plan) return 'План отсутствует'
   const diff = done - plan
   if (diff > 0) return `Превышение на ${diff}`
-  if (diff < 0) return `Н��добор на ${Math.abs(diff)}`
+  if (diff < 0) return `Недобор на ${Math.abs(diff)}`
   return 'В соответствии с планом'
 }
 
