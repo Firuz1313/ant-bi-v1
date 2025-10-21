@@ -439,6 +439,32 @@ watch([filteredData, sortBy, sortOrder], () => { page.value = 1 })
 
 // Keep selectedYear/months in sync: when selectedMonths changed programmatically, update range
 watch(selectedMonths, (v) => { onMonthsChange(v) })
+
+// When user edits dateRange manually, update year/month selectors when possible
+watch(dateRange, (rng) => {
+  if (!rng || rng.length !== 2) {
+    selectedYear.value = null
+    return
+  }
+  const [from, to] = rng
+  try {
+    const dFrom = new Date(from)
+    const dTo = new Date(to)
+    if (dFrom.getFullYear() === dTo.getFullYear()) {
+      selectedYear.value = dFrom.getFullYear()
+      const months: number[] = []
+      for (let m = dFrom.getMonth(); m <= dTo.getMonth(); m++) months.push(m + 1)
+      selectedMonths.value = months
+    } else {
+      // different years - clear month selection
+      selectedMonths.value = []
+      selectedYear.value = null
+    }
+  } catch (e) {
+    selectedYear.value = null
+    selectedMonths.value = []
+  }
+})
 </script>
 
 <style scoped lang="scss">
