@@ -1,30 +1,25 @@
 <template>
   <div class="analytics-summary-page">
-    <div class="top-controls">
-      <div class="controls-left">
-        <div class="page-title">
-          <h2>ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
-        </div>
+    <div class="page-title-section">
+      <h1 class="page-title">ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h1>
+    </div>
+
+    <div class="kpi-section">
+      <div class="kpi-block kpi-blue">
+        <div class="kpi-value">{{ filteredTotalCount }}</div>
+        <div class="kpi-label">Всего заявок</div>
       </div>
-      <div class="controls-right">
-        <div class="top-summary">
-          <div class="summary-item">
-            <div class="summary-label">Всего заявок</div>
-            <div class="summary-value">{{ filteredTotalCount }}</div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label">Выполнено</div>
-            <div class="summary-value color-success">{{ filteredDoneCount }}</div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label">В работе</div>
-            <div class="summary-value color-warning">{{ filteredInProgressCount }}</div>
-          </div>
-          <div class="summary-item">
-            <div class="summary-label">Просрочено</div>
-            <div class="summary-value color-danger">{{ filteredOverdueCount }}</div>
-          </div>
-        </div>
+      <div class="kpi-block kpi-green">
+        <div class="kpi-value">{{ filteredDoneCount }}</div>
+        <div class="kpi-label">Выполнено</div>
+      </div>
+      <div class="kpi-block kpi-orange">
+        <div class="kpi-value">{{ filteredInProgressCount }}</div>
+        <div class="kpi-label">В работе</div>
+      </div>
+      <div class="kpi-block kpi-red">
+        <div class="kpi-value">{{ filteredOverdueCount }}</div>
+        <div class="kpi-label">Просрочено</div>
       </div>
     </div>
 
