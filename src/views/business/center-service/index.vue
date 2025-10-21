@@ -557,11 +557,11 @@
       }
 
       .table-container {
-        height: 450px;
+        height: 420px;
       }
 
       .chart-container {
-        height: 450px;
+        height: 420px;
       }
 
       .pie-chart {
