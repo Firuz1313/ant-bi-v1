@@ -168,12 +168,6 @@
         </template>
       </ArtTable>
 
-      <div class="bottom-tabs">
-        <el-button type="primary" plain :class="{ 'is-active': activeTab === 'summary' }" @click="activeTab = 'summary'">Общая сводка</el-button>
-        <el-button plain :class="{ 'is-active': activeTab === 'center' }" @click="activeTab = 'center'">Центр обслуживания</el-button>
-        <el-button plain :class="{ 'is-active': activeTab === 'stp' }" @click="activeTab = 'stp'">СТП</el-button>
-        <el-button plain :class="{ 'is-active': activeTab === 'contact' }" @click="activeTab = 'contact'">Контакт центр</el-button>
-      </div>
     </el-card>
   </div>
 </template>
@@ -222,7 +216,7 @@ const yearOptions = Array.from({ length: 5 }).map((_, i) => currentYear - i) // 
 const selectedYear = ref<number | null>(currentYear)
 const monthOptions = [
   { value: 1, label: 'Январь' },
-  { value: 2, label: 'Февраль' },
+  { value: 2, label: 'Фе��раль' },
   { value: 3, label: 'Март' },
   { value: 4, label: 'Апрель' },
   { value: 5, label: 'Май' },
@@ -438,8 +432,6 @@ const filteredDoneCount = computed(() => filteredData.value.filter((r) => r.stat
 const filteredInProgressCount = computed(() => filteredData.value.filter((r) => r.status === 'in_progress').length)
 const filteredOverdueCount = computed(() => filteredData.value.filter((r) => r.status === 'overdue').length)
 
-const activeTab = ref('summary')
-
 watch([filteredData, sortBy, sortOrder], () => { page.value = 1 })
 
 // Keep selectedYear/months in sync: when selectedMonths changed programmatically, update range
@@ -533,8 +525,7 @@ watch(dateRange, (rng) => {
   .el-table th .cell, .el-table td .cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
 
   /* Bottom tabs */
-  .bottom-tabs { margin-top:12px; display:flex; justify-content:center; gap:8px }
-}
+  }
 
 .fade-enter-active, .fade-leave-active { transition: all 0.25s ease }
 .fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-6px) }
