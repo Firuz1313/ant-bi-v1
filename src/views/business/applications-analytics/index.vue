@@ -643,7 +643,7 @@
       display: flex;
       gap: 16px;
       margin-bottom: 24px;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
     }
 
