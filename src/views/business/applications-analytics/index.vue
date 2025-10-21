@@ -446,6 +446,8 @@ const filteredDoneCount = computed(() => filteredData.value.filter((r) => r.stat
 const filteredInProgressCount = computed(() => filteredData.value.filter((r) => r.status === 'in_progress').length)
 const filteredOverdueCount = computed(() => filteredData.value.filter((r) => r.status === 'overdue').length)
 
+const activeTab = ref('summary')
+
 watch([filteredData, sortBy, sortOrder], () => { page.value = 1 })
 
 // Keep selectedYear/months in sync: when selectedMonths changed programmatically, update range
