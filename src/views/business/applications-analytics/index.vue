@@ -176,6 +176,13 @@
           :current-page.sync="page"
         />
       </div>
+
+      <div class="bottom-tabs">
+        <el-button type="primary" plain :class="{ 'is-active': activeTab === 'summary' }" @click="activeTab = 'summary'">Общая сводка</el-button>
+        <el-button plain :class="{ 'is-active': activeTab === 'center' }" @click="activeTab = 'center'">Центр обслуживания</el-button>
+        <el-button plain :class="{ 'is-active': activeTab === 'stp' }" @click="activeTab = 'stp'">СТП</el-button>
+        <el-button plain :class="{ 'is-active': activeTab === 'contact' }" @click="activeTab = 'contact'">Контакт центр</el-button>
+      </div>
     </el-card>
   </div>
 </template>
