@@ -376,7 +376,7 @@ function handleSort(prop: string) {
 }
 
 function applyFilters() { page.value = 1 }
-function resetFilters() { dateRange.value = null; status.value = 'all'; search.value = '' }
+function resetFilters() { dateRange.value = null; status.value = 'all'; search.value = ''; selectedYear.value = null; selectedMonths.value = [] }
 
 function percent(plan: number, done: number) {
   if (!plan || plan === 0) return 0
