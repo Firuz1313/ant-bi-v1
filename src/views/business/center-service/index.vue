@@ -197,7 +197,7 @@
             },
             {
               value: totals.value.cancelled,
-              name: `Отмен��но ${totals.value.cancelled}`,
+              name: `Отменено ${totals.value.cancelled}`,
               itemStyle: { color: '#dc2626' }
             },
             {
@@ -526,35 +526,64 @@
     }
 
     .pie-chart {
-      height: 340px;
+      height: 480px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex: 1;
     }
 
-    @media (max-width: 1024px) {
-      .content-section {
-        grid-template-columns: 1fr;
+    @media (max-width: 1400px) {
+      .table-container {
+        min-height: 500px;
+      }
+
+      .chart-container {
+        min-height: 500px;
       }
 
       .pie-chart {
-        height: 300px;
+        height: 420px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .content-section {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+      }
+
+      .table-container {
+        min-height: 450px;
+      }
+
+      .chart-container {
+        min-height: 450px;
+      }
+
+      .pie-chart {
+        height: 380px;
       }
     }
 
     @media (max-width: 768px) {
       .page-title {
         font-size: 22px;
+        margin-bottom: 12px;
+      }
+
+      .page-title-section {
+        margin-bottom: 16px;
       }
 
       .kpi-section {
         flex-direction: row;
-        gap: 12px;
+        gap: 10px;
+        margin-bottom: 16px;
       }
 
       .kpi-block {
-        padding: 12px 16px;
+        padding: 12px 14px;
         min-width: 0;
         flex: 1;
         max-width: none;
@@ -562,20 +591,28 @@
 
       .kpi-value {
         font-size: 24px;
+        margin-bottom: 6px;
       }
 
       .kpi-label {
-        font-size: 12px;
+        font-size: 11px;
       }
 
       .period-section {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        padding: 10px;
+        margin-bottom: 16px;
+      }
+
+      .period-inline {
+        gap: 8px;
       }
 
       .period-slider {
         align-items: stretch;
+        gap: 6px;
       }
 
       .days-slider {
@@ -587,17 +624,100 @@
         gap: 12px;
       }
 
+      .table-container {
+        min-height: 350px;
+      }
+
+      .chart-container {
+        min-height: 350px;
+      }
+
       .table-card,
       .chart-card {
         padding: 12px;
       }
 
       .pie-chart {
-        height: 240px;
+        height: 280px;
       }
 
       .summary-values {
-        gap: 16px;
+        gap: 20px;
+      }
+
+      .summary-footer {
+        padding: 10px 12px;
+        flex-wrap: wrap;
+      }
+
+      .summary-label {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .chart-legend {
+        gap: 8px;
+        margin-bottom: 12px;
+        padding: 8px 0;
+      }
+
+      .legend-item {
+        font-size: 12px;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-title {
+        font-size: 18px;
+      }
+
+      .kpi-section {
+        gap: 8px;
+      }
+
+      .kpi-block {
+        padding: 10px 12px;
+      }
+
+      .kpi-value {
+        font-size: 20px;
+      }
+
+      .kpi-label {
+        font-size: 10px;
+      }
+
+      .period-inline {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .period-dates {
+        font-size: 12px;
+      }
+
+      .table-container,
+      .chart-container {
+        min-height: 280px;
+      }
+
+      .pie-chart {
+        height: 220px;
+      }
+
+      .summary-values {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .center-table .el-table th {
+        font-size: 11px;
+      }
+
+      .center-table .el-table td {
+        font-size: 10px;
       }
     }
   }
