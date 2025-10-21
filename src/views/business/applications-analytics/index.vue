@@ -32,6 +32,24 @@
     <transition name="fade">
       <div v-show="showFilter" class="top-filter">
         <div class="filter-row">
+          <!-- Year + Months smart selector -->
+          <el-select v-model="selectedYear" placeholder="Год" class="filter-item" clearable @change="onYearChange">
+            <el-option v-for="y in yearOptions" :key="y" :label="String(y)" :value="y" />
+          </el-select>
+
+          <el-select
+            v-model="selectedMonths"
+            multiple
+            collapse-tags
+            placeholder="Месяцы"
+            class="filter-item months-select"
+            clearable
+            :disabled="!selectedYear"
+            @change="onMonthsChange"
+          >
+            <el-option v-for="m in monthOptions" :key="m.value" :label="m.label" :value="m.value" />
+          </el-select>
+
           <el-date-picker
             v-model="dateRange"
             type="daterange"
@@ -39,14 +57,16 @@
             start-placeholder="Дата от"
             end-placeholder="Дата до"
             value-format="yyyy-MM-dd"
-            class="filter-item"
+            class="filter-item compact-date"
           />
+
           <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
             <el-option label="Все" value="all" />
             <el-option label="Выполнено" value="done" />
             <el-option label="В работе" value="in_progress" />
             <el-option label="Просрочено" value="overdue" />
           </el-select>
+
           <el-input
             v-model="search"
             placeholder="Поиск по заявке / клиенту"
