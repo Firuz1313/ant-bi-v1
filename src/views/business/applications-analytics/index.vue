@@ -62,7 +62,7 @@
           <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
             <el-option label="Все" value="all" />
             <el-option label="Выполнено" value="done" />
-            <el-option label="В работе" value="in_progress" />
+            <el-option label="�� работе" value="in_progress" />
             <el-option label="Просрочено" value="overdue" />
           </el-select>
 
@@ -510,9 +510,11 @@ watch(dateRange, (rng) => {
 
   .top-summary { display:flex; gap:12px; align-items:center; .summary-item{ padding:8px 14px; background:linear-gradient(180deg,#ffffff,#fbfbff); border-radius:8px; border:1px solid rgba(15,23,42,0.04); text-align:center; .summary-label{font-size:12px;color:#556} .summary-value{font-size:18px;font-weight:700}} .color-success{color:#059669} .color-warning{color:#d97706} .color-danger{color:#dc2626} }
 
-  .table-card.art-table-card{ padding:8px }
+  .table-card.art-table-card{ padding:8px; position:relative }
 
-  .cell-combo{ display:flex; align-items:center; justify-content:center; gap:8px; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669; font-weight:700; margin-right:4px} .arrow.down::after{content:'▼'; color:#dc2626; font-weight:700; margin-right:4px} .arrow.right::after{content:'▶'; color:#64748b; font-weight:700; margin-right:4px} .delta.good{ background:rgba(16,185,129,0.08); color:#065f46 } .delta.warning{ background:rgba(245,158,11,0.07); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.07); color:#7f1d1d } }
+  .card-actions{ position:absolute; top:12px; right:12px; z-index:5 }
+
+  .cell-combo{ display:flex; align-items:center; justify-content:center; gap:8px; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669; font-weight:700; margin-right:4px} .arrow.down::after{content:'▼'; color:#dc2626; font-weight:700; margin-right:4px} .arrow.right::after{content:'▶'; color:#64748b; font-weight:700; margin-right:4px} .delta.good{ background:rgba(16,185,129,0.12); color:#065f46 } .delta.warning{ background:rgba(250,204,21,0.12); color:#7c5d00 } .delta.poor{ background:rgba(239,68,68,0.12); color:#7f1d1d } }
 
   .el-table__footer-wrapper{ background:linear-gradient(180deg,#f7fafc,#fff) }
 
@@ -523,8 +525,8 @@ watch(dateRange, (rng) => {
   .table-footer{ display:flex; justify-content:flex-end; margin-top:12px }
 
   /* Center align all table content and set project font */
-  .el-table th, .el-table td { text-align:center; font-family:'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px }
-  .el-table th { font-size:16px; font-weight:700 }
+  .el-table th, .el-table td { text-align:center; font-family:'Segoe UI', Tahoma, Arial, sans-serif; font-size:13px }
+  .el-table th { font-size:14px; font-weight:700 }
 
   /* Bottom tabs */
   .bottom-tabs { margin-top:12px; display:flex; justify-content:center; gap:8px }
