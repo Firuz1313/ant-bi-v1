@@ -51,10 +51,10 @@
             <el-button type="primary" size="small" @click="toggleFilter">Фильтр</el-button>
           </div>
           <el-table :data="filteredRows" stripe border class="center-table" style="width: 100%">
-            <el-table-column prop="fio" label="ФИО" width="220" align="center" />
-            <el-table-column prop="dept" label="Подразделение" width="180" align="center" />
-            <el-table-column prop="total" label="Заявки" width="90" align="center" />
-            <el-table-column prop="cancelled" label="Отменено" width="90" align="center">
+            <el-table-column prop="fio" label="ФИО" width="160" align="center" />
+            <el-table-column prop="dept" label="Подразделение" width="130" align="center" />
+            <el-table-column prop="total" label="Заявки" width="75" align="center" />
+            <el-table-column prop="cancelled" label="Отменено" width="75" align="center">
               <template #default="{ row }">
                 <div class="cell-combo">
                   <div class="value">{{ row.cancelled }}</div>
@@ -64,12 +64,12 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column prop="in_progress" label="В процессе" width="100" align="center">
+            <el-table-column prop="in_progress" label="В процессе" width="85" align="center">
               <template #default="{ row }">
                 <div class="value">{{ row.in_progress }}</div>
               </template>
             </el-table-column>
-            <el-table-column prop="done" label="Выполнено" width="100" align="center">
+            <el-table-column prop="done" label="Выполнено" width="85" align="center">
               <template #default="{ row }">
                 <div class="cell-combo">
                   <div class="value">{{ row.done }}</div>
