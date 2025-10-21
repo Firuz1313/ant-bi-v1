@@ -108,6 +108,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import * as echarts from 'echarts'
+import { mockCenterRows } from '@/mock/center-service'
 
 interface Row { fio: string; dept: string; total: number; cancelled: number; in_progress: number; done: number }
 
