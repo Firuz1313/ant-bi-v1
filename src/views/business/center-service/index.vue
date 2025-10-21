@@ -365,16 +365,20 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
       grid-auto-rows: 1fr;
+      width: 100%;
+      overflow: hidden;
     }
 
     .table-container {
       display: flex;
-      min-height: 600px;
+      height: 600px;
+      overflow: hidden;
     }
 
     .chart-container {
       display: flex;
-      min-height: 600px;
+      height: 600px;
+      overflow: hidden;
     }
 
     .table-card,
@@ -385,6 +389,8 @@
       flex-direction: column;
       flex: 1;
       width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     .card-actions {
