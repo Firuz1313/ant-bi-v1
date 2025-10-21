@@ -364,19 +364,19 @@
 
     .table-container {
       display: flex;
-      height: 600px;
+      height: 550px;
       overflow: hidden;
     }
 
     .chart-container {
       display: flex;
-      height: 600px;
+      height: 550px;
       overflow: hidden;
     }
 
     .table-card,
     .chart-card {
-      padding: 16px;
+      padding: 12px;
       position: relative;
       display: flex;
       flex-direction: column;
