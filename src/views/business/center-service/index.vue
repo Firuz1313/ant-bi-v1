@@ -405,13 +405,13 @@
       color: #fff;
       font-weight: 700;
       text-align: center;
-      font-size: 13px;
+      font-size: 11px;
     }
 
     .center-table .el-table td {
       text-align: center;
       font-weight: 600;
-      font-size: 13px;
+      font-size: 11px;
     }
 
     .cell-combo {
