@@ -399,6 +399,14 @@ function arrowIcon(plan: number, done: number) {
   return 'right'
 }
 
+function arrowTitle(plan: number, done: number) {
+  if (!plan) return 'План отсутствует'
+  const diff = done - plan
+  if (diff > 0) return `Превышение на ${diff}`
+  if (diff < 0) return `Недобор на ${Math.abs(diff)}`
+  return 'В соответствии с планом'
+}
+
 function getSummary(columns: any[]) {
   const totals: any[] = []
   const data = filteredData.value
