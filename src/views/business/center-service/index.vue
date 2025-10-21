@@ -465,15 +465,16 @@
     }
 
     .summary-footer {
-      margin-top: 12px;
+      margin-top: 8px;
       background: #dbeafe;
-      padding: 12px 16px;
+      padding: 8px 12px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 700;
       color: #1e40af;
+      font-size: 11px;
     }
 
     .summary-label {
