@@ -11,19 +11,19 @@
         <div class="top-summary">
           <div class="summary-item">
             <div class="summary-label">Всего заявок</div>
-            <div class="summary-value">{{ totalCount }}</div>
+            <div class="summary-value">{{ filteredTotalCount }}</div>
           </div>
           <div class="summary-item">
             <div class="summary-label">Выполнено</div>
-            <div class="summary-value color-success">{{ doneCount }}</div>
+            <div class="summary-value color-success">{{ filteredDoneCount }}</div>
           </div>
           <div class="summary-item">
             <div class="summary-label">В работе</div>
-            <div class="summary-value color-warning">{{ inProgressCount }}</div>
+            <div class="summary-value color-warning">{{ filteredInProgressCount }}</div>
           </div>
           <div class="summary-item">
             <div class="summary-label">Просрочено</div>
-            <div class="summary-value color-danger">{{ overdueCount }}</div>
+            <div class="summary-value color-danger">{{ filteredOverdueCount }}</div>
           </div>
         </div>
       </div>
@@ -66,89 +66,82 @@
       </div>
     </transition>
 
-    <el-card class="table-card">
-      <el-table
-        :data="pagedData"
-        stripe
-        size="small"
-        class="analytics-table"
-        :default-sort="{ prop: sortBy, order: sortOrder }"
-        :show-summary="true"
-        :summary-method="getSummary"
-      >
-        <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
-        <el-table-column prop="days_nd" label="Дни нд" width="90" :sortable="true" @header-click="handleSort('days_nd')" />
+    <el-card class="table-card art-table-card">
+      <ArtTable :data="pagedData" :pagination="{ current: page, size: pageSize, total: filteredData.length }" showTableHeader>
+        <template #default>
+          <el-table-column prop="date" label="Дата" width="120" :sortable="true" @header-click="handleSort('date')" />
+          <el-table-column prop="days_nd" label="Дни нд" width="90" :sortable="true" @header-click="handleSort('days_nd')" />
 
-        <el-table-column prop="kc_plan" label="Кц План" width="90" :sortable="true" @header-click="handleSort('kc_plan')" />
-        <el-table-column prop="kc_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('kc_done')">
-          <template #default="{ row }">
-            <div class="cell-combo">
-              <div class="value">{{ row.kc_done }}</div>
-              <div :class="['delta', deltaClass(row.kc_plan, row.kc_done)]">
-                <i :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]"></i>
-                <span class="pct">{{ percent(row.kc_plan, row.kc_done) }}%</span>
+          <el-table-column prop="kc_plan" label="Кц План" width="90" :sortable="true" @header-click="handleSort('kc_plan')" />
+          <el-table-column prop="kc_done" label="Кц Выполнено" width="120" :sortable="true" @header-click="handleSort('kc_done')">
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.kc_done }}</div>
+                <div :class="['delta', deltaClass(row.kc_plan, row.kc_done)]">
+                  <i :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]"></i>
+                  <span class="pct">{{ percent(row.kc_plan, row.kc_done) }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </el-table-column>
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="co_plan" label="ЦО План" width="90" :sortable="true" @header-click="handleSort('co_plan')" />
-        <el-table-column prop="co_fact" label="ЦО Факт" width="90" :sortable="true" @header-click="handleSort('co_fact')" />
-        <el-table-column prop="co_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('co_done')">
-          <template #default="{ row }">
-            <div class="cell-combo">
-              <div class="value">{{ row.co_done }}</div>
-              <div :class="['delta', deltaClass(row.co_plan, row.co_done)]">
-                <i :class="['arrow', arrowIcon(row.co_plan, row.co_done)]"></i>
-                <span class="pct">{{ percent(row.co_plan, row.co_done) }}%</span>
+          <el-table-column prop="co_plan" label="ЦО План" width="90" :sortable="true" @header-click="handleSort('co_plan')" />
+          <el-table-column prop="co_fact" label="ЦО Факт" width="90" :sortable="true" @header-click="handleSort('co_fact')" />
+          <el-table-column prop="co_done" label="ЦО Выполнено" width="120" :sortable="true" @header-click="handleSort('co_done')">
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.co_done }}</div>
+                <div :class="['delta', deltaClass(row.co_plan, row.co_done)]">
+                  <i :class="['arrow', arrowIcon(row.co_plan, row.co_done)]"></i>
+                  <span class="pct">{{ percent(row.co_plan, row.co_done) }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </el-table-column>
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="stp_plan" label="СТП План" width="90" :sortable="true" @header-click="handleSort('stp_plan')" />
-        <el-table-column prop="stp_fact" label="СТП Факт" width="90" :sortable="true" @header-click="handleSort('stp_fact')" />
-        <el-table-column prop="stp_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('stp_done')">
-          <template #default="{ row }">
-            <div class="cell-combo">
-              <div class="value">{{ row.stp_done }}</div>
-              <div :class="['delta', deltaClass(row.stp_plan, row.stp_done)]">
-                <i :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]"></i>
-                <span class="pct">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+          <el-table-column prop="stp_plan" label="СТП План" width="90" :sortable="true" @header-click="handleSort('stp_plan')" />
+          <el-table-column prop="stp_fact" label="СТП Факт" width="90" :sortable="true" @header-click="handleSort('stp_fact')" />
+          <el-table-column prop="stp_done" label="СТП Выполнено" width="120" :sortable="true" @header-click="handleSort('stp_done')">
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.stp_done }}</div>
+                <div :class="['delta', deltaClass(row.stp_plan, row.stp_done)]">
+                  <i :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]"></i>
+                  <span class="pct">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </el-table-column>
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="f2f_plan" label="F2F План" width="90" :sortable="true" @header-click="handleSort('f2f_plan')" />
-        <el-table-column prop="f2f_fact" label="F2F Факт" width="90" :sortable="true" @header-click="handleSort('f2f_fact')" />
-        <el-table-column prop="f2f_done" label="Выполнено" width="120" :sortable="true" @header-click="handleSort('f2f_done')">
-          <template #default="{ row }">
-            <div class="cell-combo">
-              <div class="value">{{ row.f2f_done }}</div>
-              <div :class="['delta', deltaClass(row.f2f_plan, row.f2f_done)]">
-                <i :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]"></i>
-                <span class="pct">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+          <el-table-column prop="f2f_plan" label="F2F План" width="90" :sortable="true" @header-click="handleSort('f2f_plan')" />
+          <el-table-column prop="f2f_fact" label="F2F Факт" width="90" :sortable="true" @header-click="handleSort('f2f_fact')" />
+          <el-table-column prop="f2f_done" label="F2F Выполнено" width="120" :sortable="true" @header-click="handleSort('f2f_done')">
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.f2f_done }}</div>
+                <div :class="['delta', deltaClass(row.f2f_plan, row.f2f_done)]">
+                  <i :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]"></i>
+                  <span class="pct">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </el-table-column>
+            </template>
+          </el-table-column>
 
-        <el-table-column prop="total_plan" label="ИТОГ План" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
-        <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
-        <el-table-column prop="total_done" label="Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
-          <template #default="{ row }">
-            <div class="cell-combo">
-              <div class="value">{{ row.total_done }}</div>
-              <div :class="['delta', deltaClass(row.total_plan, row.total_done)]">
-                <i :class="['arrow', arrowIcon(row.total_plan, row.total_done)]"></i>
-                <span class="pct">{{ percent(row.total_plan, row.total_done) }}%</span>
+          <el-table-column prop="total_plan" label="ИТОГ ��лан" width="110" :sortable="true" @header-click="handleSort('total_plan')" />
+          <el-table-column prop="total_fact" label="ИТОГ Факт" width="110" :sortable="true" @header-click="handleSort('total_fact')" />
+          <el-table-column prop="total_done" label="ИТОГ Выполнено" width="130" :sortable="true" @header-click="handleSort('total_done')">
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.total_done }}</div>
+                <div :class="['delta', deltaClass(row.total_plan, row.total_done)]">
+                  <i :class="['arrow', arrowIcon(row.total_plan, row.total_done)]"></i>
+                  <span class="pct">{{ percent(row.total_plan, row.total_done) }}%</span>
+                </div>
               </div>
-            </div>
-          </template>
-        </el-table-column>
-
-      </el-table>
+            </template>
+          </el-table-column>
+        </template>
+      </ArtTable>
 
       <div class="table-footer">
         <el-pagination
@@ -165,6 +158,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
+import ArtTable from '@/components/core/tables/art-table/index.vue'
 
 interface Row {
   id: number
@@ -198,7 +192,6 @@ const sortOrder = ref<'ascending' | 'descending'>('descending')
 const page = ref(1)
 const pageSize = ref(10)
 
-// Mock data set
 const rows = ref<Row[]>(generateMockRows())
 
 function randInt(min: number, max: number) {
@@ -207,20 +200,35 @@ function randInt(min: number, max: number) {
 
 function generateMockRows(): Row[] {
   const base: Row[] = []
+  // Create 24 done rows and 4 in_progress rows to match requested totals
   for (let i = 1; i <= 28; i++) {
     const kc_plan = randInt(10, 60)
-    const kc_done = Math.max(0, kc_plan + randInt(-10, 20))
     const co_plan = randInt(5, 40)
-    const co_fact = Math.max(0, co_plan + randInt(-8, 18))
-    const co_done = Math.max(0, Math.round((co_fact + randInt(-3, 5))))
     const stp_plan = randInt(3, 30)
-    const stp_fact = Math.max(0, stp_plan + randInt(-6, 12))
-    const stp_done = Math.max(0, stp_fact + randInt(-2, 4))
     const f2f_plan = randInt(0, 10)
-    const f2f_fact = Math.max(0, f2f_plan + randInt(-3, 6))
-    const f2f_done = Math.max(0, f2f_fact + randInt(-1, 3))
-
     const total_plan = kc_plan + co_plan + stp_plan + f2f_plan
+
+    let kc_done = kc_plan
+    let co_fact = co_plan
+    let co_done = co_plan
+    let stp_fact = stp_plan
+    let stp_done = stp_plan
+    let f2f_fact = f2f_plan
+    let f2f_done = f2f_plan
+
+    // For last 4 rows make them in_progress
+    const isInProgress = i > 24
+    if (isInProgress) {
+      // lower completions
+      kc_done = Math.max(0, Math.round(kc_plan * 0.6))
+      co_fact = Math.max(0, Math.round(co_plan * 0.7))
+      co_done = Math.max(0, Math.round(co_fact * 0.7))
+      stp_fact = Math.max(0, Math.round(stp_plan * 0.6))
+      stp_done = Math.max(0, Math.round(stp_fact * 0.6))
+      f2f_fact = Math.max(0, Math.round(f2f_plan * 0.5))
+      f2f_done = Math.max(0, Math.round(f2f_fact * 0.5))
+    }
+
     const total_fact = Math.max(0, kc_done + co_fact + stp_fact + f2f_fact)
     const total_done = Math.max(0, kc_done + co_done + stp_done + f2f_done)
 
@@ -228,7 +236,7 @@ function generateMockRows(): Row[] {
     date.setDate(date.getDate() - (28 - i))
 
     const execution = Math.round((total_done / Math.max(1, total_plan)) * 100)
-    const status: Row['status'] = execution >= 100 ? 'done' : execution >= 60 ? 'in_progress' : 'overdue'
+    const statusVal: Row['status'] = i <= 24 ? 'done' : 'in_progress'
 
     base.push({
       id: i,
@@ -248,13 +256,12 @@ function generateMockRows(): Row[] {
       total_plan,
       total_fact,
       total_done,
-      status
+      status: statusVal
     })
   }
   return base
 }
 
-// Filtering
 const filteredData = computed(() => {
   let data = rows.value.slice()
   if (dateRange.value && dateRange.value.length === 2) {
@@ -281,7 +288,6 @@ const filteredData = computed(() => {
   return data
 })
 
-// Sorting
 const sortedData = computed(() => {
   const data = filteredData.value.slice()
   const sBy = sortBy.value
@@ -295,7 +301,6 @@ const sortedData = computed(() => {
   return data
 })
 
-// Pagination
 const pagedData = computed(() => {
   const start = (page.value - 1) * pageSize.value
   return sortedData.value.slice(start, start + pageSize.value)
@@ -310,16 +315,8 @@ function handleSort(prop: string) {
   }
 }
 
-function applyFilters() {
-  // currently filtering reactive variables are enough; this function kept for expansion
-  page.value = 1
-}
-
-function resetFilters() {
-  dateRange.value = null
-  status.value = 'all'
-  search.value = ''
-}
+function applyFilters() { page.value = 1 }
+function resetFilters() { dateRange.value = null; status.value = 'all'; search.value = '' }
 
 function percent(plan: number, done: number) {
   if (!plan || plan === 0) return 0
@@ -335,7 +332,6 @@ function deltaClass(plan: number, done: number) {
 }
 
 function arrowIcon(plan: number, done: number) {
-  // returns classes: 'up','down','right'
   if (!plan) return 'right'
   const diff = done - plan
   if (diff > 0) return 'up'
@@ -344,149 +340,50 @@ function arrowIcon(plan: number, done: number) {
 }
 
 function getSummary(columns: any[]) {
-  // columns are provided in order; build totals corresponding to visible columns
   const totals: any[] = []
-  // We'll map by order of table columns in template
   const data = filteredData.value
   const sum = (key: string) => data.reduce((acc, cur) => acc + (Number((cur as any)[key]) || 0), 0)
-
-  // Date column -> label
   totals.push('Всего')
-  // days_nd
   totals.push(sum('days_nd'))
-  // kc_plan
   totals.push(sum('kc_plan'))
-  // kc_done
   totals.push(sum('kc_done'))
-  // co_plan
   totals.push(sum('co_plan'))
-  // co_fact
   totals.push(sum('co_fact'))
-  // co_done
   totals.push(sum('co_done'))
-  // stp_plan
   totals.push(sum('stp_plan'))
-  // stp_fact
   totals.push(sum('stp_fact'))
-  // stp_done
   totals.push(sum('stp_done'))
-  // f2f_plan
   totals.push(sum('f2f_plan'))
-  // f2f_fact
   totals.push(sum('f2f_fact'))
-  // f2f_done
   totals.push(sum('f2f_done'))
-  // total_plan
   totals.push(sum('total_plan'))
-  // total_fact
   totals.push(sum('total_fact'))
-  // total_done
   totals.push(sum('total_done'))
-
   return totals
 }
 
-function arrowCharacter(type: string) {
-  if (type === 'up') return '▲'
-  if (type === 'down') return '▼'
-  return '▶'
-}
+const filteredTotalCount = computed(() => filteredData.value.length)
+const filteredDoneCount = computed(() => filteredData.value.filter((r) => r.status === 'done').length)
+const filteredInProgressCount = computed(() => filteredData.value.filter((r) => r.status === 'in_progress').length)
+const filteredOverdueCount = computed(() => filteredData.value.filter((r) => r.status === 'overdue').length)
 
-const totalCount = computed(() => rows.value.length)
-const doneCount = computed(() => rows.value.filter((r) => r.status === 'done').length)
-const inProgressCount = computed(() => rows.value.filter((r) => r.status === 'in_progress').length)
-const overdueCount = computed(() => rows.value.filter((r) => r.status === 'overdue').length)
-
-// Reset to first page when filters or sort change
-watch([filteredData, sortBy, sortOrder], () => {
-  page.value = 1
-})
+watch([filteredData, sortBy, sortOrder], () => { page.value = 1 })
 </script>
 
 <style scoped lang="scss">
+@import '@/components/core/tables/art-table/style.scss';
+
 .analytics-summary-page {
-  .top-controls {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    .controls-left { display: flex; gap: 8px; }
-    .controls-right { display: flex; align-items: center; }
-  }
-
-  .filter-toggle { display: inline-flex; align-items: center; gap: 6px; }
-
-  .top-filter {
-    margin-bottom: 16px;
-    background: #fbfdff;
-    padding: 12px;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(10,23,50,0.04);
-    .filter-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      flex-wrap: wrap;
-      .filter-item { min-width: 160px; }
-      .filter-search { min-width: 300px; }
-      .filter-actions { display: flex; gap: 8px; align-items: center; }
-    }
-  }
-
-  .top-summary {
-    display: flex;
-    gap: 12px;
-    .summary-item {
-      padding: 8px 14px;
-      background: linear-gradient(180deg, #ffffff, #fbfbff);
-      border-radius: 8px;
-      border: 1px solid rgba(15,23,42,0.04);
-      .summary-label { font-size: 12px; color: #556; }
-      .summary-value { font-size: 18px; font-weight: 700; }
-    }
-    .color-success { color: #059669; }
-    .color-warning { color: #d97706; }
-    .color-danger { color: #dc2626; }
-  }
-
-  .table-card { padding: 8px; }
-
-  .analytics-table {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-
-    .cell-combo {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .value { font-weight: 700; }
-      .delta {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 8px;
-        border-radius: 6px;
-        font-size: 12px;
-      }
-      .arrow { width: 0; height: 0; }
-      .arrow.up::after { content: '▲'; color: #059669; }
-      .arrow.down::after { content: '▼'; color: #dc2626; }
-      .arrow.right::after { content: '▶'; color: #64748b; }
-      .delta.excellent { background: rgba(16,185,129,0.06); color: #065f46; }
-      .delta.good { background: rgba(34,197,94,0.04); color: #166534; }
-      .delta.warning { background: rgba(245,158,11,0.06); color: #92400e; }
-      .delta.poor { background: rgba(239,68,68,0.06); color: #7f1d1d; }
-    }
-
-    /* summary row styles */
-    .el-table__footer-wrapper { background: linear-gradient(180deg,#f7fafc,#fff); }
-    .el-table__summary { font-weight: 700; }
-  }
-
-  .table-footer { display: flex; justify-content: flex-end; margin-top: 12px; }
+  .top-controls { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+  .filter-toggle { display:inline-flex; align-items:center; gap:6px }
+  .top-filter { margin-bottom:16px; background:#fbfdff; padding:12px; border-radius:8px; box-shadow:0 6px 18px rgba(10,23,50,0.04); }
+  .top-summary { display:flex; gap:12px; .summary-item{ padding:8px 14px; background:linear-gradient(180deg,#ffffff,#fbfbff); border-radius:8px; border:1px solid rgba(15,23,42,0.04); .summary-label{font-size:12px;color:#556} .summary-value{font-size:18px;font-weight:700}} .color-success{color:#059669} .color-warning{color:#d97706} .color-danger{color:#dc2626} }
+  .table-card.art-table-card{ padding:8px }
+  .cell-combo{ display:flex; align-items:center; justify-content:space-between; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:6px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669} .arrow.down::after{content:'▼'; color:#dc2626} .arrow.right::after{content:'▶'; color:#64748b} .delta.excellent{ background:rgba(16,185,129,0.06); color:#065f46 } .delta.good{ background:rgba(34,197,94,0.04); color:#166534 } .delta.warning{ background:rgba(245,158,11,0.06); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.06); color:#7f1d1d } }
+  .el-table__footer-wrapper{ background:linear-gradient(180deg,#f7fafc,#fff) }
+  .table-footer{ display:flex; justify-content:flex-end; margin-top:12px }
 }
 
-.fade-enter-active, .fade-leave-active { transition: all 0.25s ease; }
-.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-6px); }
+.fade-enter-active, .fade-leave-active { transition: all 0.25s ease }
+.fade-enter-from, .fade-leave-to { opacity: 0; transform: translateY(-6px) }
 </style>
