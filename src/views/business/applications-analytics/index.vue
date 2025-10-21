@@ -2,12 +2,16 @@
   <div class="analytics-summary-page">
     <div class="top-controls">
       <div class="controls-left">
+        <div class="page-title">
+          <h2>ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
+        </div>
+      </div>
+      <div class="controls-right">
         <el-button type="primary" @click="showFilter = !showFilter" size="small" class="filter-toggle">
           <i class="el-icon-setting"></i>
           Фильтр
         </el-button>
-      </div>
-      <div class="controls-right">
+
         <div class="top-summary">
           <div class="summary-item">
             <div class="summary-label">Всего заявок</div>
@@ -385,9 +389,9 @@ function percent(plan: number, done: number) {
 
 function deltaClass(plan: number, done: number) {
   const p = percent(plan, done)
-  if (p >= 100) return 'excellent'
+  // Color thresholds: red <50, yellow 50-79, green >=80
   if (p >= 80) return 'good'
-  if (p >= 60) return 'warning'
+  if (p >= 50) return 'warning'
   return 'poor'
 }
 
@@ -411,7 +415,7 @@ function getSummary(columns: any[]) {
   const totals: any[] = []
   const data = filteredData.value
   const sum = (key: string) => data.reduce((acc, cur) => acc + (Number((cur as any)[key]) || 0), 0)
-  totals.push('Всего')
+  totals.push('Итого')
   totals.push(sum('days_nd'))
   totals.push(sum('kc_plan'))
   totals.push(sum('kc_done'))
@@ -493,14 +497,26 @@ watch(dateRange, (rng) => {
     }
   }
 
-  .top-summary { display:flex; gap:12px; .summary-item{ padding:8px 14px; background:linear-gradient(180deg,#ffffff,#fbfbff); border-radius:8px; border:1px solid rgba(15,23,42,0.04); .summary-label{font-size:12px;color:#556} .summary-value{font-size:18px;font-weight:700}} .color-success{color:#059669} .color-warning{color:#d97706} .color-danger{color:#dc2626} }
+  .top-summary { display:flex; gap:12px; align-items:center; .summary-item{ padding:8px 14px; background:linear-gradient(180deg,#ffffff,#fbfbff); border-radius:8px; border:1px solid rgba(15,23,42,0.04); text-align:center; .summary-label{font-size:12px;color:#556} .summary-value{font-size:18px;font-weight:700}} .color-success{color:#059669} .color-warning{color:#d97706} .color-danger{color:#dc2626} }
 
   .table-card.art-table-card{ padding:8px }
 
-  .cell-combo{ display:flex; align-items:center; justify-content:space-between; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669; font-weight:700} .arrow.down::after{content:'▼'; color:#dc2626; font-weight:700} .arrow.right::after{content:'▶'; color:#64748b; font-weight:700} .delta.excellent{ background:rgba(16,185,129,0.08); color:#065f46 } .delta.good{ background:rgba(34,197,94,0.06); color:#166534 } .delta.warning{ background:rgba(245,158,11,0.07); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.07); color:#7f1d1d } }
+  .cell-combo{ display:flex; align-items:center; justify-content:center; gap:8px; .value{ font-weight:700 } .delta{ display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:8px; font-size:12px } .arrow.up::after{content:'▲'; color:#059669; font-weight:700; margin-right:4px} .arrow.down::after{content:'▼'; color:#dc2626; font-weight:700; margin-right:4px} .arrow.right::after{content:'▶'; color:#64748b; font-weight:700; margin-right:4px} .delta.good{ background:rgba(16,185,129,0.08); color:#065f46 } .delta.warning{ background:rgba(245,158,11,0.07); color:#92400e } .delta.poor{ background:rgba(239,68,68,0.07); color:#7f1d1d } }
 
   .el-table__footer-wrapper{ background:linear-gradient(180deg,#f7fafc,#fff) }
+
+  /* Summary row (Итого) styling */
+  :deep(.el-table__footer-wrapper .el-table__row) { background:#eaf4ff; }
+  :deep(.el-table__footer-wrapper td) { text-align:center; font-weight:700; }
+
   .table-footer{ display:flex; justify-content:flex-end; margin-top:12px }
+
+  /* Center align all table content and set project font */
+  .el-table th, .el-table td { text-align:center; font-family:'Segoe UI', Tahoma, Arial, sans-serif; font-size:14px }
+  .el-table th { font-size:16px; font-weight:700 }
+
+  /* Bottom tabs */
+  .bottom-tabs { margin-top:12px; display:flex; justify-content:center; gap:8px }
 }
 
 .fade-enter-active, .fade-leave-active { transition: all 0.25s ease }
