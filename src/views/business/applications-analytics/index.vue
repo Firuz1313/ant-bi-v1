@@ -3,7 +3,7 @@
     <div class="top-controls">
       <div class="controls-left">
         <div class="page-title">
-          <h2>ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
+          <h2>П��АН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h2>
         </div>
       </div>
       <div class="controls-right">
@@ -167,16 +167,6 @@
           </el-table-column>
         </template>
       </ArtTable>
-
-      <div class="table-footer">
-        <el-pagination
-          background
-          layout="prev, pager, next, ->, total"
-          :total="filteredData.length"
-          :page-size="pageSize"
-          :current-page.sync="page"
-        />
-      </div>
 
       <div class="bottom-tabs">
         <el-button type="primary" plain :class="{ 'is-active': activeTab === 'summary' }" @click="activeTab = 'summary'">Общая сводка</el-button>
