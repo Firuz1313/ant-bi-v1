@@ -343,7 +343,7 @@
           <span class="summary-value">{{ summaryData[11] }}</span>
         </div>
         <div class="summary-item">
-          <span class="summary-label">F2F Выполнено:</span>
+          <span class="summary-label">F2F Вып��лнено:</span>
           <span class="summary-value">{{ summaryData[12] }}</span>
         </div>
         <div class="summary-item">
@@ -1033,39 +1033,31 @@
         margin: 8px 0 0 0;
       }
 
-      .el-table th {
-        font-size: 12px;
-      }
-
-      .el-table td {
+      .summary-table th {
         font-size: 11px;
       }
 
-      :deep(.el-table__header-wrapper th:nth-child(n + 8)),
-      :deep(.el-table__body-wrapper td:nth-child(n + 8)) {
-        display: none;
+      .summary-table td {
+        font-size: 10px;
       }
 
-      .el-table {
-        width: 100%;
-        overflow-x: auto;
+      .table-container {
+        min-height: 300px;
+      }
+
+      .table-summary {
+        gap: 12px;
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+
+      .summary-item {
+        gap: 4px;
       }
     }
   }
 
-  @media (min-width: 769px) {
-    :deep(.el-table__header-wrapper th),
-    :deep(.el-table__body-wrapper td) {
-      border-right: 1px solid var(--border-weak);
-    }
-
-    :deep(.el-table__header-wrapper th:last-child),
-    :deep(.el-table__body-wrapper td:last-child) {
-      border-right: none;
-    }
-  }
-
-  .el-table .cell {
+  .summary-table .cell {
     display: flex;
     align-items: center;
     justify-content: center;
