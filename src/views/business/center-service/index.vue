@@ -407,53 +407,194 @@
 
     .filters-section {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: 1fr 1.2fr;
       gap: 20px;
       margin-bottom: 24px;
-      padding: 16px;
-      background: #f9fafb;
-      border-radius: 8px;
     }
 
-    .filter-group {
+    .period-display-card {
+      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+      color: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+    }
+
+    .period-header {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 8px;
-    }
-
-    .filter-label {
-      font-weight: 600;
-      color: #374151;
+      margin-bottom: 12px;
       font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.9;
     }
 
-    .date-range-container {
+    .period-label {
+      display: block;
+    }
+
+    .period-range {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .period-date {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .period-separator {
+      font-size: 20px;
+      font-weight: 300;
+    }
+
+    .period-controls {
       :deep(.el-date-editor) {
         width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        input {
+          background: transparent;
+          color: white;
+          font-size: 13px;
+
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+          }
+        }
+      }
+
+      :deep(.el-input__icon) {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      :deep(.el-input__suffix) {
+        color: rgba(255, 255, 255, 0.8);
       }
     }
 
-    .slider-container {
+    .days-filter-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+    }
+
+    .days-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #1e40af;
+      letter-spacing: 0.5px;
+    }
+
+    .days-label {
+      display: block;
+    }
+
+    .days-content {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 16px;
+    }
+
+    .days-slider-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .slider-input-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .slider-input-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #374151;
+      }
+
+      :deep(.el-input-number) {
+        width: 100%;
+
+        .el-input__inner {
+          text-align: center;
+          font-weight: 600;
+        }
+      }
     }
 
     .day-slider {
       :deep(.el-slider__track) {
-        background-color: #1e40af;
+        background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+        height: 6px;
       }
 
       :deep(.el-slider__button) {
         border-color: #1e40af;
-        background-color: #1e40af;
+        background-color: white;
+        width: 20px;
+        height: 20px;
+        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+        border: 3px solid #1e40af;
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+        }
+      }
+
+      :deep(.el-slider__stop) {
+        background-color: #dbeafe;
+      }
+
+      :deep(.el-tooltip__popper[x-placement^='top']) {
+        background: #1e40af;
+
+        &[x-placement^='top']::after {
+          border-top-color: #1e40af;
+        }
       }
     }
 
-    .slider-display {
-      font-size: 12px;
-      color: #6b7280;
+    .days-display {
       text-align: center;
+      padding: 12px;
+      background: #f0f9ff;
+      border-radius: 8px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .days-info {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e40af;
+      letter-spacing: 0.3px;
     }
 
     .content-section {
