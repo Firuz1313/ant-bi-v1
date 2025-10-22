@@ -599,9 +599,9 @@
 
     .content-section {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.3fr;
       gap: 20px;
-      min-height: 600px;
+      min-height: 650px;
     }
 
     .table-wrapper {
