@@ -24,9 +24,17 @@
     </div>
 
     <div class="filters-section">
-      <div class="filter-group">
-        <label class="filter-label">Период:</label>
-        <div class="date-range-container">
+      <div class="period-display-card">
+        <div class="period-header">
+          <i class="el-icon-date"></i>
+          <span class="period-label">Период анализа</span>
+        </div>
+        <div class="period-range">
+          <span class="period-date">{{ formatDate(dateRange[0]) }}</span>
+          <span class="period-separator">—</span>
+          <span class="period-date">{{ formatDate(dateRange[1]) }}</span>
+        </div>
+        <div class="period-controls">
           <el-date-picker
             v-model="dateRange"
             type="daterange"
@@ -35,23 +43,53 @@
             end-placeholder="Конец"
             size="small"
             format="YYYY-MM-DD"
+            class="period-picker"
           />
         </div>
       </div>
 
-      <div class="filter-group">
-        <label class="filter-label">Диапазон дней:</label>
-        <div class="slider-container">
-          <el-slider
-            v-model="daysRange"
-            range
-            :min="1"
-            :max="31"
-            :step="1"
-            :show-tooltip="true"
-            class="day-slider"
-          />
-          <div class="slider-display">{{ daysRange[0] }}-{{ daysRange[1] }} день</div>
+      <div class="days-filter-card">
+        <div class="days-header">
+          <i class="el-icon-s-unfold"></i>
+          <span class="days-label">Выбор дней месяца</span>
+        </div>
+        <div class="days-content">
+          <div class="days-slider-wrapper">
+            <div class="slider-input-group">
+              <div class="slider-input-item">
+                <label>От:</label>
+                <el-input-number
+                  v-model="daysRange[0]"
+                  :min="1"
+                  :max="31"
+                  size="small"
+                  @change="validateDaysRange"
+                />
+              </div>
+              <div class="slider-input-item">
+                <label>До:</label>
+                <el-input-number
+                  v-model="daysRange[1]"
+                  :min="1"
+                  :max="31"
+                  size="small"
+                  @change="validateDaysRange"
+                />
+              </div>
+            </div>
+            <el-slider
+              v-model="daysRange"
+              range
+              :min="1"
+              :max="31"
+              :step="1"
+              :show-tooltip="true"
+              class="day-slider"
+            />
+          </div>
+          <div class="days-display">
+            <span class="days-info">{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{ daysRange[1] - daysRange[0] + 1 }} дней)</span>
+          </div>
         </div>
       </div>
     </div>
