@@ -26,30 +26,6 @@
     <transition name="fade">
       <div v-show="showFilter" class="top-filter">
         <div class="filter-row">
-          <!-- Year + Months smart selector -->
-          <el-select
-            v-model="selectedYear"
-            placeholder="Год"
-            class="filter-item"
-            clearable
-            @change="onYearChange"
-          >
-            <el-option v-for="y in yearOptions" :key="y" :label="String(y)" :value="y" />
-          </el-select>
-
-          <el-select
-            v-model="selectedMonths"
-            multiple
-            collapse-tags
-            placeholder="Месяцы"
-            class="filter-item months-select"
-            clearable
-            :disabled="!selectedYear"
-            @change="onMonthsChange"
-          >
-            <el-option v-for="m in monthOptions" :key="m.value" :label="m.label" :value="m.value" />
-          </el-select>
-
           <el-date-picker
             v-model="dateRange"
             type="daterange"
@@ -58,20 +34,28 @@
             end-placeholder="Дата до"
             value-format="yyyy-MM-dd"
             class="filter-item compact-date"
+            @change="applyFilters"
           />
 
-          <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
+          <el-select
+            v-model="status"
+            placeholder="Статус"
+            class="filter-item"
+            clearable
+            @change="applyFilters"
+          >
             <el-option label="Все" value="all" />
             <el-option label="Выполнено" value="done" />
-            <el-option label="�� работе" value="in_progress" />
+            <el-option label="В работе" value="in_progress" />
             <el-option label="Просрочено" value="overdue" />
           </el-select>
 
           <el-input
             v-model="search"
-            placeholder="Поиск по заявке / клиенту"
+            placeholder="Поиск по данным"
             clearable
             class="filter-item filter-search"
+            @input="applyFilters"
           >
             <template #prefix>
               <i class="el-icon-search"></i>
@@ -79,8 +63,7 @@
           </el-input>
 
           <div class="filter-actions">
-            <el-button type="primary" @click="applyFilters">Применить</el-button>
-            <el-button @click="resetFilters">Сброс</el-button>
+            <el-button @click="resetFilters" size="small">Сброс</el-button>
           </div>
         </div>
       </div>
@@ -98,45 +81,33 @@
           Фильтр
         </el-button>
       </div>
-      <ArtTable
-        :data="sortedData"
-        showTableHeader
-        :show-summary="true"
-        :summary-method="getSummary"
-      >
-        <template #default>
-          <el-table-column
-            prop="date"
-            label="Дата"
-            width="120"
-            align="center"
-            :sortable="true"
-            @header-click="handleSort('date')"
-          />
+      <div class="table-header">
+        <h3 class="table-title">План/Факт по приёму заявок</h3>
+      </div>
+      <div class="table-container">
+        <el-table :data="sortedData" stripe border class="summary-table" style="width: 100%">
+          <el-table-column prop="date" label="Дата" width="100" align="center" :sortable="false" />
           <el-table-column
             prop="days_nd"
             label="Дни нд"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('days_nd')"
+            :sortable="false"
           />
 
           <el-table-column
             prop="kc_plan"
             label="Кц План"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('kc_plan')"
+            :sortable="false"
           />
           <el-table-column
             prop="kc_done"
             label="Кц Выполнено"
-            width="120"
+            width="110"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('kc_done')"
+            :sortable="false"
           >
             <template #default="{ row }">
               <div class="cell-combo">
@@ -155,26 +126,23 @@
           <el-table-column
             prop="co_plan"
             label="ЦО План"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('co_plan')"
+            :sortable="false"
           />
           <el-table-column
             prop="co_fact"
             label="ЦО Факт"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('co_fact')"
+            :sortable="false"
           />
           <el-table-column
             prop="co_done"
             label="ЦО Выполнено"
-            width="120"
+            width="110"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('co_done')"
+            :sortable="false"
           >
             <template #default="{ row }">
               <div class="cell-combo">
@@ -193,26 +161,23 @@
           <el-table-column
             prop="stp_plan"
             label="СТП План"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('stp_plan')"
+            :sortable="false"
           />
           <el-table-column
             prop="stp_fact"
             label="СТП Факт"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('stp_fact')"
+            :sortable="false"
           />
           <el-table-column
             prop="stp_done"
             label="СТП Выполнено"
-            width="120"
+            width="110"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('stp_done')"
+            :sortable="false"
           >
             <template #default="{ row }">
               <div class="cell-combo">
@@ -231,26 +196,23 @@
           <el-table-column
             prop="f2f_plan"
             label="F2F План"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('f2f_plan')"
+            :sortable="false"
           />
           <el-table-column
             prop="f2f_fact"
             label="F2F Факт"
-            width="90"
+            width="85"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('f2f_fact')"
+            :sortable="false"
           />
           <el-table-column
             prop="f2f_done"
             label="F2F Выполнено"
-            width="120"
+            width="110"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('f2f_done')"
+            :sortable="false"
           >
             <template #default="{ row }">
               <div class="cell-combo">
@@ -269,26 +231,23 @@
           <el-table-column
             prop="total_plan"
             label="ИТОГ План"
-            width="110"
+            width="100"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('total_plan')"
+            :sortable="false"
           />
           <el-table-column
             prop="total_fact"
             label="ИТОГ Факт"
-            width="110"
+            width="100"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('total_fact')"
+            :sortable="false"
           />
           <el-table-column
             prop="total_done"
             label="ИТОГ Выполнено"
-            width="130"
+            width="120"
             align="center"
-            :sortable="true"
-            @header-click="handleSort('total_done')"
+            :sortable="false"
           >
             <template #default="{ row }">
               <div class="cell-combo">
@@ -303,15 +262,109 @@
               </div>
             </template>
           </el-table-column>
-        </template>
-      </ArtTable>
+        </el-table>
+      </div>
+      <div class="table-summary">
+        <div class="summary-section">
+          <div class="summary-header">Дополнительно</div>
+          <div class="summary-metric">
+            <span class="summary-label">Дни нд</span>
+            <span class="summary-value">{{ summaryData[1] }}</span>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">Кц (Клиентский центр)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[2] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[3] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">ЦО (Центр обслуживания)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[4] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[5] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[6] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">СТП (Служба технической поддержки)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[7] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[8] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[9] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">F2F (Face to Face)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[10] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[11] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[12] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section summary-total">
+          <div class="summary-header">Итого</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value total-value">{{ summaryData[13] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value total-value">{{ summaryData[14] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value total-value">{{ summaryData[15] }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </el-card>
   </div>
 </template>
 
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue'
-  import ArtTable from '@/components/core/tables/art-table/index.vue'
 
   interface Row {
     id: number
@@ -346,46 +399,6 @@
   const pageSize = ref(10)
 
   const rows = ref<Row[]>(generateMockRows())
-
-  // Smart year / months selector
-  const currentYear = new Date().getFullYear()
-  const yearOptions = Array.from({ length: 5 }).map((_, i) => currentYear - i) // current year and 4 previous
-  const selectedYear = ref<number | null>(currentYear)
-  const monthOptions = [
-    { value: 1, label: 'Январь' },
-    { value: 2, label: 'Февраль' },
-    { value: 3, label: 'Март' },
-    { value: 4, label: 'Апрель' },
-    { value: 5, label: 'Май' },
-    { value: 6, label: 'Июнь' },
-    { value: 7, label: 'Июль' },
-    { value: 8, label: 'Август' },
-    { value: 9, label: 'Сентябрь' },
-    { value: 10, label: 'Октябрь' },
-    { value: 11, label: 'Ноябрь' },
-    { value: 12, label: 'Декабрь' }
-  ]
-  const selectedMonths = ref<number[]>([])
-
-  function onYearChange(year: number | null) {
-    // reset months when year changes
-    selectedMonths.value = []
-    dateRange.value = null
-  }
-
-  function onMonthsChange(months: number[]) {
-    // if months selected and year set, compute dateRange spanning from first day of earliest month
-    if (!selectedYear.value || !months || months.length === 0) {
-      dateRange.value = null
-      return
-    }
-    const sorted = months.slice().sort((a, b) => a - b)
-    const y = selectedYear.value
-    const from = new Date(y, sorted[0] - 1, 1)
-    const to = new Date(y, sorted[sorted.length - 1], 0) // day 0 of next month -> last day of month
-    const fmt = (d: Date) => d.toISOString().slice(0, 10)
-    dateRange.value = [fmt(from), fmt(to)]
-  }
 
   function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min
@@ -515,8 +528,7 @@
     dateRange.value = null
     status.value = 'all'
     search.value = ''
-    selectedYear.value = null
-    selectedMonths.value = []
+    page.value = 1
   }
 
   function percent(plan: number, done: number) {
@@ -549,29 +561,29 @@
     return `Низкий показатель (${p}%)`
   }
 
-  function getSummary(columns: any[]) {
-    const totals: any[] = []
+  const summaryData = computed(() => {
     const data = filteredData.value
     const sum = (key: string) =>
       data.reduce((acc, cur) => acc + (Number((cur as any)[key]) || 0), 0)
-    totals.push('Итого')
-    totals.push(sum('days_nd'))
-    totals.push(sum('kc_plan'))
-    totals.push(sum('kc_done'))
-    totals.push(sum('co_plan'))
-    totals.push(sum('co_fact'))
-    totals.push(sum('co_done'))
-    totals.push(sum('stp_plan'))
-    totals.push(sum('stp_fact'))
-    totals.push(sum('stp_done'))
-    totals.push(sum('f2f_plan'))
-    totals.push(sum('f2f_fact'))
-    totals.push(sum('f2f_done'))
-    totals.push(sum('total_plan'))
-    totals.push(sum('total_fact'))
-    totals.push(sum('total_done'))
-    return totals
-  }
+    return [
+      'Итого',
+      sum('days_nd'),
+      sum('kc_plan'),
+      sum('kc_done'),
+      sum('co_plan'),
+      sum('co_fact'),
+      sum('co_done'),
+      sum('stp_plan'),
+      sum('stp_fact'),
+      sum('stp_done'),
+      sum('f2f_plan'),
+      sum('f2f_fact'),
+      sum('f2f_done'),
+      sum('total_plan'),
+      sum('total_fact'),
+      sum('total_done')
+    ]
+  })
 
   const filteredTotalCount = computed(() => filteredData.value.length)
   const filteredDoneCount = computed(
@@ -587,42 +599,9 @@
   watch([filteredData, sortBy, sortOrder], () => {
     page.value = 1
   })
-
-  // Keep selectedYear/months in sync: when selectedMonths changed programmatically, update range
-  watch(selectedMonths, (v) => {
-    onMonthsChange(v)
-  })
-
-  // When user edits dateRange manually, update year/month selectors when possible
-  watch(dateRange, (rng) => {
-    if (!rng || rng.length !== 2) {
-      selectedYear.value = null
-      return
-    }
-    const [from, to] = rng
-    try {
-      const dFrom = new Date(from)
-      const dTo = new Date(to)
-      if (dFrom.getFullYear() === dTo.getFullYear()) {
-        selectedYear.value = dFrom.getFullYear()
-        const months: number[] = []
-        for (let m = dFrom.getMonth(); m <= dTo.getMonth(); m++) months.push(m + 1)
-        selectedMonths.value = months
-      } else {
-        // different years - clear month selection
-        selectedMonths.value = []
-        selectedYear.value = null
-      }
-    } catch (e) {
-      selectedYear.value = null
-      selectedMonths.value = []
-    }
-  })
 </script>
 
 <style scoped lang="scss">
-  @import '@/components/core/tables/art-table/style.scss';
-
   .analytics-summary-page {
     font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
     color: var(--text-color, #0f172a);
@@ -732,9 +711,11 @@
       }
     }
 
-    .table-card.art-table-card {
-      padding: 16px;
+    .table-card {
+      padding: 0;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .card-actions {
@@ -742,6 +723,137 @@
       top: 12px;
       right: 12px;
       z-index: 10;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    .table-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .table-container {
+      flex: 1;
+      overflow: auto;
+      min-height: 400px;
+    }
+
+    .summary-table {
+      :deep(.el-table__header th) {
+        background: #1e40af;
+        color: white;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 12px 0;
+      }
+
+      :deep(.el-table__body td) {
+        padding: 12px 0;
+        font-size: 12px;
+      }
+
+      :deep(.el-table__row:hover > td) {
+        background-color: #f3f4f6;
+      }
+    }
+
+    .table-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 24px;
+      background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+      border-top: 2px solid #e5e7eb;
+      color: #1f2937;
+    }
+
+    .summary-section {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      border-left: 4px solid #1e40af;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+
+    .summary-total {
+      border-left-color: #059669;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+
+      .summary-header {
+        color: #059669;
+      }
+
+      .total-value {
+        color: #059669;
+        font-size: 16px;
+      }
+    }
+
+    .summary-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1e40af;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 8px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+        border-color: #1e40af;
+      }
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6b7280;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+
+    .summary-value {
+      font-weight: 700;
+      color: #1e40af;
+      font-size: 18px;
+      line-height: 1;
     }
 
     .cell-combo {
@@ -800,60 +912,29 @@
       }
     }
 
-    .el-table__footer-wrapper {
-      background: #dbeafe;
+    .summary-table {
+      width: 100%;
     }
 
-    :deep(.el-table__footer-wrapper .el-table__row) {
-      background: #dbeafe;
-    }
-
-    :deep(.el-table__footer-wrapper td) {
-      text-align: center;
-      font-weight: 700;
-      color: #1e40af;
-    }
-
-    .table-footer {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 12px;
-    }
-
-    .el-table th,
-    .el-table td {
+    .summary-table th,
+    .summary-table td {
       text-align: center;
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
     }
 
-    .el-table th {
+    .summary-table th {
       background: #1e40af;
       color: #fff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
     }
 
-    .el-table td {
-      font-size: 13px;
+    .summary-table td {
+      font-size: 12px;
     }
 
-    :deep(.el-table__header-wrapper th),
-    :deep(.el-table__body-wrapper td) {
-      border-right: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    :deep(.el-table__header-wrapper th:last-child),
-    :deep(.el-table__body-wrapper td:last-child) {
-      border-right: none;
-    }
-
-    .el-table {
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    .el-table th .cell,
-    .el-table td .cell {
+    .summary-table th .cell,
+    .summary-table td .cell {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -942,39 +1023,53 @@
         margin: 8px 0 0 0;
       }
 
-      .el-table th {
-        font-size: 12px;
-      }
-
-      .el-table td {
+      .summary-table th {
         font-size: 11px;
       }
 
-      :deep(.el-table__header-wrapper th:nth-child(n + 8)),
-      :deep(.el-table__body-wrapper td:nth-child(n + 8)) {
-        display: none;
+      .summary-table td {
+        font-size: 10px;
       }
 
-      .el-table {
-        width: 100%;
-        overflow-x: auto;
+      .table-container {
+        min-height: 300px;
+      }
+
+      .table-summary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .summary-section {
+        padding: 12px;
+      }
+
+      .summary-header {
+        font-size: 11px;
+        margin-bottom: 10px;
+      }
+
+      .summary-columns {
+        gap: 8px;
+      }
+
+      .summary-metric {
+        padding: 8px 4px;
+      }
+
+      .summary-label {
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+
+      .summary-value {
+        font-size: 14px;
       }
     }
   }
 
-  @media (min-width: 769px) {
-    :deep(.el-table__header-wrapper th),
-    :deep(.el-table__body-wrapper td) {
-      border-right: 1px solid var(--border-weak);
-    }
-
-    :deep(.el-table__header-wrapper th:last-child),
-    :deep(.el-table__body-wrapper td:last-child) {
-      border-right: none;
-    }
-  }
-
-  .el-table .cell {
+  .summary-table .cell {
     display: flex;
     align-items: center;
     justify-content: center;
