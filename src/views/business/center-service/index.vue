@@ -304,6 +304,22 @@
     return 'Низко'
   }
 
+  function formatDate(date: Date | null | undefined): string {
+    if (!date) return ''
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+
+  function validateDaysRange() {
+    if (daysRange.value[0] > daysRange.value[1]) {
+      const temp = daysRange.value[0]
+      daysRange.value[0] = daysRange.value[1]
+      daysRange.value[1] = temp
+    }
+  }
+
   function exportTableData() {
     console.log('Export table data')
   }
