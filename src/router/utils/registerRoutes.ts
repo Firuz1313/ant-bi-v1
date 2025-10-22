@@ -240,22 +240,29 @@ function handleIframeRoute(
 }
 
 /**
- * 处理��级菜单路由
+ * 处理一级菜单路由
  */
 function handleLayoutRoute(
   converted: ConvertedRoute,
   route: AppRouteRecord,
-  component: string | undefined
+  component: string | (() => Promise<any>) | undefined
 ): void {
   // converted.component = () => import('@/views/index/index.vue')
   converted.path = `/${(route.path?.split('/')[1] || '').trim()}`
   converted.name = ''
   route.meta.isFirstLevel = true
 
+  let componentLoader: () => Promise<any>
+  if (typeof component === 'function') {
+    componentLoader = component
+  } else {
+    componentLoader = loadComponent(component as string, String(route.name))
+  }
+
   converted.children = [
     {
       ...route,
-      component: loadComponent(component as string, String(route.name))
+      component: componentLoader
     } as ConvertedRoute
   ]
 }
