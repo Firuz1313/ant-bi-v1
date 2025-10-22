@@ -53,7 +53,7 @@
           <el-date-picker
             v-model="dateRange"
             type="daterange"
-            range-separator="��"
+            range-separator="—"
             start-placeholder="Дата от"
             end-placeholder="Дата до"
             value-format="yyyy-MM-dd"
@@ -365,7 +365,6 @@
 
 <script setup lang="ts">
   import { ref, computed, watch } from 'vue'
-  import ArtTable from '@/components/core/tables/art-table/index.vue'
 
   interface Row {
     id: number
