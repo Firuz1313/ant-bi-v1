@@ -10,7 +10,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     path: '/applications-analytics',
     component: RoutesAlias.Layout,
     meta: {
-      title: 'Аналитика по заявкам на подключение план/факт',
+      title: 'АНАЛИТИКА ПРИНЯТЫХ ЗАЯВОК',
       icon: '&#xe73a;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
@@ -18,31 +18,31 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'ApplicationsAnalyticsIndex',
-        component: '/business/applications-analytics/index',
+        component: () => import('@views/business/applications-analytics/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'service-center',
         name: 'ApplicationsAnalyticsServiceCenter',
-        component: '/business/applications-analytics/service-center/index',
-        meta: { title: 'Центр обслуживания', keepAlive: true, icon: '&#xe6af;' }
+        component: () => import('@views/business/applications-analytics/service-center/index.vue'),
+        meta: { title: 'ЦЕНТР ОБСЛУЖИВАНИЯ', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'stp',
         name: 'ApplicationsAnalyticsSTP',
-        component: '/business/applications-analytics/stp/index',
+        component: () => import('@views/business/applications-analytics/stp/index.vue'),
         meta: { title: 'СТП', keepAlive: true, icon: '&#xe722;' }
       },
       {
         path: 'contact-center',
         name: 'ApplicationsAnalyticsContactCenter',
-        component: '/business/applications-analytics/contact-center/index',
+        component: () => import('@views/business/applications-analytics/contact-center/index.vue'),
         meta: { title: 'Контакт центр', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'f2f',
         name: 'ApplicationsAnalyticsF2F',
-        component: '/business/applications-analytics/f2f/index',
+        component: () => import('@views/business/applications-analytics/f2f/index.vue'),
         meta: { title: 'F2F', keepAlive: true, icon: '&#xe75f;' }
       }
     ]
@@ -60,49 +60,49 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'MastersDeptIndex',
-        component: '/business/masters-dept/index',
+        component: () => import('@views/business/masters-dept/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'cancelled',
         name: 'MastersDeptCancelled',
-        component: '/business/masters-dept/cancelled/index',
+        component: () => import('@views/business/masters-dept/cancelled/index.vue'),
         meta: { title: 'Отмененные заявки', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'repair-days',
         name: 'MastersDeptRepairDays',
-        component: '/business/masters-dept/repair-days/index',
+        component: () => import('@views/business/masters-dept/repair-days/index.vue'),
         meta: { title: 'Дни обработки на ремонт', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'connection-days',
         name: 'MastersDeptConnectionDays',
-        component: '/business/masters-dept/connection-days/index',
+        component: () => import('@views/business/masters-dept/connection-days/index.vue'),
         meta: { title: 'Дни обработки подключений', keepAlive: true, icon: '&#xe75f;' }
       },
       {
         path: 'percent-completed',
         name: 'MastersDeptPercentCompleted',
-        component: '/business/masters-dept/percent-completed/index',
+        component: () => import('@views/business/masters-dept/percent-completed/index.vue'),
         meta: { title: '% Выполнено', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'avg-days',
         name: 'MastersDeptAvgDays',
-        component: '/business/masters-dept/avg-days/index',
+        component: () => import('@views/business/masters-dept/avg-days/index.vue'),
         meta: { title: 'Среднее количество дней', keepAlive: true, icon: '&#xe722;' }
       },
       {
         path: 'forecasts',
         name: 'MastersDeptForecasts',
-        component: '/business/masters-dept/forecasts/index',
+        component: () => import('@views/business/masters-dept/forecasts/index.vue'),
         meta: { title: 'Прогнозы', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'source',
         name: 'MastersDeptSource',
-        component: '/business/masters-dept/source/index',
+        component: () => import('@views/business/masters-dept/source/index.vue'),
         meta: { title: 'Источник заявок', keepAlive: true, icon: '&#xe734;' }
       }
     ]
@@ -120,31 +120,31 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'CallCenterIndex',
-        component: '/business/call-center/index',
+        component: () => import('@views/business/call-center/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'call-purpose-repeat',
         name: 'CallCenterPurposeRepeat',
-        component: '/business/call-center/call-purpose-repeat/index',
+        component: () => import('@views/business/call-center/call-purpose-repeat/index.vue'),
         meta: { title: 'Цель звонка и повторные', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'by-periods',
         name: 'CallCenterByPeriods',
-        component: '/business/call-center/by-periods/index',
+        component: () => import('@views/business/call-center/by-periods/index.vue'),
         meta: { title: 'По дням, месяцам, годам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'by-daytime',
         name: 'CallCenterByDaytime',
-        component: '/business/call-center/by-daytime/index',
+        component: () => import('@views/business/call-center/by-daytime/index.vue'),
         meta: { title: 'По времени суток', keepAlive: true, icon: '&#xe75f;' }
       },
       {
         path: 'resolved-remotely',
         name: 'CallCenterResolvedRemotely',
-        component: '/business/call-center/resolved-remotely/index',
+        component: () => import('@views/business/call-center/resolved-remotely/index.vue'),
         meta: { title: 'Решенные удаленно', keepAlive: true, icon: '&#xe722;' }
       }
     ]
@@ -162,25 +162,25 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'DiscountProgramIndex',
-        component: '/business/discount-program/index',
+        component: () => import('@views/business/discount-program/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'by-connection',
         name: 'DiscountProgramByConnection',
-        component: '/business/discount-program/by-connection/index',
+        component: () => import('@views/business/discount-program/by-connection/index.vue'),
         meta: { title: 'По подключению', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'by-years',
         name: 'DiscountProgramByYears',
-        component: '/business/discount-program/by-years/index',
+        component: () => import('@views/business/discount-program/by-years/index.vue'),
         meta: { title: 'По годам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'package-share',
         name: 'DiscountProgramPackageShare',
-        component: '/business/discount-program/package-share/index',
+        component: () => import('@views/business/discount-program/package-share/index.vue'),
         meta: { title: 'Удельный вес по пакетам', keepAlive: true, icon: '&#xe73a;' }
       }
     ]
@@ -198,13 +198,13 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'BackofficeDelayIndex',
-        component: '/business/backoffice-delay/index',
+        component: () => import('@views/business/backoffice-delay/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'salary-penalty',
         name: 'BackofficeSalaryPenalty',
-        component: '/business/backoffice-delay/salary-penalty/index',
+        component: () => import('@views/business/backoffice-delay/salary-penalty/index.vue'),
         meta: { title: 'Штраф от ЗП', keepAlive: true, icon: '&#xe6af;' }
       }
     ]
@@ -222,25 +222,25 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'ClientsIndex',
-        component: '/business/clients/index',
+        component: () => import('@views/business/clients/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'inactive',
         name: 'ClientsInactive',
-        component: '/business/clients/inactive/index',
+        component: () => import('@views/business/clients/inactive/index.vue'),
         meta: { title: 'Неактивные', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'by-region',
         name: 'ClientsByRegion',
-        component: '/business/clients/by-region/index',
+        component: () => import('@views/business/clients/by-region/index.vue'),
         meta: { title: 'По регионам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'empty-names',
         name: 'ClientsEmptyNames',
-        component: '/business/clients/empty-names/index',
+        component: () => import('@views/business/clients/empty-names/index.vue'),
         meta: { title: 'С пустыми ФИО', keepAlive: true, icon: '&#xe75f;' }
       }
     ]

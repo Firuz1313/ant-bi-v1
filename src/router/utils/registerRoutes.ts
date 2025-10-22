@@ -192,9 +192,9 @@ function convertRouteComponent(
   if (route.meta.isIframe) {
     handleIframeRoute(converted, route, iframeRoutes, depth)
   } else if (isFirstLevel) {
-    handleLayoutRoute(converted, route, component as string)
+    handleLayoutRoute(converted, route, component)
   } else {
-    handleNormalRoute(converted, component as string, String(route.name))
+    handleNormalRoute(converted, component, String(route.name))
   }
 
   // 递归时增加深度
@@ -245,17 +245,24 @@ function handleIframeRoute(
 function handleLayoutRoute(
   converted: ConvertedRoute,
   route: AppRouteRecord,
-  component: string | undefined
+  component: string | (() => Promise<any>) | undefined
 ): void {
   // converted.component = () => import('@/views/index/index.vue')
   converted.path = `/${(route.path?.split('/')[1] || '').trim()}`
   converted.name = ''
   route.meta.isFirstLevel = true
 
+  let componentLoader: () => Promise<any>
+  if (typeof component === 'function') {
+    componentLoader = component
+  } else {
+    componentLoader = loadComponent(component as string, String(route.name))
+  }
+
   converted.children = [
     {
       ...route,
-      component: loadComponent(component as string, String(route.name))
+      component: componentLoader
     } as ConvertedRoute
   ]
 }
@@ -265,10 +272,17 @@ function handleLayoutRoute(
  */
 function handleNormalRoute(
   converted: ConvertedRoute,
-  component: string | undefined,
+  component: string | (() => Promise<any>) | undefined,
   routeName: string
 ): void {
   if (component) {
+    // 如果 component 是一个函数（动态导入），直接使用
+    if (typeof component === 'function') {
+      converted.component = component as () => Promise<any>
+      return
+    }
+
+    // 检查是否是 RoutesAlias 中的别名
     const aliasComponent = RoutesAlias[
       component as keyof typeof RoutesAlias
     ] as unknown as RouteRecordRaw['component']
