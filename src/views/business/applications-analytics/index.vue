@@ -674,7 +674,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import '@/components/core/tables/art-table/style.scss';
 
   .analytics-summary-page {
     font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
