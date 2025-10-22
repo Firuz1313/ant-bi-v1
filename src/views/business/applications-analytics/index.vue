@@ -277,69 +277,98 @@
         </el-table>
       </div>
       <div class="table-summary">
-        <div class="summary-item">
-          <span class="summary-label">Итого:</span>
-          <span class="summary-value">{{ summaryData[0] }}</span>
+        <div class="summary-section">
+          <div class="summary-header">Дополнительно</div>
+          <div class="summary-metric">
+            <span class="summary-label">Дни нд</span>
+            <span class="summary-value">{{ summaryData[1] }}</span>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Дни нд:</span>
-          <span class="summary-value">{{ summaryData[1] }}</span>
+
+        <div class="summary-section">
+          <div class="summary-header">Кц (Клиентский центр)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[2] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[3] }}</span>
+            </div>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Кц План:</span>
-          <span class="summary-value">{{ summaryData[2] }}</span>
+
+        <div class="summary-section">
+          <div class="summary-header">ЦО (Центр обслуживания)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[4] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[5] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[6] }}</span>
+            </div>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">Кц Выполнено:</span>
-          <span class="summary-value">{{ summaryData[3] }}</span>
+
+        <div class="summary-section">
+          <div class="summary-header">СТП (Служба технической поддержки)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[7] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[8] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[9] }}</span>
+            </div>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">ЦО План:</span>
-          <span class="summary-value">{{ summaryData[4] }}</span>
+
+        <div class="summary-section">
+          <div class="summary-header">F2F (Face to Face)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[10] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[11] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[12] }}</span>
+            </div>
+          </div>
         </div>
-        <div class="summary-item">
-          <span class="summary-label">ЦО Факт:</span>
-          <span class="summary-value">{{ summaryData[5] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">ЦО Выполнено:</span>
-          <span class="summary-value">{{ summaryData[6] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">СТП План:</span>
-          <span class="summary-value">{{ summaryData[7] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">СТП Факт:</span>
-          <span class="summary-value">{{ summaryData[8] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">СТП Выполнено:</span>
-          <span class="summary-value">{{ summaryData[9] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">F2F План:</span>
-          <span class="summary-value">{{ summaryData[10] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">F2F Факт:</span>
-          <span class="summary-value">{{ summaryData[11] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">F2F Выполнено:</span>
-          <span class="summary-value">{{ summaryData[12] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">ИТОГ План:</span>
-          <span class="summary-value">{{ summaryData[13] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">ИТОГ Факт:</span>
-          <span class="summary-value">{{ summaryData[14] }}</span>
-        </div>
-        <div class="summary-item">
-          <span class="summary-label">ИТОГ Выполнено:</span>
-          <span class="summary-value">{{ summaryData[15] }}</span>
+
+        <div class="summary-section summary-total">
+          <div class="summary-header">Итого</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value total-value">{{ summaryData[13] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value total-value">{{ summaryData[14] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value total-value">{{ summaryData[15] }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </el-card>
