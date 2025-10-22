@@ -88,7 +88,12 @@
             />
           </div>
           <div class="days-display">
-            <span class="days-info">{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{ daysRange[1] - daysRange[0] + 1 }} дней)</span>
+            <span class="days-info"
+              >{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{
+                daysRange[1] - daysRange[0] + 1
+              }}
+              дней)</span
+            >
           </div>
         </div>
       </div>
@@ -113,7 +118,12 @@
           >
             <el-table-column prop="fio" label="ФИО" min-width="140" align="left" />
             <el-table-column prop="dept" label="Подразделение" min-width="120" align="center" />
-            <el-table-column prop="total" label="Заявки на подключение" min-width="120" align="center" />
+            <el-table-column
+              prop="total"
+              label="Заявки на подключение"
+              min-width="120"
+              align="center"
+            />
             <el-table-column prop="cancelled" label="Отменено" min-width="100" align="center">
               <template #default="{ row }">
                 <div class="cell-value">{{ row.cancelled }}</div>
@@ -175,11 +185,15 @@
             </div>
             <div class="legend-item">
               <span class="dot cancelled"></span>
-              <span class="legend-text">Отменено {{ totals.cancelled }} ({{ percentTotalCancelled }}%)</span>
+              <span class="legend-text"
+                >Отменено {{ totals.cancelled }} ({{ percentTotalCancelled }}%)</span
+              >
             </div>
             <div class="legend-item">
               <span class="dot inprog"></span>
-              <span class="legend-text">В процессе {{ totals.in_progress }} ({{ percentTotalInProgress }}%)</span>
+              <span class="legend-text"
+                >В процессе {{ totals.in_progress }} ({{ percentTotalInProgress }}%)</span
+              >
             </div>
           </div>
           <div ref="chartRef" class="pie-chart" />
