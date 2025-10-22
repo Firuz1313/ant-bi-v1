@@ -26,8 +26,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, watch, nextTick } from 'vue'
-  import * as echarts from 'echarts'
+  import { ref, computed } from 'vue'
   import { mockCenterRows } from '@/mock/center-service'
 
   interface Row {
@@ -39,17 +38,7 @@
     done: number
   }
 
-  // Mock rows (from centralized mock file)
   const rows = ref<Row[]>(mockCenterRows)
-
-  // Period slider: days range within August 2025
-  const selectedMonth = ref<number>(8)
-  const daysRange = ref<[number, number]>([1, 31])
-
-  const filteredRows = computed(() => {
-    // For mock, we ignore dates; in real app we'd filter by date fields
-    return rows.value
-  })
 
   const totals = computed(() => {
     const total = rows.value.reduce((s, r) => s + r.total, 0)
@@ -58,97 +47,6 @@
     const in_progress = rows.value.reduce((s, r) => s + r.in_progress, 0)
     return { total, cancelled, done, in_progress }
   })
-
-  const percentTotalDone = computed(() =>
-    Math.round((totals.value.done / Math.max(1, totals.value.total)) * 100)
-  )
-  const percentTotalCancelled = computed(() =>
-    Math.round((totals.value.cancelled / Math.max(1, totals.value.total)) * 100)
-  )
-  const percentTotalInProgress = computed(() =>
-    Math.round((totals.value.in_progress / Math.max(1, totals.value.total)) * 100)
-  )
-
-  // Chart
-  const chartRef = ref<HTMLDivElement | null>(null)
-  let chart: echarts.ECharts | null = null
-
-  function renderChart() {
-    if (!chartRef.value) return
-    chart = echarts.init(chartRef.value as HTMLDivElement)
-    const option = {
-      tooltip: { trigger: 'item', formatter: '{b} {c} ({d}%)' },
-      series: [
-        {
-          name: 'Статус',
-          type: 'pie',
-          radius: ['45%', '75%'],
-          avoidLabelOverlap: false,
-          label: { show: true, formatter: '{b}\n{d}%', position: 'outside' },
-          emphasis: { label: { show: true, fontSize: '14', fontWeight: 'bold' } },
-          labelLine: { length: 16, length2: 8 },
-          data: [
-            {
-              value: totals.value.done,
-              name: `Выполнено ${totals.value.done}`,
-              itemStyle: { color: '#16a34a' }
-            },
-            {
-              value: totals.value.cancelled,
-              name: `Отменено ${totals.value.cancelled}`,
-              itemStyle: { color: '#dc2626' }
-            },
-            {
-              value: totals.value.in_progress,
-              name: `В процессе ${totals.value.in_progress}`,
-              itemStyle: { color: '#f97316' }
-            }
-          ]
-        }
-      ]
-    }
-    chart.setOption(option)
-  }
-
-  onMounted(() => {
-    nextTick(() => renderChart())
-    window.addEventListener('resize', () => chart?.resize())
-  })
-
-  watch(totals, () => {
-    renderChart()
-  })
-
-  // UI helpers
-  const periodStart = computed(() => `2025-08-${String(daysRange.value[0]).padStart(2, '0')}`)
-  const periodEnd = computed(() => `2025-08-${String(daysRange.value[1]).padStart(2, '0')}`)
-  const sliderLabel = computed(() => `${periodStart.value} — ${periodEnd.value}`)
-
-  function toggleFilter() {
-    // placeholder: in a polished UI this would open filters; left as stub
-    // keep minimal: scroll to table
-    const el = document.querySelector('.center-table')
-    if (el) (el as HTMLElement).scrollIntoView({ behavior: 'smooth' })
-  }
-
-  function percentRow(row: Row) {
-    const total = row.total || 1
-    return Math.round((row.done / total) * 100)
-  }
-
-  function deltaClassFromRow(row: Row) {
-    const p = percentRow(row)
-    if (p >= 80) return 'good'
-    if (p >= 50) return 'warning'
-    return 'poor'
-  }
-
-  function arrowClassFromRow(row: Row) {
-    const p = percentRow(row)
-    if (p >= 80) return 'up'
-    if (p >= 50) return 'right'
-    return 'down'
-  }
 </script>
 
 <style scoped lang="scss">
