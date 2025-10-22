@@ -330,7 +330,7 @@
           <span class="summary-value">{{ summaryData[12] }}</span>
         </div>
         <div class="summary-item">
-          <span class="summary-label">ИТОГ План:</span>
+          <span class="summary-label">��ТОГ План:</span>
           <span class="summary-value">{{ summaryData[13] }}</span>
         </div>
         <div class="summary-item">
@@ -383,45 +383,6 @@
 
   const rows = ref<Row[]>(generateMockRows())
 
-  // Smart year / months selector
-  const currentYear = new Date().getFullYear()
-  const yearOptions = Array.from({ length: 5 }).map((_, i) => currentYear - i) // current year and 4 previous
-  const selectedYear = ref<number | null>(currentYear)
-  const monthOptions = [
-    { value: 1, label: 'Январь' },
-    { value: 2, label: 'Февраль' },
-    { value: 3, label: 'Март' },
-    { value: 4, label: 'Апрель' },
-    { value: 5, label: 'Май' },
-    { value: 6, label: 'Июнь' },
-    { value: 7, label: 'Июль' },
-    { value: 8, label: 'Август' },
-    { value: 9, label: 'Сентябрь' },
-    { value: 10, label: 'Октябрь' },
-    { value: 11, label: 'Ноябрь' },
-    { value: 12, label: 'Декабрь' }
-  ]
-  const selectedMonths = ref<number[]>([])
-
-  function onYearChange(year: number | null) {
-    // reset months when year changes
-    selectedMonths.value = []
-    dateRange.value = null
-  }
-
-  function onMonthsChange(months: number[]) {
-    // if months selected and year set, compute dateRange spanning from first day of earliest month
-    if (!selectedYear.value || !months || months.length === 0) {
-      dateRange.value = null
-      return
-    }
-    const sorted = months.slice().sort((a, b) => a - b)
-    const y = selectedYear.value
-    const from = new Date(y, sorted[0] - 1, 1)
-    const to = new Date(y, sorted[sorted.length - 1], 0) // day 0 of next month -> last day of month
-    const fmt = (d: Date) => d.toISOString().slice(0, 10)
-    dateRange.value = [fmt(from), fmt(to)]
-  }
 
   function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min
