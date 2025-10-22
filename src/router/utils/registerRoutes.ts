@@ -192,9 +192,9 @@ function convertRouteComponent(
   if (route.meta.isIframe) {
     handleIframeRoute(converted, route, iframeRoutes, depth)
   } else if (isFirstLevel) {
-    handleLayoutRoute(converted, route, component as string)
+    handleLayoutRoute(converted, route, component)
   } else {
-    handleNormalRoute(converted, component as string, String(route.name))
+    handleNormalRoute(converted, component, String(route.name))
   }
 
   // 递归时增加深度
