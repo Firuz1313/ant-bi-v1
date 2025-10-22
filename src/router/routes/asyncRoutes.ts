@@ -10,7 +10,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     path: '/applications-analytics',
     component: RoutesAlias.Layout,
     meta: {
-      title: 'Аналитика по заявкам на подключение план/факт',
+      title: 'Аналитика по заяв��ам на подключение план/факт',
       icon: '&#xe73a;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
@@ -198,13 +198,13 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'BackofficeDelayIndex',
-        component: '/business/backoffice-delay/index',
+        component: () => import('@views/business/backoffice-delay/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'salary-penalty',
         name: 'BackofficeSalaryPenalty',
-        component: '/business/backoffice-delay/salary-penalty/index',
+        component: () => import('@views/business/backoffice-delay/salary-penalty/index.vue'),
         meta: { title: 'Штраф от ЗП', keepAlive: true, icon: '&#xe6af;' }
       }
     ]
