@@ -602,29 +602,29 @@
     return `Низкий показатель (${p}%)`
   }
 
-  function getSummary(columns: any[]) {
-    const totals: any[] = []
+  const summaryData = computed(() => {
     const data = filteredData.value
     const sum = (key: string) =>
       data.reduce((acc, cur) => acc + (Number((cur as any)[key]) || 0), 0)
-    totals.push('Итого')
-    totals.push(sum('days_nd'))
-    totals.push(sum('kc_plan'))
-    totals.push(sum('kc_done'))
-    totals.push(sum('co_plan'))
-    totals.push(sum('co_fact'))
-    totals.push(sum('co_done'))
-    totals.push(sum('stp_plan'))
-    totals.push(sum('stp_fact'))
-    totals.push(sum('stp_done'))
-    totals.push(sum('f2f_plan'))
-    totals.push(sum('f2f_fact'))
-    totals.push(sum('f2f_done'))
-    totals.push(sum('total_plan'))
-    totals.push(sum('total_fact'))
-    totals.push(sum('total_done'))
-    return totals
-  }
+    return [
+      'Итого',
+      sum('days_nd'),
+      sum('kc_plan'),
+      sum('kc_done'),
+      sum('co_plan'),
+      sum('co_fact'),
+      sum('co_done'),
+      sum('stp_plan'),
+      sum('stp_fact'),
+      sum('stp_done'),
+      sum('f2f_plan'),
+      sum('f2f_fact'),
+      sum('f2f_done'),
+      sum('total_plan'),
+      sum('total_fact'),
+      sum('total_done')
+    ]
+  })
 
   const filteredTotalCount = computed(() => filteredData.value.length)
   const filteredDoneCount = computed(
