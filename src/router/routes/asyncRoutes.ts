@@ -18,31 +18,31 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'ApplicationsAnalyticsIndex',
-        component: '/business/applications-analytics/index',
+        component: () => import('@views/business/applications-analytics/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'service-center',
         name: 'ApplicationsAnalyticsServiceCenter',
-        component: '/business/applications-analytics/service-center/index',
+        component: () => import('@views/business/applications-analytics/service-center/index.vue'),
         meta: { title: 'Центр обслуживания', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'stp',
         name: 'ApplicationsAnalyticsSTP',
-        component: '/business/applications-analytics/stp/index',
+        component: () => import('@views/business/applications-analytics/stp/index.vue'),
         meta: { title: 'СТП', keepAlive: true, icon: '&#xe722;' }
       },
       {
         path: 'contact-center',
         name: 'ApplicationsAnalyticsContactCenter',
-        component: '/business/applications-analytics/contact-center/index',
+        component: () => import('@views/business/applications-analytics/contact-center/index.vue'),
         meta: { title: 'Контакт центр', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'f2f',
         name: 'ApplicationsAnalyticsF2F',
-        component: '/business/applications-analytics/f2f/index',
+        component: () => import('@views/business/applications-analytics/f2f/index.vue'),
         meta: { title: 'F2F', keepAlive: true, icon: '&#xe75f;' }
       }
     ]
@@ -133,7 +133,7 @@ export const asyncRoutes: AppRouteRecord[] = [
         path: 'by-periods',
         name: 'CallCenterByPeriods',
         component: '/business/call-center/by-periods/index',
-        meta: { title: 'По дням, месяцам, годам', keepAlive: true, icon: '&#xe734;' }
+        meta: { title: 'По дням, месяцам, года��', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'by-daytime',
