@@ -781,30 +781,93 @@
     }
 
     .table-summary {
-      display: flex;
-      gap: 24px;
-      padding: 12px 16px;
-      background: #dbeafe;
-      border-top: 1px solid #e5e7eb;
-      font-weight: 600;
-      color: #1e40af;
-      font-size: 12px;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 24px;
+      background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+      border-top: 2px solid #e5e7eb;
+      color: #1f2937;
     }
 
-    .summary-item {
+    .summary-section {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      border-left: 4px solid #1e40af;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+
+    .summary-total {
+      border-left-color: #059669;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+
+      .summary-header {
+        color: #059669;
+      }
+
+      .total-value {
+        color: #059669;
+        font-size: 16px;
+      }
+    }
+
+    .summary-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1e40af;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
       display: flex;
-      gap: 8px;
       align-items: center;
+      gap: 6px;
+    }
+
+    .summary-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 8px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+        border-color: #1e40af;
+      }
     }
 
     .summary-label {
-      color: #1e40af;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6b7280;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
     }
 
     .summary-value {
       font-weight: 700;
       color: #1e40af;
+      font-size: 18px;
+      line-height: 1;
     }
 
     .cell-combo {
