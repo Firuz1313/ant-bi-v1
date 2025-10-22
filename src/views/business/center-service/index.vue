@@ -716,51 +716,60 @@
       display: flex;
       flex-direction: column;
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
     }
 
     .chart-header {
-      padding: 16px;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 20px;
+      border-bottom: 2px solid #f0f4f8;
+      background: linear-gradient(to right, #f8f9fb, #ffffff);
     }
 
     .chart-title {
       margin: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1f2937;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e40af;
+      letter-spacing: 0.3px;
     }
 
     .chart-container {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 16px;
-      min-height: 400px;
+      padding: 24px 20px;
+      min-height: 480px;
     }
 
     .chart-legend {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 14px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: #f0f9ff;
+      border-radius: 8px;
+      border-left: 4px solid #1e40af;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 13px;
       font-weight: 600;
+      line-height: 1.4;
     }
 
     .dot {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .dot.done {
@@ -776,12 +785,13 @@
     }
 
     .legend-text {
-      color: #374151;
+      color: #1f2937;
+      font-weight: 600;
     }
 
     .pie-chart {
       flex: 1;
-      min-height: 300px;
+      min-height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
