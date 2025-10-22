@@ -25,7 +25,7 @@ export const asyncRoutes: AppRouteRecord[] = [
         path: 'service-center',
         name: 'ApplicationsAnalyticsServiceCenter',
         component: () => import('@views/business/applications-analytics/service-center/index.vue'),
-        meta: { title: 'Центр обслуживания', keepAlive: true, icon: '&#xe6af;' }
+        meta: { title: 'ЦЕНТР ОБСЛУЖИВАНИЯ', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'stp',
