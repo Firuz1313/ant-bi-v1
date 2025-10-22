@@ -91,7 +91,7 @@ export const asyncRoutes: AppRouteRecord[] = [
         path: 'avg-days',
         name: 'MastersDeptAvgDays',
         component: () => import('@views/business/masters-dept/avg-days/index.vue'),
-        meta: { title: 'Среднее ��оличество дней', keepAlive: true, icon: '&#xe722;' }
+        meta: { title: 'Среднее количество дней', keepAlive: true, icon: '&#xe722;' }
       },
       {
         path: 'forecasts',
@@ -120,31 +120,31 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'CallCenterIndex',
-        component: '/business/call-center/index',
+        component: () => import('@views/business/call-center/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'call-purpose-repeat',
         name: 'CallCenterPurposeRepeat',
-        component: '/business/call-center/call-purpose-repeat/index',
+        component: () => import('@views/business/call-center/call-purpose-repeat/index.vue'),
         meta: { title: 'Цель звонка и повторные', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'by-periods',
         name: 'CallCenterByPeriods',
-        component: '/business/call-center/by-periods/index',
+        component: () => import('@views/business/call-center/by-periods/index.vue'),
         meta: { title: 'По дням, месяцам, годам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'by-daytime',
         name: 'CallCenterByDaytime',
-        component: '/business/call-center/by-daytime/index',
+        component: () => import('@views/business/call-center/by-daytime/index.vue'),
         meta: { title: 'По времени суток', keepAlive: true, icon: '&#xe75f;' }
       },
       {
         path: 'resolved-remotely',
         name: 'CallCenterResolvedRemotely',
-        component: '/business/call-center/resolved-remotely/index',
+        component: () => import('@views/business/call-center/resolved-remotely/index.vue'),
         meta: { title: 'Решенные удаленно', keepAlive: true, icon: '&#xe722;' }
       }
     ]
