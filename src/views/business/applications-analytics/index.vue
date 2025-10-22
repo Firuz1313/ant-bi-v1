@@ -512,8 +512,7 @@
     dateRange.value = null
     status.value = 'all'
     search.value = ''
-    selectedYear.value = null
-    selectedMonths.value = []
+    page.value = 1
   }
 
   function percent(plan: number, done: number) {
