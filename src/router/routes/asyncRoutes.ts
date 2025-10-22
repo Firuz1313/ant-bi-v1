@@ -10,7 +10,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     path: '/applications-analytics',
     component: RoutesAlias.Layout,
     meta: {
-      title: 'Аналитика по заявкам на подключение план/факт',
+      title: 'АНАЛИТИКА ПРИНЯТЫХ ЗАЯВОК',
       icon: '&#xe73a;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
