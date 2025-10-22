@@ -162,25 +162,25 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'DiscountProgramIndex',
-        component: '/business/discount-program/index',
+        component: () => import('@views/business/discount-program/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'by-connection',
         name: 'DiscountProgramByConnection',
-        component: '/business/discount-program/by-connection/index',
+        component: () => import('@views/business/discount-program/by-connection/index.vue'),
         meta: { title: 'По подключению', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'by-years',
         name: 'DiscountProgramByYears',
-        component: '/business/discount-program/by-years/index',
+        component: () => import('@views/business/discount-program/by-years/index.vue'),
         meta: { title: 'По годам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'package-share',
         name: 'DiscountProgramPackageShare',
-        component: '/business/discount-program/package-share/index',
+        component: () => import('@views/business/discount-program/package-share/index.vue'),
         meta: { title: 'Удельный вес по пакетам', keepAlive: true, icon: '&#xe73a;' }
       }
     ]
