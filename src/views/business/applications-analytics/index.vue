@@ -85,20 +85,8 @@
         <h3 class="table-title">План/Факт по приёму заявок</h3>
       </div>
       <div class="table-container">
-        <el-table
-          :data="sortedData"
-          stripe
-          border
-          class="summary-table"
-          style="width: 100%"
-        >
-          <el-table-column
-            prop="date"
-            label="Дата"
-            width="100"
-            align="center"
-            :sortable="false"
-          />
+        <el-table :data="sortedData" stripe border class="summary-table" style="width: 100%">
+          <el-table-column prop="date" label="Дата" width="100" align="center" :sortable="false" />
           <el-table-column
             prop="days_nd"
             label="Дни нд"
@@ -412,7 +400,6 @@
 
   const rows = ref<Row[]>(generateMockRows())
 
-
   function randInt(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
@@ -615,7 +602,6 @@
 </script>
 
 <style scoped lang="scss">
-
   .analytics-summary-page {
     font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
     color: var(--text-color, #0f172a);
