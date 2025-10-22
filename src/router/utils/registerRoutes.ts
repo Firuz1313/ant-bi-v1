@@ -240,7 +240,7 @@ function handleIframeRoute(
 }
 
 /**
- * 处理一级菜单路由
+ * 处理��级菜单路由
  */
 function handleLayoutRoute(
   converted: ConvertedRoute,
@@ -265,10 +265,17 @@ function handleLayoutRoute(
  */
 function handleNormalRoute(
   converted: ConvertedRoute,
-  component: string | undefined,
+  component: string | (() => Promise<any>) | undefined,
   routeName: string
 ): void {
   if (component) {
+    // 如果 component 是一个函数（动态导入），直接使用
+    if (typeof component === 'function') {
+      converted.component = component as () => Promise<any>
+      return
+    }
+
+    // 检查是否是 RoutesAlias 中的别名
     const aliasComponent = RoutesAlias[
       component as keyof typeof RoutesAlias
     ] as unknown as RouteRecordRaw['component']
