@@ -10,7 +10,7 @@ export const asyncRoutes: AppRouteRecord[] = [
     path: '/applications-analytics',
     component: RoutesAlias.Layout,
     meta: {
-      title: 'Аналитика по заяв��ам на подключение план/факт',
+      title: 'Аналитика по заявкам на подключение план/факт',
       icon: '&#xe73a;',
       roles: ['R_SUPER', 'R_ADMIN', 'R_USER']
     },
@@ -222,25 +222,25 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'ClientsIndex',
-        component: '/business/clients/index',
+        component: () => import('@views/business/clients/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'inactive',
         name: 'ClientsInactive',
-        component: '/business/clients/inactive/index',
+        component: () => import('@views/business/clients/inactive/index.vue'),
         meta: { title: 'Неактивные', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'by-region',
         name: 'ClientsByRegion',
-        component: '/business/clients/by-region/index',
+        component: () => import('@views/business/clients/by-region/index.vue'),
         meta: { title: 'По регионам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'empty-names',
         name: 'ClientsEmptyNames',
-        component: '/business/clients/empty-names/index',
+        component: () => import('@views/business/clients/empty-names/index.vue'),
         meta: { title: 'С пустыми ФИО', keepAlive: true, icon: '&#xe75f;' }
       }
     ]
