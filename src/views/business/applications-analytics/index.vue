@@ -26,30 +26,6 @@
     <transition name="fade">
       <div v-show="showFilter" class="top-filter">
         <div class="filter-row">
-          <!-- Year + Months smart selector -->
-          <el-select
-            v-model="selectedYear"
-            placeholder="Год"
-            class="filter-item"
-            clearable
-            @change="onYearChange"
-          >
-            <el-option v-for="y in yearOptions" :key="y" :label="String(y)" :value="y" />
-          </el-select>
-
-          <el-select
-            v-model="selectedMonths"
-            multiple
-            collapse-tags
-            placeholder="Месяцы"
-            class="filter-item months-select"
-            clearable
-            :disabled="!selectedYear"
-            @change="onMonthsChange"
-          >
-            <el-option v-for="m in monthOptions" :key="m.value" :label="m.label" :value="m.value" />
-          </el-select>
-
           <el-date-picker
             v-model="dateRange"
             type="daterange"
@@ -58,20 +34,28 @@
             end-placeholder="Дата до"
             value-format="yyyy-MM-dd"
             class="filter-item compact-date"
+            @change="applyFilters"
           />
 
-          <el-select v-model="status" placeholder="Статус" class="filter-item" clearable>
+          <el-select
+            v-model="status"
+            placeholder="Статус"
+            class="filter-item"
+            clearable
+            @change="applyFilters"
+          >
             <el-option label="Все" value="all" />
             <el-option label="Выполнено" value="done" />
-            <el-option label="�� работе" value="in_progress" />
+            <el-option label="В работе" value="in_progress" />
             <el-option label="Просрочено" value="overdue" />
           </el-select>
 
           <el-input
             v-model="search"
-            placeholder="Поиск по заявке / клиенту"
+            placeholder="Поиск по данным"
             clearable
             class="filter-item filter-search"
+            @input="applyFilters"
           >
             <template #prefix>
               <i class="el-icon-search"></i>
@@ -79,8 +63,7 @@
           </el-input>
 
           <div class="filter-actions">
-            <el-button type="primary" @click="applyFilters">Применить</el-button>
-            <el-button @click="resetFilters">Сброс</el-button>
+            <el-button @click="resetFilters" size="small">Сброс</el-button>
           </div>
         </div>
       </div>
@@ -343,7 +326,7 @@
           <span class="summary-value">{{ summaryData[11] }}</span>
         </div>
         <div class="summary-item">
-          <span class="summary-label">F2F Вып��лнено:</span>
+          <span class="summary-label">F2F Выполнено:</span>
           <span class="summary-value">{{ summaryData[12] }}</span>
         </div>
         <div class="summary-item">
