@@ -1050,13 +1050,35 @@
       }
 
       .table-summary {
+        grid-template-columns: 1fr;
         gap: 12px;
-        padding: 10px 12px;
-        font-size: 11px;
+        padding: 16px;
       }
 
-      .summary-item {
-        gap: 4px;
+      .summary-section {
+        padding: 12px;
+      }
+
+      .summary-header {
+        font-size: 11px;
+        margin-bottom: 10px;
+      }
+
+      .summary-columns {
+        gap: 8px;
+      }
+
+      .summary-metric {
+        padding: 8px 4px;
+      }
+
+      .summary-label {
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+
+      .summary-value {
+        font-size: 14px;
       }
     }
   }
