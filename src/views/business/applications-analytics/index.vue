@@ -784,9 +784,11 @@
       }
     }
 
-    .table-card.art-table-card {
-      padding: 16px;
+    .table-card {
+      padding: 0;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .card-actions {
@@ -794,6 +796,74 @@
       top: 12px;
       right: 12px;
       z-index: 10;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    .table-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .table-container {
+      flex: 1;
+      overflow: auto;
+      min-height: 400px;
+    }
+
+    .summary-table {
+      :deep(.el-table__header th) {
+        background: #1e40af;
+        color: white;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 12px 0;
+      }
+
+      :deep(.el-table__body td) {
+        padding: 12px 0;
+        font-size: 12px;
+      }
+
+      :deep(.el-table__row:hover > td) {
+        background-color: #f3f4f6;
+      }
+    }
+
+    .table-summary {
+      display: flex;
+      gap: 24px;
+      padding: 12px 16px;
+      background: #dbeafe;
+      border-top: 1px solid #e5e7eb;
+      font-weight: 600;
+      color: #1e40af;
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+
+    .summary-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .summary-label {
+      color: #1e40af;
+    }
+
+    .summary-value {
+      font-weight: 700;
+      color: #1e40af;
     }
 
     .cell-combo {
