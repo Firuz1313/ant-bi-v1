@@ -60,49 +60,49 @@ export const asyncRoutes: AppRouteRecord[] = [
       {
         path: 'index',
         name: 'MastersDeptIndex',
-        component: '/business/masters-dept/index',
+        component: () => import('@views/business/masters-dept/index.vue'),
         meta: { title: 'Общая сводка', keepAlive: true, icon: '&#xe721;' }
       },
       {
         path: 'cancelled',
         name: 'MastersDeptCancelled',
-        component: '/business/masters-dept/cancelled/index',
+        component: () => import('@views/business/masters-dept/cancelled/index.vue'),
         meta: { title: 'Отмененные заявки', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'repair-days',
         name: 'MastersDeptRepairDays',
-        component: '/business/masters-dept/repair-days/index',
+        component: () => import('@views/business/masters-dept/repair-days/index.vue'),
         meta: { title: 'Дни обработки на ремонт', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'connection-days',
         name: 'MastersDeptConnectionDays',
-        component: '/business/masters-dept/connection-days/index',
+        component: () => import('@views/business/masters-dept/connection-days/index.vue'),
         meta: { title: 'Дни обработки подключений', keepAlive: true, icon: '&#xe75f;' }
       },
       {
         path: 'percent-completed',
         name: 'MastersDeptPercentCompleted',
-        component: '/business/masters-dept/percent-completed/index',
+        component: () => import('@views/business/masters-dept/percent-completed/index.vue'),
         meta: { title: '% Выполнено', keepAlive: true, icon: '&#xe73a;' }
       },
       {
         path: 'avg-days',
         name: 'MastersDeptAvgDays',
-        component: '/business/masters-dept/avg-days/index',
-        meta: { title: 'Среднее количество дней', keepAlive: true, icon: '&#xe722;' }
+        component: () => import('@views/business/masters-dept/avg-days/index.vue'),
+        meta: { title: 'Среднее ��оличество дней', keepAlive: true, icon: '&#xe722;' }
       },
       {
         path: 'forecasts',
         name: 'MastersDeptForecasts',
-        component: '/business/masters-dept/forecasts/index',
+        component: () => import('@views/business/masters-dept/forecasts/index.vue'),
         meta: { title: 'Прогнозы', keepAlive: true, icon: '&#xe6af;' }
       },
       {
         path: 'source',
         name: 'MastersDeptSource',
-        component: '/business/masters-dept/source/index',
+        component: () => import('@views/business/masters-dept/source/index.vue'),
         meta: { title: 'Источник заявок', keepAlive: true, icon: '&#xe734;' }
       }
     ]
@@ -133,7 +133,7 @@ export const asyncRoutes: AppRouteRecord[] = [
         path: 'by-periods',
         name: 'CallCenterByPeriods',
         component: '/business/call-center/by-periods/index',
-        meta: { title: 'По дням, месяцам, года��', keepAlive: true, icon: '&#xe734;' }
+        meta: { title: 'По дням, месяцам, годам', keepAlive: true, icon: '&#xe734;' }
       },
       {
         path: 'by-daytime',
