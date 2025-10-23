@@ -1,16 +1,9 @@
-export interface Reply {
-  id: number
-  author: string
-  content: string
-  timestamp: string
-}
-
 export interface Comment {
   id: number
   author: string
   content: string
   timestamp: string
-  replies: Reply[]
+  replies: Comment[]
 }
 
 export const commentList = [
@@ -31,7 +24,8 @@ export const commentList = [
         id: 101,
         author: '用户1',
         content: '感谢回复',
-        timestamp: new Date(Date.now() - 1800000).toISOString()
+        timestamp: new Date(Date.now() - 1800000).toISOString(),
+        replies: []
       }
     ]
   }
