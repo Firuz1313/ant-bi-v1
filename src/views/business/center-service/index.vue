@@ -194,21 +194,69 @@
     cancelled: number
     in_progress: number
     done: number
+    date: Date
+  }
+
+  interface DatePreset {
+    name: string
+    label: string
+    getRange: () => [Date, Date]
   }
 
   const rows = ref<Row[]>(mockCenterRows)
-  const dateRange = ref<[Date, Date]>([new Date(2025, 7, 1), new Date(2025, 7, 31)])
+  const dateRange = ref<[Date, Date] | null>(null)
   const daysRange = ref<[number, number]>([1, 31])
 
-  const filteredRows = computed(() => {
-    return rows.value.filter((row) => {
-      // День месяца вычисляется из mock данных
-      // Фильтруем только по диапазону дней если указан
-      if (daysRange.value && daysRange.value.length === 2) {
-        // Извлекаем день из данных (для реальных данных нужно будет из даты)
-        return true // В mock данных нет реальных дат, поэтому показываем всё
+  const defaultDateRange: [Date, Date] = [new Date(2025, 7, 1), new Date(2025, 7, 31)]
+
+  const datePresets: DatePreset[] = [
+    {
+      name: 'month',
+      label: 'Месяц',
+      getRange: () => [new Date(2025, 7, 1), new Date(2025, 7, 31)]
+    },
+    {
+      name: 'first',
+      label: '1-15',
+      getRange: () => [new Date(2025, 7, 1), new Date(2025, 7, 15)]
+    },
+    {
+      name: 'second',
+      label: '16-31',
+      getRange: () => [new Date(2025, 7, 16), new Date(2025, 7, 31)]
+    },
+    {
+      name: 'week',
+      label: 'Неделя',
+      getRange: () => {
+        const end = new Date(2025, 7, 31)
+        const start = new Date(end)
+        start.setDate(start.getDate() - 6)
+        return [start, end]
       }
-      return true
+    }
+  ]
+
+  const filteredRows = computed(() => {
+    const range = dateRange.value || defaultDateRange
+
+    return rows.value.filter((row) => {
+      if (!row || !row.date) return false
+
+      const rowDay = row.date.getDate()
+      const rowDate = new Date(row.date)
+      rowDate.setHours(0, 0, 0, 0)
+
+      const rangeStart = new Date(range[0])
+      rangeStart.setHours(0, 0, 0, 0)
+
+      const rangeEnd = new Date(range[1])
+      rangeEnd.setHours(23, 59, 59, 999)
+
+      const isInDateRange = rowDate >= rangeStart && rowDate <= rangeEnd
+      const isInDayRange = rowDay >= daysRange.value[0] && rowDay <= daysRange.value[1]
+
+      return isInDateRange && isInDayRange
     })
   })
 
@@ -253,7 +301,7 @@
           data: [
             {
               value: totals.value.done,
-              name: `Выполнено ${totals.value.done}`,
+              name: `Вы��олнено ${totals.value.done}`,
               itemStyle: { color: '#16a34a' }
             },
             {
