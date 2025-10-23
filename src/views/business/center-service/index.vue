@@ -24,76 +24,73 @@
     </div>
 
     <div class="filters-section">
-      <div class="period-display-card">
-        <div class="period-header">
-          <i class="el-icon-date"></i>
-          <span class="period-label">Период анализа</span>
-        </div>
-        <div class="period-range">
-          <span class="period-date">{{ formatDate(dateRange[0]) }}</span>
-          <span class="period-separator">—</span>
-          <span class="period-date">{{ formatDate(dateRange[1]) }}</span>
-        </div>
-        <div class="period-controls">
-          <el-date-picker
-            v-model="dateRange"
-            type="daterange"
-            range-separator="—"
-            start-placeholder="Начало"
-            end-placeholder="Конец"
-            size="small"
-            format="YYYY-MM-DD"
-            class="period-picker"
-          />
-        </div>
-      </div>
-
-      <div class="days-filter-card">
-        <div class="days-header">
-          <i class="el-icon-s-unfold"></i>
-          <span class="days-label">Выбор дней месяца</span>
-        </div>
-        <div class="days-content">
-          <div class="days-slider-wrapper">
-            <div class="slider-input-group">
-              <div class="slider-input-item">
-                <label>От:</label>
-                <el-input-number
-                  v-model="daysRange[0]"
-                  :min="1"
-                  :max="31"
-                  size="small"
-                  @change="validateDaysRange"
-                />
-              </div>
-              <div class="slider-input-item">
-                <label>До:</label>
-                <el-input-number
-                  v-model="daysRange[1]"
-                  :min="1"
-                  :max="31"
-                  size="small"
-                  @change="validateDaysRange"
-                />
-              </div>
-            </div>
-            <el-slider
-              v-model="daysRange"
-              range
-              :min="1"
-              :max="31"
-              :step="1"
-              :show-tooltip="true"
-              class="day-slider"
+      <div class="filter-bar-container">
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label class="filter-label">Период:</label>
+            <el-date-picker
+              v-model="dateRange"
+              type="daterange"
+              range-separator="—"
+              start-placeholder="От"
+              end-placeholder="До"
+              format="DD.MM.YYYY"
+              size="small"
+              class="date-picker-input"
+              @change="onFilterChange"
             />
           </div>
-          <div class="days-display">
-            <span class="days-info"
-              >{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{
-                daysRange[1] - daysRange[0] + 1
-              }}
-              дней)</span
+
+          <div class="filter-divider"></div>
+
+          <div class="filter-group days-group">
+            <label class="filter-label">Дни:</label>
+            <div class="days-input-group">
+              <el-input-number
+                v-model="daysRange[0]"
+                :min="1"
+                :max="31"
+                size="small"
+                controls-position="right"
+                @change="validateDaysRange"
+              />
+              <span class="days-separator">—</span>
+              <el-input-number
+                v-model="daysRange[1]"
+                :min="1"
+                :max="31"
+                size="small"
+                controls-position="right"
+                @change="validateDaysRange"
+              />
+              <span class="days-count">({{ daysRange[1] - daysRange[0] + 1 }} дн.)</span>
+            </div>
+          </div>
+
+          <div class="filter-divider"></div>
+
+          <div class="filter-presets">
+            <el-button
+              v-for="preset in datePresets"
+              :key="preset.name"
+              :type="isPresetActive(preset) ? 'primary' : 'default'"
+              size="small"
+              @click="applyPreset(preset)"
+              class="preset-button"
             >
+              {{ preset.label }}
+            </el-button>
+          </div>
+
+          <div class="filter-actions">
+            <el-button
+              @click="resetFilters"
+              size="small"
+              plain
+              type="info"
+            >
+              Очистить
+            </el-button>
           </div>
         </div>
       </div>
@@ -261,7 +258,7 @@
             },
             {
               value: totals.value.cancelled,
-              name: `Отменено ${totals.value.cancelled}`,
+              name: `Отм��нено ${totals.value.cancelled}`,
               itemStyle: { color: '#dc2626' }
             },
             {
