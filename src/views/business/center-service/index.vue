@@ -7,7 +7,7 @@
     <div class="kpi-section">
       <div class="kpi-block kpi-blue">
         <div class="kpi-value">{{ totals.total }}</div>
-        <div class="kpi-label">��аявки на подключение</div>
+        <div class="kpi-label">Заявки на подключение</div>
       </div>
       <div class="kpi-block kpi-green">
         <div class="kpi-value">{{ totals.done }}</div>
@@ -89,7 +89,7 @@
           </div>
           <div class="days-display">
             <span class="days-info"
-              >{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{
+              >{{ daysRange[0] }}-{{ daysRange[1] }} ��ни ({{
                 daysRange[1] - daysRange[0] + 1
               }}
               дней)</span
@@ -790,32 +790,33 @@
       padding: 12px;
 
       .page-title {
-        font-size: 20px;
-        margin-bottom: 16px;
+        font-size: 22px;
       }
 
       .kpi-section {
         gap: 12px;
         margin-bottom: 16px;
+        flex-direction: row;
       }
 
       .kpi-block {
-        padding: 14px 16px;
-        min-width: 140px;
+        padding: 12px 16px;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
       }
 
       .kpi-value {
-        font-size: 28px;
+        font-size: 24px;
       }
 
       .kpi-label {
-        font-size: 11px;
+        font-size: 12px;
       }
 
       .filters-section {
         grid-template-columns: 1fr;
         gap: 16px;
-        padding: 12px;
         margin-bottom: 16px;
       }
 
@@ -831,31 +832,12 @@
 
       .table-header,
       .chart-header {
-        padding: 12px;
+        padding: 16px;
       }
 
       .table-title,
       .chart-title {
-        font-size: 14px;
-      }
-
-      .table-summary {
-        gap: 12px;
-        padding: 10px 12px;
-        font-size: 11px;
-      }
-
-      .summary-item {
-        gap: 4px;
-      }
-
-      .chart-legend {
-        gap: 10px;
-        margin-bottom: 12px;
-      }
-
-      .legend-item {
-        font-size: 12px;
+        font-size: 15px;
       }
 
       .center-table {
@@ -875,7 +857,7 @@
       padding: 8px;
 
       .page-title {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       .kpi-section {
@@ -885,28 +867,23 @@
 
       .kpi-block {
         padding: 12px;
-        min-width: 100px;
+        min-width: 0;
         flex: 1;
       }
 
       .kpi-value {
-        font-size: 24px;
+        font-size: 22px;
         margin-bottom: 4px;
       }
 
       .kpi-label {
-        font-size: 10px;
+        font-size: 11px;
       }
 
       .filters-section {
         grid-template-columns: 1fr;
         gap: 12px;
-        padding: 10px;
         margin-bottom: 12px;
-      }
-
-      .filter-label {
-        font-size: 12px;
       }
 
       .table-container {
@@ -921,18 +898,16 @@
         min-height: 250px;
       }
 
-      .table-summary {
-        flex-direction: column;
-        gap: 8px;
-        padding: 8px 10px;
-      }
+      .center-table {
+        :deep(.el-table__header th) {
+          font-size: 10px;
+          padding: 6px 0;
+        }
 
-      .chart-legend {
-        gap: 8px;
-      }
-
-      .legend-item {
-        font-size: 11px;
+        :deep(.el-table__body td) {
+          padding: 6px 0;
+          font-size: 10px;
+        }
       }
     }
   }
