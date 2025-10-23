@@ -7,7 +7,7 @@
     <div class="kpi-section">
       <div class="kpi-block kpi-blue">
         <div class="kpi-value">{{ totals.total }}</div>
-        <div class="kpi-label">Заявки на подключение</div>
+        <div class="kpi-label">��аявки на подключение</div>
       </div>
       <div class="kpi-block kpi-green">
         <div class="kpi-value">{{ totals.done }}</div>
@@ -612,24 +612,27 @@
       display: flex;
       flex-direction: column;
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
     }
 
     .table-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 20px;
+      border-bottom: 2px solid #f0f4f8;
+      background: linear-gradient(to right, #f8f9fb, #ffffff);
     }
 
     .table-title {
       margin: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1f2937;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e40af;
+      letter-spacing: 0.3px;
     }
 
     .table-actions {
@@ -650,6 +653,8 @@
         font-weight: 700;
         font-size: 12px;
         padding: 12px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
 
       :deep(.el-table__body td) {
@@ -668,52 +673,25 @@
     }
 
     .percentage-badge {
-      padding: 4px 12px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-weight: 600;
       font-size: 11px;
 
       &.high {
-        background-color: rgba(22, 163, 74, 0.1);
-        color: #16a34a;
+        background-color: rgba(22, 163, 74, 0.12);
+        color: #15803d;
       }
 
       &.medium {
-        background-color: rgba(249, 115, 22, 0.1);
-        color: #f97316;
+        background-color: rgba(249, 115, 22, 0.12);
+        color: #92400e;
       }
 
       &.low {
-        background-color: rgba(220, 38, 38, 0.1);
-        color: #dc2626;
+        background-color: rgba(220, 38, 38, 0.12);
+        color: #991b1b;
       }
-    }
-
-    .table-summary {
-      display: flex;
-      gap: 24px;
-      padding: 12px 16px;
-      background: #dbeafe;
-      border-top: 1px solid #e5e7eb;
-      font-weight: 600;
-      color: #1e40af;
-      font-size: 12px;
-      flex-wrap: wrap;
-    }
-
-    .summary-item {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .summary-label {
-      color: #1e40af;
-    }
-
-    .summary-value {
-      font-weight: 700;
-      color: #1e40af;
     }
 
     .chart-wrapper {
