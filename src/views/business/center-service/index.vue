@@ -83,14 +83,7 @@
           </div>
 
           <div class="filter-actions">
-            <el-button
-              @click="resetFilters"
-              size="small"
-              plain
-              type="info"
-            >
-              Очистить
-            </el-button>
+            <el-button @click="resetFilters" size="small" plain type="info"> Очистить </el-button>
           </div>
         </div>
       </div>
