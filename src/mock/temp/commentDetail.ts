@@ -1,16 +1,16 @@
+export interface Reply {
+  id: number
+  author: string
+  content: string
+  timestamp: string
+}
+
 export interface Comment {
   id: number
   author: string
   content: string
   timestamp: string
   replies: Reply[]
-}
-
-export interface Reply {
-  id: number
-  author: string
-  content: string
-  timestamp: string
 }
 
 export const commentList = [
