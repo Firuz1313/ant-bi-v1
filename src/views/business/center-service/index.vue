@@ -230,25 +230,9 @@
   ]
 
   const filteredRows = computed(() => {
-    const range = dateRange.value || defaultDateRange
-
     return rows.value.filter((row) => {
-      if (!row || !row.date) return false
-
-      const rowDay = row.date.getDate()
-      const rowDate = new Date(row.date)
-      rowDate.setHours(0, 0, 0, 0)
-
-      const rangeStart = new Date(range[0])
-      rangeStart.setHours(0, 0, 0, 0)
-
-      const rangeEnd = new Date(range[1])
-      rangeEnd.setHours(23, 59, 59, 999)
-
-      const isInDateRange = rowDate >= rangeStart && rowDate <= rangeEnd
-      const isInDayRange = rowDay >= daysRange.value[0] && rowDay <= daysRange.value[1]
-
-      return isInDateRange && isInDayRange
+      if (!row) return false
+      return true
     })
   })
 
