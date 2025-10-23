@@ -414,7 +414,7 @@
 
     .filters-section {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
@@ -424,19 +424,26 @@
       color: white;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+      box-shadow: 0 4px 16px rgba(30, 64, 175, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.25);
+      }
     }
 
     .period-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.9;
+      letter-spacing: 0.6px;
+      opacity: 0.95;
     }
 
     .period-label {
@@ -447,40 +454,61 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      font-size: 18px;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .period-date {
       background: rgba(255, 255, 255, 0.15);
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 10px 14px;
+      border-radius: 8px;
       font-family: 'Courier New', monospace;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
     }
 
     .period-separator {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 300;
+      opacity: 0.8;
     }
 
     .period-controls {
       :deep(.el-date-editor) {
         width: 100%;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.12);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.16);
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:focus-within {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
 
         input {
           background: transparent;
           color: white;
           font-size: 13px;
+          font-weight: 500;
 
           &::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
           }
         }
       }
@@ -498,20 +526,26 @@
       background: white;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
     }
 
     .days-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 18px;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
       color: #1e40af;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
 
     .days-label {
@@ -521,30 +555,32 @@
     .days-content {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     .days-slider-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .slider-input-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .slider-input-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
 
       label {
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         color: #374151;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
 
       :deep(.el-input-number) {
@@ -553,26 +589,41 @@
         .el-input__inner {
           text-align: center;
           font-weight: 600;
+          border-color: #dbeafe;
+          transition: all 0.2s ease;
+
+          &:focus {
+            border-color: #1e40af;
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+          }
         }
       }
     }
 
     .day-slider {
       :deep(.el-slider__track) {
-        background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+        background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
         height: 6px;
+        border-radius: 3px;
       }
 
       :deep(.el-slider__button) {
         border-color: #1e40af;
         background-color: white;
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
         border: 3px solid #1e40af;
+        transition: all 0.2s ease;
 
         &:hover {
           box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: scale(1.15);
+          box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
         }
       }
 
@@ -591,15 +642,21 @@
 
     .days-display {
       text-align: center;
-      padding: 12px;
-      background: #f0f9ff;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
       border-radius: 8px;
-      border: 1px solid #bfdbfe;
+      border: 2px solid #bfdbfe;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #1e40af;
+        background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+      }
     }
 
     .days-info {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: #1e40af;
       letter-spacing: 0.3px;
     }
