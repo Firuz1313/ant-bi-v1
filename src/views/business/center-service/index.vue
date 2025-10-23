@@ -153,24 +153,6 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="table-summary">
-          <div class="summary-item">
-            <span class="summary-label">Итого:</span>
-            <span class="summary-value">{{ totals.total }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">Отменено:</span>
-            <span class="summary-value">{{ totals.cancelled }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">В процессе:</span>
-            <span class="summary-value">{{ totals.in_progress }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">Выполнено:</span>
-            <span class="summary-value">{{ totals.done }}</span>
-          </div>
-        </div>
       </div>
 
       <div class="chart-wrapper">
