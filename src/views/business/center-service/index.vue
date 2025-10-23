@@ -361,22 +361,30 @@
     }
 
     .kpi-block {
-      padding: 20px;
+      padding: 16px 20px;
       border-radius: 8px;
       text-align: center;
-      min-width: 160px;
-      flex: 0 1 auto;
+      min-width: 140px;
+      flex: 1;
+      max-width: 280px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      }
     }
 
     .kpi-value {
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 700;
       line-height: 1;
       margin-bottom: 8px;
     }
 
     .kpi-label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       line-height: 1.3;
     }
