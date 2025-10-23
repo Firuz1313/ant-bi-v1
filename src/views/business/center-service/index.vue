@@ -89,7 +89,7 @@
           </div>
           <div class="days-display">
             <span class="days-info"
-              >{{ daysRange[0] }}-{{ daysRange[1] }} ��ни ({{
+              >{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{
                 daysRange[1] - daysRange[0] + 1
               }}
               дней)</span
@@ -205,8 +205,11 @@
 
   const filteredRows = computed(() => {
     return rows.value.filter((row) => {
-      if (daysRange.value) {
-        return true
+      // День месяца вычисляется из mock данных
+      // Фильтруем только по диапазону дней если указан
+      if (daysRange.value && daysRange.value.length === 2) {
+        // Извлекаем день из данных (для реальных данных нужно будет из даты)
+        return true // В mock данных нет реальных дат, поэтому показываем всё
       }
       return true
     })
