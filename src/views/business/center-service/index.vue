@@ -9,10 +9,6 @@
         <div class="kpi-value">{{ totals.total }}</div>
         <div class="kpi-label">Заявки на подключение</div>
       </div>
-      <div class="kpi-block kpi-red">
-        <div class="kpi-value">{{ totals.cancelled }}</div>
-        <div class="kpi-label">Отменено</div>
-      </div>
       <div class="kpi-block kpi-green">
         <div class="kpi-value">{{ totals.done }}</div>
         <div class="kpi-label">Выполнено</div>
@@ -20,6 +16,10 @@
       <div class="kpi-block kpi-orange">
         <div class="kpi-value">{{ totals.in_progress }}</div>
         <div class="kpi-label">В процессе</div>
+      </div>
+      <div class="kpi-block kpi-red">
+        <div class="kpi-value">{{ totals.cancelled }}</div>
+        <div class="kpi-label">Отменено</div>
       </div>
     </div>
 
@@ -153,24 +153,6 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="table-summary">
-          <div class="summary-item">
-            <span class="summary-label">Итого:</span>
-            <span class="summary-value">{{ totals.total }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">Отменено:</span>
-            <span class="summary-value">{{ totals.cancelled }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">В процессе:</span>
-            <span class="summary-value">{{ totals.in_progress }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-label">Выполнено:</span>
-            <span class="summary-value">{{ totals.done }}</span>
-          </div>
-        </div>
       </div>
 
       <div class="chart-wrapper">
@@ -223,8 +205,11 @@
 
   const filteredRows = computed(() => {
     return rows.value.filter((row) => {
-      if (daysRange.value) {
-        return true
+      // День месяца вычисляется из mock данных
+      // Фильтруем только по диапазону дней если указан
+      if (daysRange.value && daysRange.value.length === 2) {
+        // Извлекаем день из данных (для реальных данных нужно будет из даты)
+        return true // В mock данных нет реальных дат, поэтому показываем всё
       }
       return true
     })
@@ -379,22 +364,30 @@
     }
 
     .kpi-block {
-      padding: 20px;
+      padding: 16px 20px;
       border-radius: 8px;
       text-align: center;
-      min-width: 160px;
-      flex: 0 1 auto;
+      min-width: 140px;
+      flex: 1;
+      max-width: 280px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      }
     }
 
     .kpi-value {
-      font-size: 36px;
+      font-size: 32px;
       font-weight: 700;
       line-height: 1;
       margin-bottom: 8px;
     }
 
     .kpi-label {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       line-height: 1.3;
     }
@@ -421,7 +414,7 @@
 
     .filters-section {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
+      grid-template-columns: 1fr 1fr;
       gap: 20px;
       margin-bottom: 24px;
     }
@@ -431,19 +424,26 @@
       color: white;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
+      box-shadow: 0 4px 16px rgba(30, 64, 175, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.25);
+      }
     }
 
     .period-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 14px;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      opacity: 0.9;
+      letter-spacing: 0.6px;
+      opacity: 0.95;
     }
 
     .period-label {
@@ -454,40 +454,61 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      font-size: 18px;
+      gap: 10px;
+      margin-bottom: 18px;
+      font-size: 16px;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.3px;
     }
 
     .period-date {
       background: rgba(255, 255, 255, 0.15);
-      padding: 8px 12px;
-      border-radius: 6px;
+      padding: 10px 14px;
+      border-radius: 8px;
       font-family: 'Courier New', monospace;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
     }
 
     .period-separator {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 300;
+      opacity: 0.8;
     }
 
     .period-controls {
       :deep(.el-date-editor) {
         width: 100%;
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.12);
         border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.16);
+          border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &:focus-within {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
 
         input {
           background: transparent;
           color: white;
           font-size: 13px;
+          font-weight: 500;
 
           &::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
           }
         }
       }
@@ -505,20 +526,26 @@
       background: white;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
       border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      }
     }
 
     .days-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      font-weight: 600;
+      margin-bottom: 18px;
+      font-size: 12px;
+      font-weight: 700;
       text-transform: uppercase;
       color: #1e40af;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
     }
 
     .days-label {
@@ -528,30 +555,32 @@
     .days-content {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 18px;
     }
 
     .days-slider-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
     .slider-input-group {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 14px;
     }
 
     .slider-input-item {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
 
       label {
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 700;
         color: #374151;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
 
       :deep(.el-input-number) {
@@ -560,26 +589,41 @@
         .el-input__inner {
           text-align: center;
           font-weight: 600;
+          border-color: #dbeafe;
+          transition: all 0.2s ease;
+
+          &:focus {
+            border-color: #1e40af;
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+          }
         }
       }
     }
 
     .day-slider {
       :deep(.el-slider__track) {
-        background: linear-gradient(90deg, #1e40af 0%, #2563eb 100%);
+        background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
         height: 6px;
+        border-radius: 3px;
       }
 
       :deep(.el-slider__button) {
         border-color: #1e40af;
         background-color: white;
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
         border: 3px solid #1e40af;
+        transition: all 0.2s ease;
 
         &:hover {
           box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
+          transform: scale(1.1);
+        }
+
+        &:active {
+          transform: scale(1.15);
+          box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
         }
       }
 
@@ -598,15 +642,21 @@
 
     .days-display {
       text-align: center;
-      padding: 12px;
-      background: #f0f9ff;
+      padding: 14px 16px;
+      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
       border-radius: 8px;
-      border: 1px solid #bfdbfe;
+      border: 2px solid #bfdbfe;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: #1e40af;
+        background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+      }
     }
 
     .days-info {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: #1e40af;
       letter-spacing: 0.3px;
     }
@@ -622,24 +672,27 @@
       display: flex;
       flex-direction: column;
       background: white;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
     }
 
     .table-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 20px;
+      border-bottom: 2px solid #f0f4f8;
+      background: linear-gradient(to right, #f8f9fb, #ffffff);
     }
 
     .table-title {
       margin: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1f2937;
+      font-size: 17px;
+      font-weight: 700;
+      color: #1e40af;
+      letter-spacing: 0.3px;
     }
 
     .table-actions {
@@ -660,6 +713,8 @@
         font-weight: 700;
         font-size: 12px;
         padding: 12px 0;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
       }
 
       :deep(.el-table__body td) {
@@ -678,52 +733,25 @@
     }
 
     .percentage-badge {
-      padding: 4px 12px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-weight: 600;
       font-size: 11px;
 
       &.high {
-        background-color: rgba(22, 163, 74, 0.1);
-        color: #16a34a;
+        background-color: rgba(22, 163, 74, 0.12);
+        color: #15803d;
       }
 
       &.medium {
-        background-color: rgba(249, 115, 22, 0.1);
-        color: #f97316;
+        background-color: rgba(249, 115, 22, 0.12);
+        color: #92400e;
       }
 
       &.low {
-        background-color: rgba(220, 38, 38, 0.1);
-        color: #dc2626;
+        background-color: rgba(220, 38, 38, 0.12);
+        color: #991b1b;
       }
-    }
-
-    .table-summary {
-      display: flex;
-      gap: 24px;
-      padding: 12px 16px;
-      background: #dbeafe;
-      border-top: 1px solid #e5e7eb;
-      font-weight: 600;
-      color: #1e40af;
-      font-size: 12px;
-      flex-wrap: wrap;
-    }
-
-    .summary-item {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .summary-label {
-      color: #1e40af;
-    }
-
-    .summary-value {
-      font-weight: 700;
-      color: #1e40af;
     }
 
     .chart-wrapper {
@@ -822,32 +850,33 @@
       padding: 12px;
 
       .page-title {
-        font-size: 20px;
-        margin-bottom: 16px;
+        font-size: 22px;
       }
 
       .kpi-section {
         gap: 12px;
         margin-bottom: 16px;
+        flex-direction: row;
       }
 
       .kpi-block {
-        padding: 14px 16px;
-        min-width: 140px;
+        padding: 12px 16px;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
       }
 
       .kpi-value {
-        font-size: 28px;
+        font-size: 24px;
       }
 
       .kpi-label {
-        font-size: 11px;
+        font-size: 12px;
       }
 
       .filters-section {
         grid-template-columns: 1fr;
         gap: 16px;
-        padding: 12px;
         margin-bottom: 16px;
       }
 
@@ -863,31 +892,12 @@
 
       .table-header,
       .chart-header {
-        padding: 12px;
+        padding: 16px;
       }
 
       .table-title,
       .chart-title {
-        font-size: 14px;
-      }
-
-      .table-summary {
-        gap: 12px;
-        padding: 10px 12px;
-        font-size: 11px;
-      }
-
-      .summary-item {
-        gap: 4px;
-      }
-
-      .chart-legend {
-        gap: 10px;
-        margin-bottom: 12px;
-      }
-
-      .legend-item {
-        font-size: 12px;
+        font-size: 15px;
       }
 
       .center-table {
@@ -907,7 +917,7 @@
       padding: 8px;
 
       .page-title {
-        font-size: 16px;
+        font-size: 18px;
       }
 
       .kpi-section {
@@ -917,28 +927,23 @@
 
       .kpi-block {
         padding: 12px;
-        min-width: 100px;
+        min-width: 0;
         flex: 1;
       }
 
       .kpi-value {
-        font-size: 24px;
+        font-size: 22px;
         margin-bottom: 4px;
       }
 
       .kpi-label {
-        font-size: 10px;
+        font-size: 11px;
       }
 
       .filters-section {
         grid-template-columns: 1fr;
         gap: 12px;
-        padding: 10px;
         margin-bottom: 12px;
-      }
-
-      .filter-label {
-        font-size: 12px;
       }
 
       .table-container {
@@ -953,18 +958,16 @@
         min-height: 250px;
       }
 
-      .table-summary {
-        flex-direction: column;
-        gap: 8px;
-        padding: 8px 10px;
-      }
+      .center-table {
+        :deep(.el-table__header th) {
+          font-size: 10px;
+          padding: 6px 0;
+        }
 
-      .chart-legend {
-        gap: 8px;
-      }
-
-      .legend-item {
-        font-size: 11px;
+        :deep(.el-table__body td) {
+          padding: 6px 0;
+          font-size: 10px;
+        }
       }
     }
   }
