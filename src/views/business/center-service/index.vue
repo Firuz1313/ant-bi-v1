@@ -9,10 +9,6 @@
         <div class="kpi-value">{{ totals.total }}</div>
         <div class="kpi-label">Заявки на подключение</div>
       </div>
-      <div class="kpi-block kpi-red">
-        <div class="kpi-value">{{ totals.cancelled }}</div>
-        <div class="kpi-label">Отменено</div>
-      </div>
       <div class="kpi-block kpi-green">
         <div class="kpi-value">{{ totals.done }}</div>
         <div class="kpi-label">Выполнено</div>
@@ -20,6 +16,10 @@
       <div class="kpi-block kpi-orange">
         <div class="kpi-value">{{ totals.in_progress }}</div>
         <div class="kpi-label">В процессе</div>
+      </div>
+      <div class="kpi-block kpi-red">
+        <div class="kpi-value">{{ totals.cancelled }}</div>
+        <div class="kpi-label">Отменено</div>
       </div>
     </div>
 
