@@ -61,7 +61,7 @@
         content: replyContent,
         timestamp: new Date().toISOString(),
         replies: []
-      })
+      } as Comment)
       showReplyForm.value = null
     } else {
       alert('请填写完整的回复信息')
