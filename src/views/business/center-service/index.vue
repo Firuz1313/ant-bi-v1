@@ -187,7 +187,6 @@
     cancelled: number
     in_progress: number
     done: number
-    date: Date
   }
 
   interface DatePreset {
