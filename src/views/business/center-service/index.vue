@@ -487,183 +487,81 @@
     }
 
     .filters-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .period-display-card {
-      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-      color: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(30, 64, 175, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.25);
-      }
-    }
-
-    .period-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      opacity: 0.95;
-    }
-
-    .period-label {
-      display: block;
-    }
-
-    .period-range {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .period-date {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      font-size: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    .period-separator {
-      font-size: 18px;
-      font-weight: 300;
-      opacity: 0.8;
-    }
-
-    .period-controls {
-      :deep(.el-date-editor) {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        transition: all 0.2s ease;
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.16);
-          border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        &:focus-within {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        input {
-          background: transparent;
-          color: white;
-          font-size: 13px;
-          font-weight: 500;
-
-          &::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-          }
-        }
-      }
-
-      :deep(.el-input__icon) {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      :deep(.el-input__suffix) {
-        color: rgba(255, 255, 255, 0.8);
-      }
-    }
-
-    .days-filter-card {
+    .filter-bar-container {
       background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       border: 1px solid #e5e7eb;
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      }
+      overflow: hidden;
     }
 
-    .days-header {
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 18px;
+      white-space: nowrap;
+    }
+
+    .filter-label {
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      color: #1e40af;
-      letter-spacing: 0.6px;
+      color: #374151;
+      letter-spacing: 0.4px;
+      margin: 0;
     }
 
-    .days-label {
-      display: block;
-    }
+    .date-picker-input {
+      width: 200px;
 
-    .days-content {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .days-slider-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .slider-input-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .slider-input-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      label {
+      :deep(.el-input__inner) {
         font-size: 12px;
-        font-weight: 700;
-        color: #374151;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
+        border-color: #d1d5db;
+        transition: all 0.2s ease;
+        height: 32px;
+
+        &:focus {
+          border-color: #1e40af;
+          box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+        }
       }
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 24px;
+      background: #e5e7eb;
+    }
+
+    .days-group {
+      gap: 10px;
+    }
+
+    .days-input-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
 
       :deep(.el-input-number) {
-        width: 100%;
+        width: 60px;
 
         .el-input__inner {
           text-align: center;
+          font-size: 12px;
           font-weight: 600;
-          border-color: #dbeafe;
+          height: 32px;
+          border-color: #d1d5db;
           transition: all 0.2s ease;
 
           &:focus {
@@ -674,65 +572,52 @@
       }
     }
 
-    .day-slider {
-      :deep(.el-slider__track) {
-        background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
-        height: 6px;
-        border-radius: 3px;
-      }
-
-      :deep(.el-slider__button) {
-        border-color: #1e40af;
-        background-color: white;
-        width: 22px;
-        height: 22px;
-        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
-        border: 3px solid #1e40af;
-        transition: all 0.2s ease;
-
-        &:hover {
-          box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
-          transform: scale(1.1);
-        }
-
-        &:active {
-          transform: scale(1.15);
-          box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
-        }
-      }
-
-      :deep(.el-slider__stop) {
-        background-color: #dbeafe;
-      }
-
-      :deep(.el-tooltip__popper[x-placement^='top']) {
-        background: #1e40af;
-
-        &[x-placement^='top']::after {
-          border-top-color: #1e40af;
-        }
-      }
+    .days-separator {
+      color: #d1d5db;
+      font-weight: 600;
+      font-size: 12px;
     }
 
-    .days-display {
-      text-align: center;
-      padding: 14px 16px;
-      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
-      border-radius: 8px;
-      border: 2px solid #bfdbfe;
+    .days-count {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .filter-presets {
+      display: flex;
+      gap: 6px;
+    }
+
+    .preset-button {
+      font-size: 11px;
+      font-weight: 600;
+      min-width: 52px;
+      padding: 5px 10px;
+      height: 32px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: #1e40af;
-        background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+        transform: translateY(-1px);
       }
     }
 
-    .days-info {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1e40af;
-      letter-spacing: 0.3px;
+    .filter-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+
+      :deep(.el-button) {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
     }
 
     .content-section {
