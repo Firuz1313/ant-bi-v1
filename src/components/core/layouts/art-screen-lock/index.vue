@@ -87,8 +87,10 @@
 <script setup lang="ts">
   import { Lock, Unlock } from '@element-plus/icons-vue'
   import type { FormInstance, FormRules } from 'element-plus'
+  import { ElInput, ElIcon, ElForm, ElFormItem, ElButton, ElDialog } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import CryptoJS from 'crypto-js'
+  import { storeToRefs } from 'pinia'
   import { useUserStore } from '@/store/modules/user'
   import { mittBus } from '@/utils/sys'
 

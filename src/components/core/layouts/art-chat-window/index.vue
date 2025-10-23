@@ -65,6 +65,8 @@
 
 <script setup lang="ts">
   import { Picture, Paperclip } from '@element-plus/icons-vue'
+  import { ElDrawer, ElInput, ElButton, ElAvatar, ElIcon } from 'element-plus'
+  import { useWindowSize } from '@vueuse/core'
   import { mittBus } from '@/utils/sys'
   import meAvatar from '@/assets/img/avatar/avatar5.webp'
   import aiAvatar from '@/assets/img/avatar/avatar10.webp'
@@ -129,7 +131,7 @@
     {
       id: 4,
       sender: USER_NAME,
-      content: '听起来很不错，能具体讲讲数据分析部分吗？',
+      content: '听起来很不错，能具体讲���数据分析部分吗？',
       time: '10:05',
       isMe: true,
       avatar: meAvatar

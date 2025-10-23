@@ -80,13 +80,15 @@
 </template>
 
 <script lang="ts" setup>
+  import { useRouter } from 'vue-router'
+  import { storeToRefs } from 'pinia'
   import { useUserStore } from '@/store/modules/user'
   import { AppRouteRecord } from '@/types/router'
   import { Search } from '@element-plus/icons-vue'
+  import { ElDialog, ElInput, ElScrollbar, type ScrollbarInstance } from 'element-plus'
   import { mittBus } from '@/utils/sys'
   import { useMenuStore } from '@/store/modules/menu'
   import { formatMenuTitle } from '@/router/utils/utils'
-  import { type ScrollbarInstance } from 'element-plus'
 
   defineOptions({ name: 'ArtGlobalSearch' })
 
@@ -105,7 +107,7 @@
   const highlightedIndex = ref(0)
   const historyHIndex = ref(0)
   const searchResultScrollbar = ref<ScrollbarInstance>()
-  const isKeyboardNavigating = ref(false) // 新增状态：是否正在使用键盘导航
+  const isKeyboardNavigating = ref(false) // 新增状态：是否��在使用键盘导航
 
   // 生命周期钩子
   onMounted(() => {

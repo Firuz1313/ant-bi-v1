@@ -103,6 +103,22 @@
   import { useWindowSize } from '@vueuse/core'
   import { useI18n } from 'vue-i18n'
   import type { FormInstance } from 'element-plus'
+  import {
+    ElInput,
+    ElInputNumber,
+    ElSelect,
+    ElSwitch,
+    ElCheckbox,
+    ElCheckboxGroup,
+    ElRadioGroup,
+    ElDatePicker,
+    ElRate,
+    ElSlider,
+    ElCascader,
+    ElTimePicker,
+    ElTimeSelect,
+    ElTreeSelect
+  } from 'element-plus'
 
   defineOptions({ name: 'ArtSearchBar' })
 
@@ -120,7 +136,7 @@
     datetimerange: ElDatePicker, // 日期时间范围选择器
     rate: ElRate, // 评分
     slider: ElSlider, // 滑块
-    cascader: ElCascader, // 级联选择器
+    cascader: ElCascader, // ���联选择器
     timepicker: ElTimePicker, // 时间选择器
     timeselect: ElTimeSelect, // 时间选择
     treeselect: ElTreeSelect // 树选择器
@@ -157,7 +173,7 @@
     /** 更多属性配置请参考 ElementPlus 官方文档 */
   }
 
-  // 表单配置
+  // 表单配��
   interface SearchBarProps {
     /** 表单数据 */
     items: SearchFormItem[]

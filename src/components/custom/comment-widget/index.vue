@@ -27,7 +27,7 @@
   import { ref } from 'vue'
   import CommentItem from './widget/CommentItem.vue'
   import { commentList, Comment } from '@/mock/temp/commentDetail'
-  const comments = commentList
+  const comments = ref(commentList)
 
   const newComment = ref<Partial<Comment>>({
     author: '',
@@ -61,7 +61,7 @@
         content: replyContent,
         timestamp: new Date().toISOString(),
         replies: []
-      })
+      } as Comment)
       showReplyForm.value = null
     } else {
       alert('请填写完整的回复信息')
