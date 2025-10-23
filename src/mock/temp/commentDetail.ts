@@ -13,7 +13,7 @@ export interface Reply {
   timestamp: string
 }
 
-export const commentList = ref<Comment[]>([
+export const commentList = [
   {
     id: 1,
     author: '用户1',
@@ -35,4 +35,4 @@ export const commentList = ref<Comment[]>([
       }
     ]
   }
-])
+] as Comment[]
