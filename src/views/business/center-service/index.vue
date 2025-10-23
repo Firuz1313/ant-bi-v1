@@ -368,7 +368,36 @@
     console.log('Export table data')
   }
 
+  function onFilterChange() {
+    // Reactive update happens automatically via computed property
+  }
+
+  function resetFilters() {
+    dateRange.value = [...defaultDateRange]
+    daysRange.value = [1, 31]
+  }
+
+  function isPresetActive(preset: DatePreset): boolean {
+    const range = dateRange.value || defaultDateRange
+    if (!range || range.length !== 2) return false
+
+    const [presetStart, presetEnd] = preset.getRange()
+    const [currentStart, currentEnd] = range
+
+    return (
+      currentStart.getTime() === presetStart.getTime() &&
+      currentEnd.getTime() === presetEnd.getTime()
+    )
+  }
+
+  function applyPreset(preset: DatePreset) {
+    dateRange.value = preset.getRange()
+  }
+
   onMounted(() => {
+    if (!dateRange.value) {
+      dateRange.value = [...defaultDateRange]
+    }
     nextTick(() => renderChart())
     window.addEventListener('resize', () => {
       if (chart) chart.resize()
