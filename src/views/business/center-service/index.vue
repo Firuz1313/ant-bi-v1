@@ -24,76 +24,66 @@
     </div>
 
     <div class="filters-section">
-      <div class="period-display-card">
-        <div class="period-header">
-          <i class="el-icon-date"></i>
-          <span class="period-label">Период анализа</span>
-        </div>
-        <div class="period-range">
-          <span class="period-date">{{ formatDate(dateRange[0]) }}</span>
-          <span class="period-separator">—</span>
-          <span class="period-date">{{ formatDate(dateRange[1]) }}</span>
-        </div>
-        <div class="period-controls">
-          <el-date-picker
-            v-model="dateRange"
-            type="daterange"
-            range-separator="—"
-            start-placeholder="Начало"
-            end-placeholder="Конец"
-            size="small"
-            format="YYYY-MM-DD"
-            class="period-picker"
-          />
-        </div>
-      </div>
-
-      <div class="days-filter-card">
-        <div class="days-header">
-          <i class="el-icon-s-unfold"></i>
-          <span class="days-label">Выбор дней месяца</span>
-        </div>
-        <div class="days-content">
-          <div class="days-slider-wrapper">
-            <div class="slider-input-group">
-              <div class="slider-input-item">
-                <label>От:</label>
-                <el-input-number
-                  v-model="daysRange[0]"
-                  :min="1"
-                  :max="31"
-                  size="small"
-                  @change="validateDaysRange"
-                />
-              </div>
-              <div class="slider-input-item">
-                <label>До:</label>
-                <el-input-number
-                  v-model="daysRange[1]"
-                  :min="1"
-                  :max="31"
-                  size="small"
-                  @change="validateDaysRange"
-                />
-              </div>
-            </div>
-            <el-slider
-              v-model="daysRange"
-              range
-              :min="1"
-              :max="31"
-              :step="1"
-              :show-tooltip="true"
-              class="day-slider"
+      <div class="filter-bar-container">
+        <div class="filter-bar">
+          <div class="filter-group">
+            <label class="filter-label">Период:</label>
+            <el-date-picker
+              v-model="dateRange"
+              type="daterange"
+              range-separator="—"
+              start-placeholder="От"
+              end-placeholder="До"
+              format="DD.MM.YYYY"
+              size="small"
+              class="date-picker-input"
+              @change="onFilterChange"
             />
           </div>
-          <div class="days-display">
-            <span class="days-info"
-              >{{ daysRange[0] }}-{{ daysRange[1] }} дни ({{
-                daysRange[1] - daysRange[0] + 1
-              }}
-              дней)</span
+
+          <div class="filter-divider"></div>
+
+          <div class="filter-group days-group">
+            <label class="filter-label">Дни:</label>
+            <div class="days-input-group">
+              <el-input-number
+                v-model="daysRange[0]"
+                :min="1"
+                :max="31"
+                size="small"
+                controls-position="right"
+                @change="validateDaysRange"
+              />
+              <span class="days-separator">—</span>
+              <el-input-number
+                v-model="daysRange[1]"
+                :min="1"
+                :max="31"
+                size="small"
+                controls-position="right"
+                @change="validateDaysRange"
+              />
+              <span class="days-count">({{ daysRange[1] - daysRange[0] + 1 }} дн.)</span>
+            </div>
+          </div>
+
+          <div class="filter-divider"></div>
+
+          <div class="filter-presets">
+            <el-button
+              v-for="preset in datePresets"
+              :key="preset.name"
+              :type="isPresetActive(preset) ? 'primary' : 'default'"
+              size="small"
+              @click="applyPreset(preset)"
+              class="preset-button"
             >
+              {{ preset.label }}
+            </el-button>
+          </div>
+
+          <div class="filter-actions">
+            <el-button @click="resetFilters" size="small" plain type="info"> Очистить </el-button>
           </div>
         </div>
       </div>
@@ -197,21 +187,69 @@
     cancelled: number
     in_progress: number
     done: number
+    date: Date
+  }
+
+  interface DatePreset {
+    name: string
+    label: string
+    getRange: () => [Date, Date]
   }
 
   const rows = ref<Row[]>(mockCenterRows)
-  const dateRange = ref<[Date, Date]>([new Date(2025, 7, 1), new Date(2025, 7, 31)])
+  const dateRange = ref<[Date, Date] | null>(null)
   const daysRange = ref<[number, number]>([1, 31])
 
-  const filteredRows = computed(() => {
-    return rows.value.filter((row) => {
-      // День месяца вычисляется из mock данных
-      // Фильтруем только по диапазону дней если указан
-      if (daysRange.value && daysRange.value.length === 2) {
-        // Извлекаем день из данных (для реальных данных нужно будет из даты)
-        return true // В mock данных нет реальных дат, поэтому показываем всё
+  const defaultDateRange: [Date, Date] = [new Date(2025, 7, 1), new Date(2025, 7, 31)]
+
+  const datePresets: DatePreset[] = [
+    {
+      name: 'month',
+      label: 'Месяц',
+      getRange: () => [new Date(2025, 7, 1), new Date(2025, 7, 31)]
+    },
+    {
+      name: 'first',
+      label: '1-15',
+      getRange: () => [new Date(2025, 7, 1), new Date(2025, 7, 15)]
+    },
+    {
+      name: 'second',
+      label: '16-31',
+      getRange: () => [new Date(2025, 7, 16), new Date(2025, 7, 31)]
+    },
+    {
+      name: 'week',
+      label: 'Неделя',
+      getRange: () => {
+        const end = new Date(2025, 7, 31)
+        const start = new Date(end)
+        start.setDate(start.getDate() - 6)
+        return [start, end]
       }
-      return true
+    }
+  ]
+
+  const filteredRows = computed(() => {
+    const range = dateRange.value || defaultDateRange
+
+    return rows.value.filter((row) => {
+      if (!row || !row.date) return false
+
+      const rowDay = row.date.getDate()
+      const rowDate = new Date(row.date)
+      rowDate.setHours(0, 0, 0, 0)
+
+      const rangeStart = new Date(range[0])
+      rangeStart.setHours(0, 0, 0, 0)
+
+      const rangeEnd = new Date(range[1])
+      rangeEnd.setHours(23, 59, 59, 999)
+
+      const isInDateRange = rowDate >= rangeStart && rowDate <= rangeEnd
+      const isInDayRange = rowDay >= daysRange.value[0] && rowDay <= daysRange.value[1]
+
+      return isInDateRange && isInDayRange
     })
   })
 
@@ -256,12 +294,12 @@
           data: [
             {
               value: totals.value.done,
-              name: `Выполнено ${totals.value.done}`,
+              name: `Вы��олнено ${totals.value.done}`,
               itemStyle: { color: '#16a34a' }
             },
             {
               value: totals.value.cancelled,
-              name: `Отменено ${totals.value.cancelled}`,
+              name: `Отм��нено ${totals.value.cancelled}`,
               itemStyle: { color: '#dc2626' }
             },
             {
@@ -323,7 +361,36 @@
     console.log('Export table data')
   }
 
+  function onFilterChange() {
+    // Reactive update happens automatically via computed property
+  }
+
+  function resetFilters() {
+    dateRange.value = [...defaultDateRange]
+    daysRange.value = [1, 31]
+  }
+
+  function isPresetActive(preset: DatePreset): boolean {
+    const range = dateRange.value || defaultDateRange
+    if (!range || range.length !== 2) return false
+
+    const [presetStart, presetEnd] = preset.getRange()
+    const [currentStart, currentEnd] = range
+
+    return (
+      currentStart.getTime() === presetStart.getTime() &&
+      currentEnd.getTime() === presetEnd.getTime()
+    )
+  }
+
+  function applyPreset(preset: DatePreset) {
+    dateRange.value = preset.getRange()
+  }
+
   onMounted(() => {
+    if (!dateRange.value) {
+      dateRange.value = [...defaultDateRange]
+    }
     nextTick(() => renderChart())
     window.addEventListener('resize', () => {
       if (chart) chart.resize()
@@ -413,183 +480,81 @@
     }
 
     .filters-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .period-display-card {
-      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
-      color: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(30, 64, 175, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(30, 64, 175, 0.25);
-      }
-    }
-
-    .period-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      opacity: 0.95;
-    }
-
-    .period-label {
-      display: block;
-    }
-
-    .period-range {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 18px;
-      font-size: 16px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-
-    .period-date {
-      background: rgba(255, 255, 255, 0.15);
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      font-size: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s ease;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.25);
-        border-color: rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    .period-separator {
-      font-size: 18px;
-      font-weight: 300;
-      opacity: 0.8;
-    }
-
-    .period-controls {
-      :deep(.el-date-editor) {
-        width: 100%;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
-        transition: all 0.2s ease;
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.16);
-          border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        &:focus-within {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: rgba(255, 255, 255, 0.4);
-        }
-
-        input {
-          background: transparent;
-          color: white;
-          font-size: 13px;
-          font-weight: 500;
-
-          &::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-          }
-        }
-      }
-
-      :deep(.el-input__icon) {
-        color: rgba(255, 255, 255, 0.8);
-      }
-
-      :deep(.el-input__suffix) {
-        color: rgba(255, 255, 255, 0.8);
-      }
-    }
-
-    .days-filter-card {
+    .filter-bar-container {
       background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
       border: 1px solid #e5e7eb;
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-      }
+      overflow: hidden;
     }
 
-    .days-header {
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      flex-wrap: wrap;
+    }
+
+    .filter-group {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 18px;
+      white-space: nowrap;
+    }
+
+    .filter-label {
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
-      color: #1e40af;
-      letter-spacing: 0.6px;
+      color: #374151;
+      letter-spacing: 0.4px;
+      margin: 0;
     }
 
-    .days-label {
-      display: block;
-    }
+    .date-picker-input {
+      width: 200px;
 
-    .days-content {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .days-slider-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .slider-input-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .slider-input-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      label {
+      :deep(.el-input__inner) {
         font-size: 12px;
-        font-weight: 700;
-        color: #374151;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
+        border-color: #d1d5db;
+        transition: all 0.2s ease;
+        height: 32px;
+
+        &:focus {
+          border-color: #1e40af;
+          box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+        }
       }
+    }
+
+    .filter-divider {
+      width: 1px;
+      height: 24px;
+      background: #e5e7eb;
+    }
+
+    .days-group {
+      gap: 10px;
+    }
+
+    .days-input-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
 
       :deep(.el-input-number) {
-        width: 100%;
+        width: 60px;
 
         .el-input__inner {
           text-align: center;
+          font-size: 12px;
           font-weight: 600;
-          border-color: #dbeafe;
+          height: 32px;
+          border-color: #d1d5db;
           transition: all 0.2s ease;
 
           &:focus {
@@ -600,65 +565,52 @@
       }
     }
 
-    .day-slider {
-      :deep(.el-slider__track) {
-        background: linear-gradient(90deg, #1e40af 0%, #3b82f6 100%);
-        height: 6px;
-        border-radius: 3px;
-      }
-
-      :deep(.el-slider__button) {
-        border-color: #1e40af;
-        background-color: white;
-        width: 22px;
-        height: 22px;
-        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
-        border: 3px solid #1e40af;
-        transition: all 0.2s ease;
-
-        &:hover {
-          box-shadow: 0 4px 12px rgba(30, 64, 175, 0.4);
-          transform: scale(1.1);
-        }
-
-        &:active {
-          transform: scale(1.15);
-          box-shadow: 0 6px 16px rgba(30, 64, 175, 0.5);
-        }
-      }
-
-      :deep(.el-slider__stop) {
-        background-color: #dbeafe;
-      }
-
-      :deep(.el-tooltip__popper[x-placement^='top']) {
-        background: #1e40af;
-
-        &[x-placement^='top']::after {
-          border-top-color: #1e40af;
-        }
-      }
+    .days-separator {
+      color: #d1d5db;
+      font-weight: 600;
+      font-size: 12px;
     }
 
-    .days-display {
-      text-align: center;
-      padding: 14px 16px;
-      background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
-      border-radius: 8px;
-      border: 2px solid #bfdbfe;
+    .days-count {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    .filter-presets {
+      display: flex;
+      gap: 6px;
+    }
+
+    .preset-button {
+      font-size: 11px;
+      font-weight: 600;
+      min-width: 52px;
+      padding: 5px 10px;
+      height: 32px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
       transition: all 0.2s ease;
 
       &:hover {
-        border-color: #1e40af;
-        background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+        transform: translateY(-1px);
       }
     }
 
-    .days-info {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1e40af;
-      letter-spacing: 0.3px;
+    .filter-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+
+      :deep(.el-button) {
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
     }
 
     .content-section {
