@@ -131,7 +131,7 @@
     {
       id: 4,
       sender: USER_NAME,
-      content: '听起来很不错，能具体讲讲数据分析部分吗？',
+      content: '听起来很不错，能具体讲���数据分析部分吗？',
       time: '10:05',
       isMe: true,
       avatar: meAvatar

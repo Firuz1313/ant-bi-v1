@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="f2f-analytics-page">
     <div class="page-title-section">
       <h1 class="page-title">АНАЛИТИКА ПРИНЯТЫХ ЗАЯВОК F2F</h1>
@@ -841,3 +842,11 @@
     }
   }
 </style>
+=======
+  <PagePlaceholder titleKey="F2F" />
+</template>
+
+<script setup lang="ts">
+  import PagePlaceholder from '@/components/custom/PagePlaceholder.vue'
+</script>
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61

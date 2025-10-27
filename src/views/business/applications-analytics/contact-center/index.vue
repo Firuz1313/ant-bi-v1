@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="contact-center-analytics-page">
     <div class="page-title-section">
       <h1 class="page-title">АНАЛИТИКА ПРИНЯТЫХ ЗАЯВОК КОНТАКТ ЦЕНТР</h1>
@@ -841,3 +842,11 @@
     }
   }
 </style>
+=======
+  <PagePlaceholder titleKey="Контакт центр" />
+</template>
+
+<script setup lang="ts">
+  import PagePlaceholder from '@/components/custom/PagePlaceholder.vue'
+</script>
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61

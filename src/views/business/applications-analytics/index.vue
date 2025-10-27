@@ -1,10 +1,18 @@
 <template>
+<<<<<<< HEAD
   <div class="analytics-page">
     <div class="page-header">
       <h1 class="page-title">ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h1>
     </div>
 
     <!-- KPI Cards -->
+=======
+  <div class="analytics-summary-page">
+    <div class="page-title-section">
+      <h1 class="page-title">ПЛАН/ФАКТ ПО ПРИЁМУ ЗАЯВОК НА ПОДКЛЮЧЕНИЕ</h1>
+    </div>
+
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
     <div class="kpi-section">
       <div class="kpi-block kpi-blue">
         <div class="kpi-value">{{ filteredTotalCount }}</div>
@@ -24,6 +32,7 @@
       </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Enhanced Filter Section -->
     <div class="filter-section">
       <div class="filter-container">
@@ -320,11 +329,349 @@
                 <span class="metric-label">Выполнено</span>
                 <span class="metric-value total-value">{{ summaryData[15] }}</span>
               </div>
+=======
+    <transition name="fade">
+      <div v-show="showFilter" class="top-filter">
+        <div class="filter-row">
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            range-separator="—"
+            start-placeholder="Дата от"
+            end-placeholder="Дата до"
+            value-format="yyyy-MM-dd"
+            class="filter-item compact-date"
+            @change="applyFilters"
+          />
+
+          <el-select
+            v-model="status"
+            placeholder="Статус"
+            class="filter-item"
+            clearable
+            @change="applyFilters"
+          >
+            <el-option label="Все" value="all" />
+            <el-option label="Выполнено" value="done" />
+            <el-option label="В работе" value="in_progress" />
+            <el-option label="Просрочено" value="overdue" />
+          </el-select>
+
+          <el-input
+            v-model="search"
+            placeholder="Поиск по данным"
+            clearable
+            class="filter-item filter-search"
+            @input="applyFilters"
+          >
+            <template #prefix>
+              <i class="el-icon-search"></i>
+            </template>
+          </el-input>
+
+          <div class="filter-actions">
+            <el-button @click="resetFilters" size="small">Сброс</el-button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <el-card class="table-card art-table-card">
+      <div class="card-actions">
+        <el-button
+          type="primary"
+          @click="showFilter = !showFilter"
+          size="small"
+          class="filter-toggle"
+        >
+          <i class="el-icon-setting"></i>
+          Фильтр
+        </el-button>
+      </div>
+      <div class="table-header">
+        <h3 class="table-title">План/Факт по приёму заявок</h3>
+      </div>
+      <div class="table-container">
+        <el-table :data="sortedData" stripe border class="summary-table" style="width: 100%">
+          <el-table-column prop="date" label="Дата" width="100" align="center" :sortable="false" />
+          <el-table-column
+            prop="days_nd"
+            label="Дни нд"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+
+          <el-table-column
+            prop="kc_plan"
+            label="Кц План"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="kc_done"
+            label="Кц Выполнено"
+            width="110"
+            align="center"
+            :sortable="false"
+          >
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.kc_done }}</div>
+                <div :class="['delta', deltaClass(row.kc_plan, row.kc_done)]">
+                  <i
+                    :class="['arrow', arrowIcon(row.kc_plan, row.kc_done)]"
+                    :title="arrowTitle(row.kc_plan, row.kc_done)"
+                  ></i>
+                  <span class="pct">{{ percent(row.kc_plan, row.kc_done) }}%</span>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="co_plan"
+            label="ЦО План"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="co_fact"
+            label="ЦО Факт"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="co_done"
+            label="ЦО Выполнено"
+            width="110"
+            align="center"
+            :sortable="false"
+          >
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.co_done }}</div>
+                <div :class="['delta', deltaClass(row.co_plan, row.co_done)]">
+                  <i
+                    :class="['arrow', arrowIcon(row.co_plan, row.co_done)]"
+                    :title="arrowTitle(row.co_plan, row.co_done)"
+                  ></i>
+                  <span class="pct">{{ percent(row.co_plan, row.co_done) }}%</span>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="stp_plan"
+            label="СТП План"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="stp_fact"
+            label="СТП Факт"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="stp_done"
+            label="СТП Выполнено"
+            width="110"
+            align="center"
+            :sortable="false"
+          >
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.stp_done }}</div>
+                <div :class="['delta', deltaClass(row.stp_plan, row.stp_done)]">
+                  <i
+                    :class="['arrow', arrowIcon(row.stp_plan, row.stp_done)]"
+                    :title="arrowTitle(row.stp_plan, row.stp_done)"
+                  ></i>
+                  <span class="pct">{{ percent(row.stp_plan, row.stp_done) }}%</span>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="f2f_plan"
+            label="F2F План"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="f2f_fact"
+            label="F2F Факт"
+            width="85"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="f2f_done"
+            label="F2F Выполнено"
+            width="110"
+            align="center"
+            :sortable="false"
+          >
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.f2f_done }}</div>
+                <div :class="['delta', deltaClass(row.f2f_plan, row.f2f_done)]">
+                  <i
+                    :class="['arrow', arrowIcon(row.f2f_plan, row.f2f_done)]"
+                    :title="arrowTitle(row.f2f_plan, row.f2f_done)"
+                  ></i>
+                  <span class="pct">{{ percent(row.f2f_plan, row.f2f_done) }}%</span>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="total_plan"
+            label="ИТОГ План"
+            width="100"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="total_fact"
+            label="ИТОГ Факт"
+            width="100"
+            align="center"
+            :sortable="false"
+          />
+          <el-table-column
+            prop="total_done"
+            label="ИТОГ Выполнено"
+            width="120"
+            align="center"
+            :sortable="false"
+          >
+            <template #default="{ row }">
+              <div class="cell-combo">
+                <div class="value">{{ row.total_done }}</div>
+                <div :class="['delta', deltaClass(row.total_plan, row.total_done)]">
+                  <i
+                    :class="['arrow', arrowIcon(row.total_plan, row.total_done)]"
+                    :title="arrowTitle(row.total_plan, row.total_done)"
+                  ></i>
+                  <span class="pct">{{ percent(row.total_plan, row.total_done) }}%</span>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div class="table-summary">
+        <div class="summary-section">
+          <div class="summary-header">Дополнительно</div>
+          <div class="summary-metric">
+            <span class="summary-label">Дни нд</span>
+            <span class="summary-value">{{ summaryData[1] }}</span>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">Кц (Клиентский центр)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[2] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[3] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">ЦО (Центр обслуживания)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[4] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[5] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[6] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">СТП (Служба технической поддержки)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[7] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[8] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[9] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section">
+          <div class="summary-header">F2F (Face to Face)</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value">{{ summaryData[10] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value">{{ summaryData[11] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value">{{ summaryData[12] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-section summary-total">
+          <div class="summary-header">Итого</div>
+          <div class="summary-columns">
+            <div class="summary-metric">
+              <span class="summary-label">План</span>
+              <span class="summary-value total-value">{{ summaryData[13] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Факт</span>
+              <span class="summary-value total-value">{{ summaryData[14] }}</span>
+            </div>
+            <div class="summary-metric">
+              <span class="summary-label">Выполнено</span>
+              <span class="summary-value total-value">{{ summaryData[15] }}</span>
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
             </div>
           </div>
         </div>
       </div>
+<<<<<<< HEAD
     </div>
+=======
+    </el-card>
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   </div>
 </template>
 
@@ -352,7 +699,11 @@
     status: 'done' | 'in_progress' | 'overdue' | 'other'
   }
 
+<<<<<<< HEAD
   const showFilter = ref(true)
+=======
+  const showFilter = ref(false)
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   const dateRange = ref<[string, string] | null>(null)
   const status = ref<string>('all')
   const search = ref<string>('')
@@ -360,6 +711,12 @@
   const sortBy = ref<string>('date')
   const sortOrder = ref<'ascending' | 'descending'>('descending')
 
+<<<<<<< HEAD
+=======
+  const page = ref(1)
+  const pageSize = ref(10)
+
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   const rows = ref<Row[]>(generateMockRows())
 
   function randInt(min: number, max: number) {
@@ -403,6 +760,10 @@
       const date = new Date()
       date.setDate(date.getDate() - (28 - i))
 
+<<<<<<< HEAD
+=======
+      const execution = Math.round((total_done / Math.max(1, total_plan)) * 100)
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       const statusVal: Row['status'] = i <= 24 ? 'done' : 'in_progress'
 
       base.push({
@@ -443,6 +804,10 @@
       data = data.filter(
         (r) =>
           String(r.id).includes(q) ||
+<<<<<<< HEAD
+=======
+          String(r.days_nd).includes(q) ||
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
           String(r.kc_plan).includes(q) ||
           String(r.kc_done).includes(q) ||
           String(r.co_plan).includes(q) ||
@@ -467,18 +832,42 @@
     return data
   })
 
+<<<<<<< HEAD
   function applyFilters() {
     // Reactive update happens automatically via computed property
   }
 
+=======
+  const pagedData = computed(() => {
+    const start = (page.value - 1) * pageSize.value
+    return sortedData.value.slice(start, start + pageSize.value)
+  })
+
+  function handleSort(prop: string) {
+    if (sortBy.value === prop) {
+      sortOrder.value = sortOrder.value === 'ascending' ? 'descending' : 'ascending'
+    } else {
+      sortBy.value = prop
+      sortOrder.value = 'ascending'
+    }
+  }
+
+  function applyFilters() {
+    page.value = 1
+  }
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   function resetFilters() {
     dateRange.value = null
     status.value = 'all'
     search.value = ''
+<<<<<<< HEAD
   }
 
   function exportData() {
     console.log('Export data')
+=======
+    page.value = 1
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   }
 
   function percent(plan: number, done: number) {
@@ -547,11 +936,16 @@
   )
 
   watch([filteredData, sortBy, sortOrder], () => {
+<<<<<<< HEAD
     // Reactive updates
+=======
+    page.value = 1
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
   })
 </script>
 
 <style scoped lang="scss">
+<<<<<<< HEAD
   .analytics-page {
     font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
     color: var(--text-color, #0f172a);
@@ -576,6 +970,23 @@
         text-shadow: 0 2px 4px rgba(30, 64, 175, 0.1);
         letter-spacing: 0.5px;
       }
+=======
+  .analytics-summary-page {
+    font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    color: var(--text-color, #0f172a);
+
+    .page-title-section {
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1e40af;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
     }
 
     .kpi-section {
@@ -584,6 +995,7 @@
       margin-bottom: 24px;
       justify-content: center;
       align-items: center;
+<<<<<<< HEAD
       flex-wrap: wrap;
 
       .kpi-block {
@@ -826,12 +1238,244 @@
           }
         }
       }
+=======
+    }
+
+    .kpi-block {
+      padding: 16px 20px;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 140px;
+      flex: 1;
+      max-width: 280px;
+    }
+
+    .kpi-value {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .kpi-label {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .kpi-blue {
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+      color: #1e40af;
+    }
+
+    .kpi-red {
+      background: linear-gradient(135deg, #fee2e2, #fef2f2);
+      color: #991b1b;
+    }
+
+    .kpi-green {
+      background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+      color: #15803d;
+    }
+
+    .kpi-orange {
+      background: linear-gradient(135deg, #fed7aa, #fffbeb);
+      color: #b45309;
+    }
+
+    .filter-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .top-filter {
+      margin-bottom: 16px;
+      background: #f9fafb;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+
+      .filter-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .filter-item {
+          min-width: 140px;
+        }
+
+        .months-select {
+          min-width: 220px;
+        }
+
+        .compact-date {
+          min-width: 220px;
+        }
+
+        .filter-search {
+          min-width: 280px;
+        }
+
+        .filter-actions {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+      }
+    }
+
+    .table-card {
+      padding: 0;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-actions {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 10;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: white;
+    }
+
+    .table-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1f2937;
+    }
+
+    .table-container {
+      flex: 1;
+      overflow: auto;
+      min-height: 400px;
+    }
+
+    .summary-table {
+      :deep(.el-table__header th) {
+        background: #1e40af;
+        color: white;
+        font-weight: 700;
+        font-size: 12px;
+        padding: 12px 0;
+      }
+
+      :deep(.el-table__body td) {
+        padding: 12px 0;
+        font-size: 12px;
+      }
+
+      :deep(.el-table__row:hover > td) {
+        background-color: #f3f4f6;
+      }
+    }
+
+    .table-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      padding: 24px;
+      background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+      border-top: 2px solid #e5e7eb;
+      color: #1f2937;
+    }
+
+    .summary-section {
+      background: white;
+      border-radius: 10px;
+      padding: 16px;
+      border-left: 4px solid #1e40af;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+
+      &:hover {
+        box-shadow: 0 4px 12px rgba(30, 64, 175, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+
+    .summary-total {
+      border-left-color: #059669;
+      background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+
+      .summary-header {
+        color: #059669;
+      }
+
+      .total-value {
+        color: #059669;
+        font-size: 16px;
+      }
+    }
+
+    .summary-header {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #1e40af;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 12px;
+    }
+
+    .summary-metric {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 8px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #ffffff 100%);
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+        border-color: #1e40af;
+      }
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #6b7280;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
+    }
+
+    .summary-value {
+      font-weight: 700;
+      color: #1e40af;
+      font-size: 18px;
+      line-height: 1;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
     }
 
     .cell-combo {
       display: flex;
       align-items: center;
       justify-content: center;
+<<<<<<< HEAD
       gap: 4px;
       flex-wrap: wrap;
 
@@ -840,41 +1484,66 @@
         font-size: 14px;
         color: #1f2937;
         flex-shrink: 0;
+=======
+      gap: 6px;
+
+      .value {
+        font-weight: 700;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .delta {
         display: inline-flex;
         align-items: center;
+<<<<<<< HEAD
         gap: 2px;
         padding: 3px 6px;
         border-radius: 4px;
         font-size: 10px;
         font-weight: 600;
         flex-shrink: 0;
+=======
+        gap: 4px;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .arrow.up::after {
         content: '▲';
         color: #16a34a;
         font-weight: 700;
+<<<<<<< HEAD
         margin-right: 1px;
         font-size: 9px;
+=======
+        margin-right: 2px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .arrow.down::after {
         content: '▼';
         color: #dc2626;
         font-weight: 700;
+<<<<<<< HEAD
         margin-right: 1px;
         font-size: 9px;
+=======
+        margin-right: 2px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .arrow.right::after {
         content: '▶';
         color: #f59e0b;
         font-weight: 700;
+<<<<<<< HEAD
         margin-right: 1px;
         font-size: 9px;
+=======
+        margin-right: 2px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .delta.good {
@@ -893,6 +1562,7 @@
       }
     }
 
+<<<<<<< HEAD
     // Адаптивные стили для стрелочек
     @media (max-width: 768px) {
       .cell-combo {
@@ -1212,10 +1882,90 @@
       .page-header .page-title {
         font-size: 22px;
         line-height: 1.2;
+=======
+    .summary-table {
+      width: 100%;
+    }
+
+    .summary-table th,
+    .summary-table td {
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    .summary-table th {
+      background: #1e40af;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .summary-table td {
+      font-size: 12px;
+    }
+
+    .summary-table th .cell,
+    .summary-table td .cell {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 0.25s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  :root {
+    --table-bg: #ffffff;
+    --text-color: #0f172a;
+    --muted: #64748b;
+    --summary-bg: #f9fafb;
+    --summary-quiet: #dbeafe;
+    --border-weak: rgba(0, 0, 0, 0.06);
+  }
+
+  body.dark,
+  .theme-dark,
+  [data-theme='dark'] {
+    --table-bg: #071022;
+    --text-color: #e6eef8;
+    --muted: #9aa8c2;
+    --summary-bg: #1a202c;
+    --summary-quiet: #1e3a5f;
+    --border-weak: rgba(255, 255, 255, 0.06);
+  }
+
+  .analytics-summary-page {
+    color: var(--text-color);
+  }
+
+  .analytics-summary-page .top-filter {
+    background: var(--summary-bg);
+    border-color: var(--border-weak);
+  }
+
+  :deep(.el-table__footer-wrapper .el-table__row) {
+    background: var(--summary-quiet);
+  }
+
+  @media (max-width: 768px) {
+    .analytics-summary-page {
+      .page-title {
+        font-size: 22px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
 
       .kpi-section {
         flex-direction: row;
+<<<<<<< HEAD
         gap: 8px;
         margin-bottom: 20px;
 
@@ -1543,10 +2293,85 @@
             }
           }
         }
+=======
+        gap: 12px;
+      }
+
+      .kpi-block {
+        padding: 12px 16px;
+        min-width: 0;
+        flex: 1;
+        max-width: none;
+      }
+
+      .kpi-value {
+        font-size: 24px;
+      }
+
+      .kpi-label {
+        font-size: 12px;
+      }
+
+      .top-filter .filter-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .card-actions {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 8px 0 0 0;
+      }
+
+      .summary-table th {
+        font-size: 11px;
+      }
+
+      .summary-table td {
+        font-size: 10px;
+      }
+
+      .table-container {
+        min-height: 300px;
+      }
+
+      .table-summary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .summary-section {
+        padding: 12px;
+      }
+
+      .summary-header {
+        font-size: 11px;
+        margin-bottom: 10px;
+      }
+
+      .summary-columns {
+        gap: 8px;
+      }
+
+      .summary-metric {
+        padding: 8px 4px;
+      }
+
+      .summary-label {
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+
+      .summary-value {
+        font-size: 14px;
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61
       }
     }
   }
 
+<<<<<<< HEAD
   @media (max-width: 360px) {
     .analytics-page {
       padding: 6px;
@@ -1664,3 +2489,11 @@
     }
   }
 </style>
+=======
+  .summary-table .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+>>>>>>> bd74014ce24bfe59c2549370fded87612e598a61

@@ -107,7 +107,7 @@
   const highlightedIndex = ref(0)
   const historyHIndex = ref(0)
   const searchResultScrollbar = ref<ScrollbarInstance>()
-  const isKeyboardNavigating = ref(false) // 新增状态：是否正在使用键盘导航
+  const isKeyboardNavigating = ref(false) // 新增状态：是否��在使用键盘导航
 
   // 生命周期钩子
   onMounted(() => {
